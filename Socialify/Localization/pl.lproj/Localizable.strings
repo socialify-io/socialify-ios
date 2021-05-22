@@ -1,0 +1,51 @@
+/* 
+  Localizable.strings
+  Socialify
+
+  Created by Tomasz on 29/03/2021.
+  
+*/
+
+//ONBOARDING
+"onboarding.title" = "Witaj w Socialify";
+
+"onboarding.functionality.title" = "Funkcjonalność";
+"onboarding.functionality.content" = "Twoje wszystkie ulubione media społecznościowe w jednym miejscu.";
+
+"onboarding.storage.title" = "Zaoszczędź miejsce";
+"onboarding.storage.content" = "Zaoszczędź miejsce na swoim telefonie używając Socialify.";
+
+"onboarding.cross.platform.title" = "Wieloplatformowy";
+"onboarding.cross.platform.content" = "Dostępny na iPhone. I na iPad. I na zegarku. Na macu też.";
+
+"onboarding.continue" = "Kontynuuj";
+
+//ADD ACCOUNT
+"add_account.title" = "Wybierz typ konta";
+
+//GLOBAL LOGIN STRINGS
+"login.title" = "Połącz konto";
+"login.button" = "Zaloguj";
+"login.singup" = "Nie masz konta? Zarejestruj się";
+"login.password" = "Hasło";
+
+//LOGIN USING ...
+"login.facebook_login" = "Zaloguj się za pomocą Facebook'a";
+"login.google_login" = "Zaloguj się za pomocą Google'a";
+"login.twitter_login" = "Zaloguj się za pomocą Twitter'a";
+"login.apple_login" = "Zaloguj się za pomocą Apple'a";
+"login.ig_login" = "Zaloguj się za pomocą Instagram'a";
+
+//FACEBOOK LOGIN
+"fb_login.username" = "Adres email lub numer telefonu";
+
+//TWITTER LOGIN
+"tw_login.username" = "Numer telefonu, email lub login";
+
+//INSTAGRAM LOGIN
+"ig_login.username" = "Numer telefonu, email lub login";
+
+//TIKTOK LOGIN
+"tt_login.username" = "Numer telefonu, email lub login";
+"tt_login.another_way" = "Zaloguj się w inny sposób";
+"tt_login.another_way.verified_label" = "Zweryfikowany sposób";

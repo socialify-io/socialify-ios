@@ -1,0 +1,810 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 52;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5C30152A26471B9A001A1FA5 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 5C30152926471B9A001A1FA5 /* SwiftSoup */; };
+		5C3DD21B2613B34700B8E532 /* AddAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DD21A2613B34700B8E532 /* AddAccountView.swift */; };
+		5C3DD2242613B78F00B8E532 /* CustomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DD2232613B78F00B8E532 /* CustomButtonView.swift */; };
+		5C3DD22A2613C81700B8E532 /* MediaItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DD2292613C81700B8E532 /* MediaItemView.swift */; };
+		5C3FE186264BCA1000CC2E40 /* MessengerLoginFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3FE185264BCA1000CC2E40 /* MessengerLoginFragment.swift */; };
+		5C3FE1A3264BD26000CC2E40 /* MessengerSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 5C3FE1A2264BD26000CC2E40 /* MessengerSdk */; };
+		5C495BC7261A72100004D538 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C495BC6261A72100004D538 /* LoginView.swift */; };
+		5C495BCC261A72F50004D538 /* FacebookLoginFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C495BCB261A72F50004D538 /* FacebookLoginFragment.swift */; };
+		5C495BDD261A76900004D538 /* TwitterLoginFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C495BDC261A76900004D538 /* TwitterLoginFragment.swift */; };
+		5C495BEE261A78590004D538 /* InstagramLoginFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C495BED261A78590004D538 /* InstagramLoginFragment.swift */; };
+		5C495BF3261A78650004D538 /* TikTokLoginFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C495BF2261A78650004D538 /* TikTokLoginFragment.swift */; };
+		5C495BF9261A78760004D538 /* PinterestLoginFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C495BF8261A78760004D538 /* PinterestLoginFragment.swift */; };
+		5C73EA9B26112822008F7315 /* SocialifyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EA9A26112822008F7315 /* SocialifyApp.swift */; };
+		5C73EA9D26112822008F7315 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EA9C26112822008F7315 /* ContentView.swift */; };
+		5C73EAA226112823008F7315 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C73EAA126112823008F7315 /* Preview Assets.xcassets */; };
+		5C73EAAD26112823008F7315 /* SocialifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EAAC26112823008F7315 /* SocialifyTests.swift */; };
+		5C73EAB826112823008F7315 /* SocialifyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EAB726112823008F7315 /* SocialifyUITests.swift */; };
+		5C73EAD0261129E1008F7315 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EACF261129E1008F7315 /* OnboardingView.swift */; };
+		5C7D560D2641FB6A00B518C9 /* TikTokAnotherWayFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7D560C2641FB6A00B518C9 /* TikTokAnotherWayFragment.swift */; };
+		5C7D56122642010100B518C9 /* LoginWithOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7D56112642010100B518C9 /* LoginWithOptionView.swift */; };
+		5CADDB9C2611E72200F690D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C73EA9E26112823008F7315 /* Assets.xcassets */; };
+		5CADDBB92611F5A100F690D0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5CADDBBB2611F5A100F690D0 /* Localizable.strings */; };
+		5CC3384E264604FA006F14CF /* FacebookSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 5CC3384D264604FA006F14CF /* FacebookSdk */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5C73EAA926112823008F7315 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5C73EA8F26112822008F7315 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5C73EA9626112822008F7315;
+			remoteInfo = Socialify;
+		};
+		5C73EAB426112823008F7315 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5C73EA8F26112822008F7315 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5C73EA9626112822008F7315;
+			remoteInfo = Socialify;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5C3DD21A2613B34700B8E532 /* AddAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountView.swift; sourceTree = "<group>"; };
+		5C3DD2232613B78F00B8E532 /* CustomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonView.swift; sourceTree = "<group>"; };
+		5C3DD2292613C81700B8E532 /* MediaItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemView.swift; sourceTree = "<group>"; };
+		5C3FE185264BCA1000CC2E40 /* MessengerLoginFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessengerLoginFragment.swift; sourceTree = "<group>"; };
+		5C3FE19B264BCBF900CC2E40 /* MessengerSdk */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MessengerSdk; sourceTree = "<group>"; };
+		5C495BC6261A72100004D538 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		5C495BCB261A72F50004D538 /* FacebookLoginFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookLoginFragment.swift; sourceTree = "<group>"; };
+		5C495BDC261A76900004D538 /* TwitterLoginFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwitterLoginFragment.swift; sourceTree = "<group>"; };
+		5C495BED261A78590004D538 /* InstagramLoginFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramLoginFragment.swift; sourceTree = "<group>"; };
+		5C495BF2261A78650004D538 /* TikTokLoginFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TikTokLoginFragment.swift; sourceTree = "<group>"; };
+		5C495BF8261A78760004D538 /* PinterestLoginFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestLoginFragment.swift; sourceTree = "<group>"; };
+		5C73EA9726112822008F7315 /* Socialify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Socialify.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C73EA9A26112822008F7315 /* SocialifyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialifyApp.swift; sourceTree = "<group>"; };
+		5C73EA9C26112822008F7315 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		5C73EA9E26112823008F7315 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5C73EAA126112823008F7315 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		5C73EAA326112823008F7315 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C73EAA826112823008F7315 /* SocialifyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SocialifyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C73EAAC26112823008F7315 /* SocialifyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialifyTests.swift; sourceTree = "<group>"; };
+		5C73EAAE26112823008F7315 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C73EAB326112823008F7315 /* SocialifyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SocialifyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C73EAB726112823008F7315 /* SocialifyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialifyUITests.swift; sourceTree = "<group>"; };
+		5C73EAB926112823008F7315 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5C73EACF261129E1008F7315 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		5C7D560C2641FB6A00B518C9 /* TikTokAnotherWayFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TikTokAnotherWayFragment.swift; sourceTree = "<group>"; };
+		5C7D56112642010100B518C9 /* LoginWithOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithOptionView.swift; sourceTree = "<group>"; };
+		5CADDBBA2611F5A100F690D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5CADDBBF2611F5DB00F690D0 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5CC338482645FF83006F14CF /* FacebookSdk */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FacebookSdk; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5C73EA9426112822008F7315 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5CC3384E264604FA006F14CF /* FacebookSdk in Frameworks */,
+				5C30152A26471B9A001A1FA5 /* SwiftSoup in Frameworks */,
+				5C3FE1A3264BD26000CC2E40 /* MessengerSdk in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C73EAA526112823008F7315 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C73EAB026112823008F7315 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5C3DD2192613B33600B8E532 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				5C495BC6261A72100004D538 /* LoginView.swift */,
+				5C3DD21A2613B34700B8E532 /* AddAccountView.swift */,
+				5C3FE183264BC96A00CC2E40 /* Messenger */,
+				5C45FBA626150F0D009EC943 /* Instagram */,
+				5C45FBA826150F1C009EC943 /* Pinterest */,
+				5C45FBA726150F16009EC943 /* TikTok */,
+				5C45FBA526150F01009EC943 /* Twitter */,
+				5C45FBA426150EFA009EC943 /* Facebook */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		5C3DD2222613B77F00B8E532 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				5C3DD2232613B78F00B8E532 /* CustomButtonView.swift */,
+				5C3DD2292613C81700B8E532 /* MediaItemView.swift */,
+				5C7D56112642010100B518C9 /* LoginWithOptionView.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		5C3FE183264BC96A00CC2E40 /* Messenger */ = {
+			isa = PBXGroup;
+			children = (
+				5C3FE185264BCA1000CC2E40 /* MessengerLoginFragment.swift */,
+			);
+			path = Messenger;
+			sourceTree = "<group>";
+		};
+		5C45FBA426150EFA009EC943 /* Facebook */ = {
+			isa = PBXGroup;
+			children = (
+				5C495BCB261A72F50004D538 /* FacebookLoginFragment.swift */,
+			);
+			path = Facebook;
+			sourceTree = "<group>";
+		};
+		5C45FBA526150F01009EC943 /* Twitter */ = {
+			isa = PBXGroup;
+			children = (
+				5C495BDC261A76900004D538 /* TwitterLoginFragment.swift */,
+			);
+			path = Twitter;
+			sourceTree = "<group>";
+		};
+		5C45FBA626150F0D009EC943 /* Instagram */ = {
+			isa = PBXGroup;
+			children = (
+				5C495BED261A78590004D538 /* InstagramLoginFragment.swift */,
+			);
+			path = Instagram;
+			sourceTree = "<group>";
+		};
+		5C45FBA726150F16009EC943 /* TikTok */ = {
+			isa = PBXGroup;
+			children = (
+				5C495BF2261A78650004D538 /* TikTokLoginFragment.swift */,
+				5C7D560C2641FB6A00B518C9 /* TikTokAnotherWayFragment.swift */,
+			);
+			path = TikTok;
+			sourceTree = "<group>";
+		};
+		5C45FBA826150F1C009EC943 /* Pinterest */ = {
+			isa = PBXGroup;
+			children = (
+				5C495BF8261A78760004D538 /* PinterestLoginFragment.swift */,
+			);
+			path = Pinterest;
+			sourceTree = "<group>";
+		};
+		5C73EA8E26112822008F7315 = {
+			isa = PBXGroup;
+			children = (
+				5C73EAC826112917008F7315 /* Modules */,
+				5C73EA9926112822008F7315 /* Socialify */,
+				5C73EAAB26112823008F7315 /* SocialifyTests */,
+				5C73EAB626112823008F7315 /* SocialifyUITests */,
+				5C73EA9826112822008F7315 /* Products */,
+				5CC3384C264604FA006F14CF /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		5C73EA9826112822008F7315 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5C73EA9726112822008F7315 /* Socialify.app */,
+				5C73EAA826112823008F7315 /* SocialifyTests.xctest */,
+				5C73EAB326112823008F7315 /* SocialifyUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5C73EA9926112822008F7315 /* Socialify */ = {
+			isa = PBXGroup;
+			children = (
+				5CADDBB32611F56200F690D0 /* Localization */,
+				5C73EACA261129B0008F7315 /* Views */,
+				5C73EAC9261129A8008F7315 /* App */,
+				5C73EA9E26112823008F7315 /* Assets.xcassets */,
+				5C73EAA326112823008F7315 /* Info.plist */,
+				5C73EAA026112823008F7315 /* Preview Content */,
+			);
+			path = Socialify;
+			sourceTree = "<group>";
+		};
+		5C73EAA026112823008F7315 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				5C73EAA126112823008F7315 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		5C73EAAB26112823008F7315 /* SocialifyTests */ = {
+			isa = PBXGroup;
+			children = (
+				5C73EAAC26112823008F7315 /* SocialifyTests.swift */,
+				5C73EAAE26112823008F7315 /* Info.plist */,
+			);
+			path = SocialifyTests;
+			sourceTree = "<group>";
+		};
+		5C73EAB626112823008F7315 /* SocialifyUITests */ = {
+			isa = PBXGroup;
+			children = (
+				5C73EAB726112823008F7315 /* SocialifyUITests.swift */,
+				5C73EAB926112823008F7315 /* Info.plist */,
+			);
+			path = SocialifyUITests;
+			sourceTree = "<group>";
+		};
+		5C73EAC826112917008F7315 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				5C3FE19B264BCBF900CC2E40 /* MessengerSdk */,
+				5CC338482645FF83006F14CF /* FacebookSdk */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		5C73EAC9261129A8008F7315 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				5C73EA9A26112822008F7315 /* SocialifyApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		5C73EACA261129B0008F7315 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5C3DD2222613B77F00B8E532 /* Shared */,
+				5C3DD2192613B33600B8E532 /* Login */,
+				5C73EACE261129D0008F7315 /* Onboarding */,
+				5C73EA9C26112822008F7315 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5C73EACE261129D0008F7315 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				5C73EACF261129E1008F7315 /* OnboardingView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		5CADDBB32611F56200F690D0 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				5CADDBBB2611F5A100F690D0 /* Localizable.strings */,
+			);
+			path = Localization;
+			sourceTree = "<group>";
+		};
+		5CC3384C264604FA006F14CF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5C73EA9626112822008F7315 /* Socialify */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C73EABC26112823008F7315 /* Build configuration list for PBXNativeTarget "Socialify" */;
+			buildPhases = (
+				5C73EA9326112822008F7315 /* Sources */,
+				5C73EA9426112822008F7315 /* Frameworks */,
+				5C73EA9526112822008F7315 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Socialify;
+			packageProductDependencies = (
+				5CC3384D264604FA006F14CF /* FacebookSdk */,
+				5C30152926471B9A001A1FA5 /* SwiftSoup */,
+				5C3FE1A2264BD26000CC2E40 /* MessengerSdk */,
+			);
+			productName = Socialify;
+			productReference = 5C73EA9726112822008F7315 /* Socialify.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5C73EAA726112823008F7315 /* SocialifyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C73EABF26112823008F7315 /* Build configuration list for PBXNativeTarget "SocialifyTests" */;
+			buildPhases = (
+				5C73EAA426112823008F7315 /* Sources */,
+				5C73EAA526112823008F7315 /* Frameworks */,
+				5C73EAA626112823008F7315 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5C73EAAA26112823008F7315 /* PBXTargetDependency */,
+			);
+			name = SocialifyTests;
+			productName = SocialifyTests;
+			productReference = 5C73EAA826112823008F7315 /* SocialifyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5C73EAB226112823008F7315 /* SocialifyUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5C73EAC226112823008F7315 /* Build configuration list for PBXNativeTarget "SocialifyUITests" */;
+			buildPhases = (
+				5C73EAAF26112823008F7315 /* Sources */,
+				5C73EAB026112823008F7315 /* Frameworks */,
+				5C73EAB126112823008F7315 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5C73EAB526112823008F7315 /* PBXTargetDependency */,
+			);
+			name = SocialifyUITests;
+			productName = SocialifyUITests;
+			productReference = 5C73EAB326112823008F7315 /* SocialifyUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5C73EA8F26112822008F7315 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1240;
+				LastUpgradeCheck = 1240;
+				TargetAttributes = {
+					5C73EA9626112822008F7315 = {
+						CreatedOnToolsVersion = 12.4;
+					};
+					5C73EAA726112823008F7315 = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = 5C73EA9626112822008F7315;
+					};
+					5C73EAB226112823008F7315 = {
+						CreatedOnToolsVersion = 12.4;
+						TestTargetID = 5C73EA9626112822008F7315;
+					};
+				};
+			};
+			buildConfigurationList = 5C73EA9226112822008F7315 /* Build configuration list for PBXProject "Socialify" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				pl,
+			);
+			mainGroup = 5C73EA8E26112822008F7315;
+			packageReferences = (
+				5C30152826471B9A001A1FA5 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+			);
+			productRefGroup = 5C73EA9826112822008F7315 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5C73EA9626112822008F7315 /* Socialify */,
+				5C73EAA726112823008F7315 /* SocialifyTests */,
+				5C73EAB226112823008F7315 /* SocialifyUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5C73EA9526112822008F7315 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5CADDB9C2611E72200F690D0 /* Assets.xcassets in Resources */,
+				5CADDBB92611F5A100F690D0 /* Localizable.strings in Resources */,
+				5C73EAA226112823008F7315 /* Preview Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C73EAA626112823008F7315 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C73EAB126112823008F7315 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5C73EA9326112822008F7315 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C3DD2242613B78F00B8E532 /* CustomButtonView.swift in Sources */,
+				5C495BCC261A72F50004D538 /* FacebookLoginFragment.swift in Sources */,
+				5C3DD21B2613B34700B8E532 /* AddAccountView.swift in Sources */,
+				5C3DD22A2613C81700B8E532 /* MediaItemView.swift in Sources */,
+				5C73EA9D26112822008F7315 /* ContentView.swift in Sources */,
+				5C495BC7261A72100004D538 /* LoginView.swift in Sources */,
+				5C7D56122642010100B518C9 /* LoginWithOptionView.swift in Sources */,
+				5C495BF9261A78760004D538 /* PinterestLoginFragment.swift in Sources */,
+				5C73EAD0261129E1008F7315 /* OnboardingView.swift in Sources */,
+				5C495BF3261A78650004D538 /* TikTokLoginFragment.swift in Sources */,
+				5C495BDD261A76900004D538 /* TwitterLoginFragment.swift in Sources */,
+				5C495BEE261A78590004D538 /* InstagramLoginFragment.swift in Sources */,
+				5C3FE186264BCA1000CC2E40 /* MessengerLoginFragment.swift in Sources */,
+				5C73EA9B26112822008F7315 /* SocialifyApp.swift in Sources */,
+				5C7D560D2641FB6A00B518C9 /* TikTokAnotherWayFragment.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C73EAA426112823008F7315 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C73EAAD26112823008F7315 /* SocialifyTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5C73EAAF26112823008F7315 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5C73EAB826112823008F7315 /* SocialifyUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5C73EAAA26112823008F7315 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5C73EA9626112822008F7315 /* Socialify */;
+			targetProxy = 5C73EAA926112823008F7315 /* PBXContainerItemProxy */;
+		};
+		5C73EAB526112823008F7315 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5C73EA9626112822008F7315 /* Socialify */;
+			targetProxy = 5C73EAB426112823008F7315 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5CADDBBB2611F5A100F690D0 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5CADDBBA2611F5A100F690D0 /* en */,
+				5CADDBBF2611F5DB00F690D0 /* pl */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5C73EABA26112823008F7315 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		5C73EABB26112823008F7315 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5C73EABD26112823008F7315 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Socialify/Preview Content\"";
+				DEVELOPMENT_TEAM = AAPC4WPC5Y;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Socialify/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.Socialify.Socialify;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5C73EABE26112823008F7315 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"Socialify/Preview Content\"";
+				DEVELOPMENT_TEAM = AAPC4WPC5Y;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = Socialify/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.Socialify.Socialify;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		5C73EAC026112823008F7315 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SocialifyTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.Socialify.SocialifyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Socialify.app/Socialify";
+			};
+			name = Debug;
+		};
+		5C73EAC126112823008F7315 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SocialifyTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.Socialify.SocialifyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Socialify.app/Socialify";
+			};
+			name = Release;
+		};
+		5C73EAC326112823008F7315 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SocialifyUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.Socialify.SocialifyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Socialify;
+			};
+			name = Debug;
+		};
+		5C73EAC426112823008F7315 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = SocialifyUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = io.Socialify.SocialifyUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Socialify;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5C73EA9226112822008F7315 /* Build configuration list for PBXProject "Socialify" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C73EABA26112823008F7315 /* Debug */,
+				5C73EABB26112823008F7315 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5C73EABC26112823008F7315 /* Build configuration list for PBXNativeTarget "Socialify" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C73EABD26112823008F7315 /* Debug */,
+				5C73EABE26112823008F7315 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5C73EABF26112823008F7315 /* Build configuration list for PBXNativeTarget "SocialifyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C73EAC026112823008F7315 /* Debug */,
+				5C73EAC126112823008F7315 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5C73EAC226112823008F7315 /* Build configuration list for PBXNativeTarget "SocialifyUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5C73EAC326112823008F7315 /* Debug */,
+				5C73EAC426112823008F7315 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5C30152826471B9A001A1FA5 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5C30152926471B9A001A1FA5 /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5C30152826471B9A001A1FA5 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+		5C3FE1A2264BD26000CC2E40 /* MessengerSdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MessengerSdk;
+		};
+		5CC3384D264604FA006F14CF /* FacebookSdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FacebookSdk;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 5C73EA8F26112822008F7315 /* Project object */;
+}

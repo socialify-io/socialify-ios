@@ -1,0 +1,51 @@
+/* 
+  Localizable.strings
+  Socialify
+
+  Created by Tomasz on 29/03/2021.
+  
+*/
+
+//ONBOARDING
+"onboarding.title" = "Welcome to Socialify";
+
+"onboarding.functionality.title" = "Functionality";
+"onboarding.functionality.content" = "All you favorite social media in one place.";
+
+"onboarding.storage.title" = "Save storage";
+"onboarding.storage.content" = "Save storage on your phone by using Socialify.";
+
+"onboarding.cross.platform.title" = "Cross platform";
+"onboarding.cross.platform.content" = "Available on iPhone. And on iPad. And on watch. On mac too.";
+
+"onboarding.continue" = "Continue";
+
+//ADD ACCOUNT
+"add_account.title" = "Choose an account type";
+
+//GLOBAL LOGIN STRINGS
+"login.title" = "Link account";
+"login.button" = "Log in";
+"login.singup" = "Don't have an account? Sing up";
+"login.password" = "Password";
+
+//LOGIN USING ...
+"login.facebook_login" = "Log in using Facebook";
+"login.google_login" = "Log in using Google";
+"login.twitter_login" = "Log in using Twitter";
+"login.apple_login" = "Log in using Apple";
+"login.ig_login" = "Log in using Instagram";
+
+//FACEBOOK LOGIN
+"fb_login.username" = "Email address or phone number";
+
+//TWITTER LOGIN
+"tw_login.username" = "Phone number, email or username";
+
+//INSTAGRAM LOGIN
+"ig_login.username" = "Phone number, email or username";
+
+//TIKTOK LOGIN
+"tt_login.username" = "Phone number, email or username";
+"tt_login.another_way" = "Log in using another way";
+"tt_login.another_way.verified_label" = "Verified method";

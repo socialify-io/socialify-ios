@@ -1,0 +1,200 @@
+{
+  "images" : [
+    {
+      "filename" : "socialify-logo-40.png",
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "20x20"
+    },
+    {
+      "filename" : "socialify-logo-60.png",
+      "idiom" : "iphone",
+      "scale" : "3x",
+      "size" : "20x20"
+    },
+    {
+      "filename" : "socialify-logo-58.png",
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "29x29"
+    },
+    {
+      "filename" : "socialify-logo-87.png",
+      "idiom" : "iphone",
+      "scale" : "3x",
+      "size" : "29x29"
+    },
+    {
+      "filename" : "socialify-logo-80.png",
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "40x40"
+    },
+    {
+      "filename" : "socialify-logo-120.png",
+      "idiom" : "iphone",
+      "scale" : "3x",
+      "size" : "40x40"
+    },
+    {
+      "filename" : "socialify-logo-121.png",
+      "idiom" : "iphone",
+      "scale" : "2x",
+      "size" : "60x60"
+    },
+    {
+      "filename" : "socialify-logo-180.png",
+      "idiom" : "iphone",
+      "scale" : "3x",
+      "size" : "60x60"
+    },
+    {
+      "filename" : "socialify-logo-20.png",
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "size" : "20x20"
+    },
+    {
+      "filename" : "socialify-logo-41.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "20x20"
+    },
+    {
+      "filename" : "socialify-logo-29.png",
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "size" : "29x29"
+    },
+    {
+      "filename" : "socialify-logo-59.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "29x29"
+    },
+    {
+      "filename" : "socialify-logo-42.png",
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "size" : "40x40"
+    },
+    {
+      "filename" : "socialify-logo-81.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "40x40"
+    },
+    {
+      "filename" : "socialify-logo-76.png",
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "size" : "76x76"
+    },
+    {
+      "filename" : "socialify-logo-152.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "76x76"
+    },
+    {
+      "filename" : "socialify-logo-167.png",
+      "idiom" : "ipad",
+      "scale" : "2x",
+      "size" : "83.5x83.5"
+    },
+    {
+      "filename" : "socialify-logo-1024.png",
+      "idiom" : "ios-marketing",
+      "scale" : "1x",
+      "size" : "1024x1024"
+    },
+    {
+      "filename" : "socialify-logo-48.png",
+      "idiom" : "watch",
+      "role" : "notificationCenter",
+      "scale" : "2x",
+      "size" : "24x24",
+      "subtype" : "38mm"
+    },
+    {
+      "filename" : "socialify-logo-55.png",
+      "idiom" : "watch",
+      "role" : "notificationCenter",
+      "scale" : "2x",
+      "size" : "27.5x27.5",
+      "subtype" : "42mm"
+    },
+    {
+      "filename" : "socialify-logo-61.png",
+      "idiom" : "watch",
+      "role" : "companionSettings",
+      "scale" : "2x",
+      "size" : "29x29"
+    },
+    {
+      "filename" : "socialify-logo-88.png",
+      "idiom" : "watch",
+      "role" : "companionSettings",
+      "scale" : "3x",
+      "size" : "29x29"
+    },
+    {
+      "filename" : "socialify-logo-82.png",
+      "idiom" : "watch",
+      "role" : "appLauncher",
+      "scale" : "2x",
+      "size" : "40x40",
+      "subtype" : "38mm"
+    },
+    {
+      "filename" : "socialify-logo-89.png",
+      "idiom" : "watch",
+      "role" : "appLauncher",
+      "scale" : "2x",
+      "size" : "44x44",
+      "subtype" : "40mm"
+    },
+    {
+      "filename" : "socialify-logo-100.png",
+      "idiom" : "watch",
+      "role" : "appLauncher",
+      "scale" : "2x",
+      "size" : "50x50",
+      "subtype" : "44mm"
+    },
+    {
+      "filename" : "socialify-logo-172.png",
+      "idiom" : "watch",
+      "role" : "quickLook",
+      "scale" : "2x",
+      "size" : "86x86",
+      "subtype" : "38mm"
+    },
+    {
+      "filename" : "socialify-logo-196.png",
+      "idiom" : "watch",
+      "role" : "quickLook",
+      "scale" : "2x",
+      "size" : "98x98",
+      "subtype" : "42mm"
+    },
+    {
+      "filename" : "socialify-logo-216.png",
+      "idiom" : "watch",
+      "role" : "quickLook",
+      "scale" : "2x",
+      "size" : "108x108",
+      "subtype" : "44mm"
+    },
+    {
+      "filename" : "socialify-logo-1025.png",
+      "idiom" : "watch-marketing",
+      "scale" : "1x",
+      "size" : "1024x1024"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
