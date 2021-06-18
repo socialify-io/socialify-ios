@@ -1,3 +1,3 @@
-# MessengerSdk
+# Messenger Sdk
 
-A description of this package.
+Sdk for Facebook Messenger written in Swift.

@@ -9,28 +9,22 @@ import Foundation
 import Combine
 import SwiftSoup
 
+@available(iOS 13.0, *)
 extension MessengerClient {
-    func _request(request: URLRequest, completion: @escaping (Result<Data, ConnectionError>) -> Void) {
+    func _request(request: URLRequest, completion: @escaping (Result<Data, MessengerError>) -> Void) {
         var request = request
         request.addValue("Socialify - MessengerSdk \(LIBRARY_VERSION)", forHTTPHeaderField: "User-Agent")
         session.dataTask(with: request) { (data, response, error) in
             guard let data = data else {
-                  if let error = error {
-                    completion(.failure(ConnectionError.wyjebaloSieWPizdu))
-                    return
+                  if let _ = error {
+                    completion(.failure(MessengerError.ConnectionError))
                   }
-
-                completion(.failure(ConnectionError.wyjebaloSieWPizdu))
+                
+                completion(.failure(MessengerError.ConnectionError))
                 return
                 }
-            
-            do {
-                completion(.success(data))
-                return
-            } catch {
-                completion(.failure(ConnectionError.wyjebaloSieWPizdu))
-            }
-            
+                
+            completion(.success(data))
         }.resume()
     }
 }

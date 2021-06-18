@@ -27,7 +27,7 @@ struct TikTokLoginFragment: View {
                 .background(cellBackground)
                 .cornerRadius(cornerRadius)
             
-            TextField("login.password", text: $password)
+            SecureField("login.password", text: $password)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .font(Font.body.weight(Font.Weight.medium))

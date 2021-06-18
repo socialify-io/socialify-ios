@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import TwitterSdk
 
 struct TwitterLoginFragment: View {
     @State private var login = ""
@@ -27,7 +28,7 @@ struct TwitterLoginFragment: View {
                 .background(cellBackground)
                 .cornerRadius(cornerRadius)
             
-            TextField("login.password", text: $password)
+            SecureField("login.password", text: $password)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
                 .font(Font.body.weight(Font.Weight.medium))
@@ -46,7 +47,8 @@ struct TwitterLoginFragment: View {
         Spacer()
         
         CustomButtonView(action: {
-            print("Dupa")
+            let client = TwitterClient()
+            client.login(email: login, password:password)
         }, title: "login.button")
     }
 }

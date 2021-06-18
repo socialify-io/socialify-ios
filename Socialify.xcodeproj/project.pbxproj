@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C2D1856267514E300D3EA04 /* TwitterSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 5C2D1855267514E300D3EA04 /* TwitterSdk */; };
 		5C30152A26471B9A001A1FA5 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 5C30152926471B9A001A1FA5 /* SwiftSoup */; };
 		5C3DD21B2613B34700B8E532 /* AddAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DD21A2613B34700B8E532 /* AddAccountView.swift */; };
 		5C3DD2242613B78F00B8E532 /* CustomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DD2232613B78F00B8E532 /* CustomButtonView.swift */; };
@@ -61,6 +62,7 @@
 		5C495BED261A78590004D538 /* InstagramLoginFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstagramLoginFragment.swift; sourceTree = "<group>"; };
 		5C495BF2261A78650004D538 /* TikTokLoginFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TikTokLoginFragment.swift; sourceTree = "<group>"; };
 		5C495BF8261A78760004D538 /* PinterestLoginFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinterestLoginFragment.swift; sourceTree = "<group>"; };
+		5C4F095C26690CC40080E5A7 /* TwitterSdk */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TwitterSdk; sourceTree = "<group>"; };
 		5C73EA9726112822008F7315 /* Socialify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Socialify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C73EA9A26112822008F7315 /* SocialifyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialifyApp.swift; sourceTree = "<group>"; };
 		5C73EA9C26112822008F7315 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				5CC3384E264604FA006F14CF /* FacebookSdk in Frameworks */,
 				5C30152A26471B9A001A1FA5 /* SwiftSoup in Frameworks */,
 				5C3FE1A3264BD26000CC2E40 /* MessengerSdk in Frameworks */,
+				5C2D1856267514E300D3EA04 /* TwitterSdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +250,7 @@
 		5C73EAC826112917008F7315 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				5C4F095C26690CC40080E5A7 /* TwitterSdk */,
 				5C3FE19B264BCBF900CC2E40 /* MessengerSdk */,
 				5CC338482645FF83006F14CF /* FacebookSdk */,
 			);
@@ -315,6 +319,7 @@
 				5CC3384D264604FA006F14CF /* FacebookSdk */,
 				5C30152926471B9A001A1FA5 /* SwiftSoup */,
 				5C3FE1A2264BD26000CC2E40 /* MessengerSdk */,
+				5C2D1855267514E300D3EA04 /* TwitterSdk */,
 			);
 			productName = Socialify;
 			productReference = 5C73EA9726112822008F7315 /* Socialify.app */;
@@ -791,6 +796,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5C2D1855267514E300D3EA04 /* TwitterSdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TwitterSdk;
+		};
 		5C30152926471B9A001A1FA5 /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5C30152826471B9A001A1FA5 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
