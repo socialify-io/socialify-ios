@@ -23,7 +23,7 @@ extension MessengerClient {
                 completion(.failure(MessengerError.ConnectionError))
                 return
                 }
-                
+            
             completion(.success(data))
         }.resume()
     }
