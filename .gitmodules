@@ -1,11 +1,11 @@
-[submodule "messenger-sdk"]
-  path = MessengerSdk
+[submodule "MessengerSdk"]
+  path = Modules/MessengerSdk
   url = git@github.com:socialify-io/messenger-sdk.git
 
-[submodule "facebook-sdk"]
-  path = FacebookSdk
+[submodule "FacebookSdk"]
+  path = Modules/FacebookSdk
   url = git@github.com:socialify-io/facebook-sdk.git
 
-[submodule "twitter-sdk"]
-  path = TwitterSdk
+[submodule "TwitterSdk"]
+  path = Modules/TwitterSdk
   url = git@github.com:socialify-io/twitter-sdk.git
