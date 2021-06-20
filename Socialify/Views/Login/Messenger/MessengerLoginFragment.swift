@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MessengerSdk
+import CoreData
 
 struct MessengerLoginFragment: View {
     @State private var login = ""

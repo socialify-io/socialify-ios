@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5C2B2AF1267FFA1F00D9E1D1 /* Moscapsule.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C2B2AEE267FF9FE00D9E1D1 /* Moscapsule.framework */; };
-		5C2B2AF2267FFA1F00D9E1D1 /* Moscapsule.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5C2B2AEE267FF9FE00D9E1D1 /* Moscapsule.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5C2B2AFA267FFDE200D9E1D1 /* FacebookSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 5C2B2AF9267FFDE200D9E1D1 /* FacebookSdk */; };
+		5C2B2AFD267FFE3400D9E1D1 /* MQTT in Frameworks */ = {isa = PBXBuildFile; productRef = 5C2B2AFC267FFE3400D9E1D1 /* MQTT */; };
 		5C2D1856267514E300D3EA04 /* TwitterSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 5C2D1855267514E300D3EA04 /* TwitterSdk */; };
 		5C30152A26471B9A001A1FA5 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 5C30152926471B9A001A1FA5 /* SwiftSoup */; };
 		5C3DD21B2613B34700B8E532 /* AddAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DD21A2613B34700B8E532 /* AddAccountView.swift */; };
@@ -33,24 +33,9 @@
 		5CADDB9C2611E72200F690D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C73EA9E26112823008F7315 /* Assets.xcassets */; };
 		5CADDBB92611F5A100F690D0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5CADDBBB2611F5A100F690D0 /* Localizable.strings */; };
 		5CB6ABFA267D381900D0CBEA /* MessengerSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 5CB6ABF9267D381900D0CBEA /* MessengerSdk */; };
-		5CC3384E264604FA006F14CF /* FacebookSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 5CC3384D264604FA006F14CF /* FacebookSdk */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		5C2B2AED267FF9FE00D9E1D1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5C2B2AD3267FF9FE00D9E1D1 /* Moscapsule.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 09CF6B131A21F78700A97383;
-			remoteInfo = Moscapsule;
-		};
-		5C2B2AEF267FF9FE00D9E1D1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5C2B2AD3267FF9FE00D9E1D1 /* Moscapsule.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 09CF6B1E1A21F78700A97383;
-			remoteInfo = MoscapsuleTests;
-		};
 		5C73EAA926112823008F7315 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5C73EA8F26112822008F7315 /* Project object */;
@@ -74,7 +59,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5C2B2AF2267FFA1F00D9E1D1 /* Moscapsule.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -82,56 +66,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		5C2B2AB3267FF9FE00D9E1D1 /* util_mosq.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = util_mosq.h; sourceTree = "<group>"; };
-		5C2B2AB4267FF9FE00D9E1D1 /* tls_mosq.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = tls_mosq.c; sourceTree = "<group>"; };
-		5C2B2AB5267FF9FE00D9E1D1 /* logging_mosq.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = logging_mosq.h; sourceTree = "<group>"; };
-		5C2B2AB6267FF9FE00D9E1D1 /* net_mosq.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = net_mosq.c; sourceTree = "<group>"; };
-		5C2B2AB7267FF9FE00D9E1D1 /* send_mosq.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = send_mosq.h; sourceTree = "<group>"; };
-		5C2B2AB8267FF9FE00D9E1D1 /* read_handle_shared.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = read_handle_shared.c; sourceTree = "<group>"; };
-		5C2B2AB9267FF9FE00D9E1D1 /* read_handle_client.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = read_handle_client.c; sourceTree = "<group>"; };
-		5C2B2ABA267FF9FE00D9E1D1 /* messages_mosq.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = messages_mosq.c; sourceTree = "<group>"; };
-		5C2B2ABB267FF9FE00D9E1D1 /* mosquitto_internal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mosquitto_internal.h; sourceTree = "<group>"; };
-		5C2B2ABC267FF9FE00D9E1D1 /* mosquitto.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mosquitto.h; sourceTree = "<group>"; };
-		5C2B2ABD267FF9FE00D9E1D1 /* read_handle.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = read_handle.c; sourceTree = "<group>"; };
-		5C2B2ABE267FF9FE00D9E1D1 /* will_mosq.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = will_mosq.c; sourceTree = "<group>"; };
-		5C2B2ABF267FF9FE00D9E1D1 /* time_mosq.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = time_mosq.c; sourceTree = "<group>"; };
-		5C2B2AC0267FF9FE00D9E1D1 /* socks_mosq.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = socks_mosq.h; sourceTree = "<group>"; };
-		5C2B2AC1267FF9FE00D9E1D1 /* memory_mosq.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = memory_mosq.h; sourceTree = "<group>"; };
-		5C2B2AC2267FF9FE00D9E1D1 /* tls_mosq.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tls_mosq.h; sourceTree = "<group>"; };
-		5C2B2AC3267FF9FE00D9E1D1 /* thread_mosq.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = thread_mosq.c; sourceTree = "<group>"; };
-		5C2B2AC4267FF9FE00D9E1D1 /* util_mosq.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = util_mosq.c; sourceTree = "<group>"; };
-		5C2B2AC5267FF9FE00D9E1D1 /* dummypthread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dummypthread.h; sourceTree = "<group>"; };
-		5C2B2AC6267FF9FE00D9E1D1 /* net_mosq.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = net_mosq.h; sourceTree = "<group>"; };
-		5C2B2AC7267FF9FE00D9E1D1 /* logging_mosq.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = logging_mosq.c; sourceTree = "<group>"; };
-		5C2B2AC8267FF9FE00D9E1D1 /* send_mosq.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = send_mosq.c; sourceTree = "<group>"; };
-		5C2B2AC9267FF9FE00D9E1D1 /* send_client_mosq.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = send_client_mosq.c; sourceTree = "<group>"; };
-		5C2B2ACA267FF9FE00D9E1D1 /* mosquitto.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mosquitto.c; sourceTree = "<group>"; };
-		5C2B2ACB267FF9FE00D9E1D1 /* mqtt3_protocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mqtt3_protocol.h; sourceTree = "<group>"; };
-		5C2B2ACC267FF9FE00D9E1D1 /* messages_mosq.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = messages_mosq.h; sourceTree = "<group>"; };
-		5C2B2ACD267FF9FE00D9E1D1 /* memory_mosq.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = memory_mosq.c; sourceTree = "<group>"; };
-		5C2B2ACE267FF9FE00D9E1D1 /* socks_mosq.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = socks_mosq.c; sourceTree = "<group>"; };
-		5C2B2ACF267FF9FE00D9E1D1 /* time_mosq.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = time_mosq.h; sourceTree = "<group>"; };
-		5C2B2AD0267FF9FE00D9E1D1 /* read_handle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = read_handle.h; sourceTree = "<group>"; };
-		5C2B2AD1267FF9FE00D9E1D1 /* srv_mosq.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = srv_mosq.c; sourceTree = "<group>"; };
-		5C2B2AD2267FF9FE00D9E1D1 /* will_mosq.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = will_mosq.h; sourceTree = "<group>"; };
-		5C2B2AD3267FF9FE00D9E1D1 /* Moscapsule.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Moscapsule.xcodeproj; sourceTree = "<group>"; };
-		5C2B2AD6267FF9FE00D9E1D1 /* .swift-version */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-version"; sourceTree = "<group>"; };
-		5C2B2AD7267FF9FE00D9E1D1 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		5C2B2AD9267FF9FE00D9E1D1 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
-		5C2B2ADA267FF9FE00D9E1D1 /* MosquittoCallbackBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MosquittoCallbackBridge.h; sourceTree = "<group>"; };
-		5C2B2ADB267FF9FE00D9E1D1 /* Moscapsule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Moscapsule.h; sourceTree = "<group>"; };
-		5C2B2ADC267FF9FE00D9E1D1 /* Moscapsule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Moscapsule.swift; sourceTree = "<group>"; };
-		5C2B2ADD267FF9FE00D9E1D1 /* MosquittoCallbackBridge.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MosquittoCallbackBridge.m; sourceTree = "<group>"; };
-		5C2B2ADE267FF9FE00D9E1D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5C2B2AE0267FF9FE00D9E1D1 /* MoscapsuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoscapsuleTests.swift; sourceTree = "<group>"; };
-		5C2B2AE1267FF9FE00D9E1D1 /* cert.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = cert.bundle; sourceTree = "<group>"; };
-		5C2B2AE2267FF9FE00D9E1D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5C2B2AE3267FF9FE00D9E1D1 /* Moscapsule.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = Moscapsule.podspec; sourceTree = "<group>"; };
-		5C2B2AE4267FF9FE00D9E1D1 /* .gitmodules */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitmodules; sourceTree = "<group>"; };
-		5C2B2AE5267FF9FE00D9E1D1 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		5C2B2AE6267FF9FE00D9E1D1 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		5C2B2AE9267FF9FE00D9E1D1 /* .gitattributes */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitattributes; sourceTree = "<group>"; };
-		5C2B2AEA267FF9FE00D9E1D1 /* download_mosquitto.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = download_mosquitto.sh; sourceTree = "<group>"; };
 		5C3DD21A2613B34700B8E532 /* AddAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountView.swift; sourceTree = "<group>"; };
 		5C3DD2232613B78F00B8E532 /* CustomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonView.swift; sourceTree = "<group>"; };
 		5C3DD2292613C81700B8E532 /* MediaItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemView.swift; sourceTree = "<group>"; };
@@ -170,11 +104,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C2B2AF1267FFA1F00D9E1D1 /* Moscapsule.framework in Frameworks */,
-				5CC3384E264604FA006F14CF /* FacebookSdk in Frameworks */,
 				5C30152A26471B9A001A1FA5 /* SwiftSoup in Frameworks */,
 				5C2D1856267514E300D3EA04 /* TwitterSdk in Frameworks */,
 				5CB6ABFA267D381900D0CBEA /* MessengerSdk in Frameworks */,
+				5C2B2AFA267FFDE200D9E1D1 /* FacebookSdk in Frameworks */,
+				5C2B2AFD267FFE3400D9E1D1 /* MQTT in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,120 +129,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5C2B2AB0267FF9FE00D9E1D1 /* Moscapsule */ = {
-			isa = PBXGroup;
-			children = (
-				5C2B2AB1267FF9FE00D9E1D1 /* mosquitto */,
-				5C2B2AD3267FF9FE00D9E1D1 /* Moscapsule.xcodeproj */,
-				5C2B2AD6267FF9FE00D9E1D1 /* .swift-version */,
-				5C2B2AD7267FF9FE00D9E1D1 /* LICENSE */,
-				5C2B2AD8267FF9FE00D9E1D1 /* Moscapsule */,
-				5C2B2ADF267FF9FE00D9E1D1 /* MoscapsuleTests */,
-				5C2B2AE3267FF9FE00D9E1D1 /* Moscapsule.podspec */,
-				5C2B2AE4267FF9FE00D9E1D1 /* .gitmodules */,
-				5C2B2AE5267FF9FE00D9E1D1 /* README.md */,
-				5C2B2AE6267FF9FE00D9E1D1 /* .gitignore */,
-				5C2B2AE7267FF9FE00D9E1D1 /* submodules */,
-				5C2B2AE9267FF9FE00D9E1D1 /* .gitattributes */,
-				5C2B2AEA267FF9FE00D9E1D1 /* download_mosquitto.sh */,
-			);
-			path = Moscapsule;
-			sourceTree = "<group>";
-		};
-		5C2B2AB1267FF9FE00D9E1D1 /* mosquitto */ = {
-			isa = PBXGroup;
-			children = (
-				5C2B2AB2267FF9FE00D9E1D1 /* lib */,
-			);
-			path = mosquitto;
-			sourceTree = "<group>";
-		};
-		5C2B2AB2267FF9FE00D9E1D1 /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				5C2B2AB3267FF9FE00D9E1D1 /* util_mosq.h */,
-				5C2B2AB4267FF9FE00D9E1D1 /* tls_mosq.c */,
-				5C2B2AB5267FF9FE00D9E1D1 /* logging_mosq.h */,
-				5C2B2AB6267FF9FE00D9E1D1 /* net_mosq.c */,
-				5C2B2AB7267FF9FE00D9E1D1 /* send_mosq.h */,
-				5C2B2AB8267FF9FE00D9E1D1 /* read_handle_shared.c */,
-				5C2B2AB9267FF9FE00D9E1D1 /* read_handle_client.c */,
-				5C2B2ABA267FF9FE00D9E1D1 /* messages_mosq.c */,
-				5C2B2ABB267FF9FE00D9E1D1 /* mosquitto_internal.h */,
-				5C2B2ABC267FF9FE00D9E1D1 /* mosquitto.h */,
-				5C2B2ABD267FF9FE00D9E1D1 /* read_handle.c */,
-				5C2B2ABE267FF9FE00D9E1D1 /* will_mosq.c */,
-				5C2B2ABF267FF9FE00D9E1D1 /* time_mosq.c */,
-				5C2B2AC0267FF9FE00D9E1D1 /* socks_mosq.h */,
-				5C2B2AC1267FF9FE00D9E1D1 /* memory_mosq.h */,
-				5C2B2AC2267FF9FE00D9E1D1 /* tls_mosq.h */,
-				5C2B2AC3267FF9FE00D9E1D1 /* thread_mosq.c */,
-				5C2B2AC4267FF9FE00D9E1D1 /* util_mosq.c */,
-				5C2B2AC5267FF9FE00D9E1D1 /* dummypthread.h */,
-				5C2B2AC6267FF9FE00D9E1D1 /* net_mosq.h */,
-				5C2B2AC7267FF9FE00D9E1D1 /* logging_mosq.c */,
-				5C2B2AC8267FF9FE00D9E1D1 /* send_mosq.c */,
-				5C2B2AC9267FF9FE00D9E1D1 /* send_client_mosq.c */,
-				5C2B2ACA267FF9FE00D9E1D1 /* mosquitto.c */,
-				5C2B2ACB267FF9FE00D9E1D1 /* mqtt3_protocol.h */,
-				5C2B2ACC267FF9FE00D9E1D1 /* messages_mosq.h */,
-				5C2B2ACD267FF9FE00D9E1D1 /* memory_mosq.c */,
-				5C2B2ACE267FF9FE00D9E1D1 /* socks_mosq.c */,
-				5C2B2ACF267FF9FE00D9E1D1 /* time_mosq.h */,
-				5C2B2AD0267FF9FE00D9E1D1 /* read_handle.h */,
-				5C2B2AD1267FF9FE00D9E1D1 /* srv_mosq.c */,
-				5C2B2AD2267FF9FE00D9E1D1 /* will_mosq.h */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		5C2B2AD4267FF9FE00D9E1D1 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				5C2B2AEE267FF9FE00D9E1D1 /* Moscapsule.framework */,
-				5C2B2AF0267FF9FE00D9E1D1 /* MoscapsuleTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		5C2B2AD8267FF9FE00D9E1D1 /* Moscapsule */ = {
-			isa = PBXGroup;
-			children = (
-				5C2B2AD9267FF9FE00D9E1D1 /* config.h */,
-				5C2B2ADA267FF9FE00D9E1D1 /* MosquittoCallbackBridge.h */,
-				5C2B2ADB267FF9FE00D9E1D1 /* Moscapsule.h */,
-				5C2B2ADC267FF9FE00D9E1D1 /* Moscapsule.swift */,
-				5C2B2ADD267FF9FE00D9E1D1 /* MosquittoCallbackBridge.m */,
-				5C2B2ADE267FF9FE00D9E1D1 /* Info.plist */,
-			);
-			path = Moscapsule;
-			sourceTree = "<group>";
-		};
-		5C2B2ADF267FF9FE00D9E1D1 /* MoscapsuleTests */ = {
-			isa = PBXGroup;
-			children = (
-				5C2B2AE0267FF9FE00D9E1D1 /* MoscapsuleTests.swift */,
-				5C2B2AE1267FF9FE00D9E1D1 /* cert.bundle */,
-				5C2B2AE2267FF9FE00D9E1D1 /* Info.plist */,
-			);
-			path = MoscapsuleTests;
-			sourceTree = "<group>";
-		};
-		5C2B2AE7267FF9FE00D9E1D1 /* submodules */ = {
-			isa = PBXGroup;
-			children = (
-				5C2B2AE8267FF9FE00D9E1D1 /* OpenSSL */,
-			);
-			path = submodules;
-			sourceTree = "<group>";
-		};
-		5C2B2AE8267FF9FE00D9E1D1 /* OpenSSL */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = OpenSSL;
-			sourceTree = "<group>";
-		};
 		5C3DD2192613B33600B8E532 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -448,7 +268,6 @@
 		5C73EAC826112917008F7315 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				5C2B2AB0267FF9FE00D9E1D1 /* Moscapsule */,
 				5CB6ABF8267D353300D0CBEA /* MessengerSdk */,
 				5C4F095C26690CC40080E5A7 /* TwitterSdk */,
 				5CC338482645FF83006F14CF /* FacebookSdk */,
@@ -516,10 +335,11 @@
 			);
 			name = Socialify;
 			packageProductDependencies = (
-				5CC3384D264604FA006F14CF /* FacebookSdk */,
 				5C30152926471B9A001A1FA5 /* SwiftSoup */,
 				5C2D1855267514E300D3EA04 /* TwitterSdk */,
 				5CB6ABF9267D381900D0CBEA /* MessengerSdk */,
+				5C2B2AF9267FFDE200D9E1D1 /* FacebookSdk */,
+				5C2B2AFC267FFE3400D9E1D1 /* MQTT */,
 			);
 			productName = Socialify;
 			productReference = 5C73EA9726112822008F7315 /* Socialify.app */;
@@ -595,15 +415,10 @@
 			mainGroup = 5C73EA8E26112822008F7315;
 			packageReferences = (
 				5C30152826471B9A001A1FA5 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				5C2B2AFB267FFE3400D9E1D1 /* XCRemoteSwiftPackageReference "swift-mqtt" */,
 			);
 			productRefGroup = 5C73EA9826112822008F7315 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 5C2B2AD4267FF9FE00D9E1D1 /* Products */;
-					ProjectRef = 5C2B2AD3267FF9FE00D9E1D1 /* Moscapsule.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				5C73EA9626112822008F7315 /* Socialify */,
@@ -612,23 +427,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		5C2B2AEE267FF9FE00D9E1D1 /* Moscapsule.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Moscapsule.framework;
-			remoteRef = 5C2B2AED267FF9FE00D9E1D1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		5C2B2AF0267FF9FE00D9E1D1 /* MoscapsuleTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = MoscapsuleTests.xctest;
-			remoteRef = 5C2B2AEF267FF9FE00D9E1D1 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		5C73EA9526112822008F7315 /* Resources */ = {
@@ -1009,6 +807,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5C2B2AFB267FFE3400D9E1D1 /* XCRemoteSwiftPackageReference "swift-mqtt" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/matsune/swift-mqtt";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		5C30152826471B9A001A1FA5 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
@@ -1020,6 +826,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5C2B2AF9267FFDE200D9E1D1 /* FacebookSdk */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FacebookSdk;
+		};
+		5C2B2AFC267FFE3400D9E1D1 /* MQTT */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5C2B2AFB267FFE3400D9E1D1 /* XCRemoteSwiftPackageReference "swift-mqtt" */;
+			productName = MQTT;
+		};
 		5C2D1855267514E300D3EA04 /* TwitterSdk */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = TwitterSdk;
@@ -1032,10 +847,6 @@
 		5CB6ABF9267D381900D0CBEA /* MessengerSdk */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MessengerSdk;
-		};
-		5CC3384D264604FA006F14CF /* FacebookSdk */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = FacebookSdk;
 		};
 /* End XCSwiftPackageProductDependency section */
 
