@@ -17,6 +17,8 @@ struct FacebookLoginFragment: View {
     let cornerRadius: CGFloat
     let cellBackground: Color
     
+    @State private var buttonText = "login.button"
+    
     var body: some View {
         VStack {
             TextField("fb_login.username", text: $login)
@@ -47,10 +49,23 @@ struct FacebookLoginFragment: View {
         Spacer()
         
         CustomButtonView(action: {
+            buttonText = "Logging in..."
             let client = FacebookClient()
-            client.login(email: login, password: password)
-        }, title: "login.button")
-        
+            client.login(email: login, password: password) { value in
+                switch value {
+                case .success(let value):
+                    if(value == true) {
+                        buttonText = "Logged in"
+                    } else {
+                        buttonText = "Not logged in"
+                    }
+                    
+                case .failure(let error):
+                    print(error)
+                    buttonText = "\(error)"
+                }
+            }
+        }, title: buttonText)
     }
 }
 
