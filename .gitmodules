@@ -9,3 +9,7 @@
 [submodule "TwitterSdk"]
   path = Modules/TwitterSdk
   url = git@github.com:socialify-io/twitter-sdk.git
+  
+[submodule "Moscapsule"]
+  path = Modules/Moscapsule
+  url = git@github.com:flightonary/Moscapsule.git
