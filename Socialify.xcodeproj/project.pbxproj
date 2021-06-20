@@ -27,6 +27,7 @@
 		5C73EAD0261129E1008F7315 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EACF261129E1008F7315 /* OnboardingView.swift */; };
 		5C7D560D2641FB6A00B518C9 /* TikTokAnotherWayFragment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7D560C2641FB6A00B518C9 /* TikTokAnotherWayFragment.swift */; };
 		5C7D56122642010100B518C9 /* LoginWithOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7D56112642010100B518C9 /* LoginWithOptionView.swift */; };
+		5C82F52F267FD60100C43D8F /* accounts.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5C82F52D267FD60100C43D8F /* accounts.xcdatamodeld */; };
 		5CADDB9C2611E72200F690D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C73EA9E26112823008F7315 /* Assets.xcassets */; };
 		5CADDBB92611F5A100F690D0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5CADDBBB2611F5A100F690D0 /* Localizable.strings */; };
 		5CB6ABFA267D381900D0CBEA /* MessengerSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 5CB6ABF9267D381900D0CBEA /* MessengerSdk */; };
@@ -77,6 +78,7 @@
 		5C73EACF261129E1008F7315 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		5C7D560C2641FB6A00B518C9 /* TikTokAnotherWayFragment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TikTokAnotherWayFragment.swift; sourceTree = "<group>"; };
 		5C7D56112642010100B518C9 /* LoginWithOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithOptionView.swift; sourceTree = "<group>"; };
+		5C82F52E267FD60100C43D8F /* accounts.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = accounts.xcdatamodel; sourceTree = "<group>"; };
 		5CADDBBA2611F5A100F690D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5CADDBBF2611F5DB00F690D0 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5CB6ABF8267D353300D0CBEA /* MessengerSdk */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MessengerSdk; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				5C73EA9E26112823008F7315 /* Assets.xcassets */,
 				5C73EAA326112823008F7315 /* Info.plist */,
 				5C73EAA026112823008F7315 /* Preview Content */,
+				5C82F52D267FD60100C43D8F /* accounts.xcdatamodeld */,
 			);
 			path = Socialify;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 				5C495BDD261A76900004D538 /* TwitterLoginFragment.swift in Sources */,
 				5C495BEE261A78590004D538 /* InstagramLoginFragment.swift in Sources */,
 				5C3FE186264BCA1000CC2E40 /* MessengerLoginFragment.swift in Sources */,
+				5C82F52F267FD60100C43D8F /* accounts.xcdatamodeld in Sources */,
 				5C73EA9B26112822008F7315 /* SocialifyApp.swift in Sources */,
 				5C7D560D2641FB6A00B518C9 /* TikTokAnotherWayFragment.swift in Sources */,
 			);
@@ -814,6 +818,19 @@
 			productName = FacebookSdk;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		5C82F52D267FD60100C43D8F /* accounts.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				5C82F52E267FD60100C43D8F /* accounts.xcdatamodel */,
+			);
+			currentVersion = 5C82F52E267FD60100C43D8F /* accounts.xcdatamodel */;
+			path = accounts.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 5C73EA8F26112822008F7315 /* Project object */;
 }
