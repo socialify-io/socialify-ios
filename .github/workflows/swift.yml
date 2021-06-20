@@ -24,8 +24,7 @@ jobs:
       
     - name: Resolve package dependencies
       run: xcodebuild -resolvePackageDependencies
-      run: git submodule update --init --recursive
-   
+
     - name: Clear cache
       run: rm -rf ~/Library/Developer/Xcode/DerivedData/ModuleCache
     
