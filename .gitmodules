@@ -1,0 +1,11 @@
+[submodule "messenger-sdk"]
+  path = project
+  url = /Modules/MessengerSdk/messenger-sdk.git
+
+[submodule "facebook-sdk"]
+  path = project
+  url = /Modules/FacebookSdk/facebook-sdk.git
+
+[submodule "twitter-sdk"]
+  path = project
+  url = /Modules/TwitterSdk/twitter-sdk.git
