@@ -5,9 +5,6 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-    
-variables:
-  GIT_SUBMODULE_STRATEGY: recursive
 
 jobs:
   build:
@@ -15,6 +12,11 @@ jobs:
     runs-on: macos-latest
 
     steps:
+    - name: Checkout repository and submodules
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+
     - uses: actions/checkout@v2
     - name: Select Xcode
       run: sudo xcode-select -switch /Applications/Xcode_12.4.app
