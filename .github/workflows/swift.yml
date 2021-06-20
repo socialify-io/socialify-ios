@@ -5,6 +5,9 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+    
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
 
 jobs:
   build:
@@ -21,7 +24,7 @@ jobs:
       
     - name: Resolve package dependencies
       run: xcodebuild -resolvePackageDependencies
-   
+
     - name: Clear cache
       run: rm -rf ~/Library/Developer/Xcode/DerivedData/ModuleCache
     
