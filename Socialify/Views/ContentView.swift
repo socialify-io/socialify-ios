@@ -8,9 +8,30 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     var body: some View {
-        Text("Hello, Socialify!")
-            .padding()
+        VStack{
+            ScrollView {
+                FacebookItemView(icon: "Facebook")
+                FacebookItemView(icon: "Facebook")
+                FacebookItemView(icon: "Facebook")
+                FacebookItemView(icon: "Facebook")
+            }.padding()
+        }.toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink(destination: AccountManagerView()) {
+                    Image(systemName: "person.circle")
+                }
+            }
+            
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: { /*showLoginModal = true*/ }) {
+                    Image(systemName: "magnifyingglass")
+                }
+            }
+        }
+        .navigationBarTitle("Homepage", displayMode: .inline)
+        .background(Color("BackgroundColor"))//.ignoresSafeArea(.all))
     }
 }
 

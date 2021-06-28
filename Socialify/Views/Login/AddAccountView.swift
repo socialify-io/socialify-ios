@@ -52,12 +52,7 @@ struct AddAccountView: View {
     }
     
     var body: some View {
-        NavigationView {
-            ChildAddAccountView()
-                .navigationBarTitle(Text("Back"))
-                .navigationBarHidden(true)
-                .background(Color("BackgroundColor").edgesIgnoringSafeArea(.all))
-        }
+        ChildAddAccountView()
     }
 }
 

@@ -54,7 +54,11 @@ struct MessengerLoginFragment: View {
             client.login(email: login, password: password) { value in
                 switch value {
                 case .success(let value):
-                    buttonText = value
+                    if(value == true) {
+                        buttonText = "Logged in"
+                    } else {
+                        buttonText = "Not logged in"
+                    }
                     
                 case .failure(let error):
                     print(error)

@@ -76,7 +76,7 @@ struct LoginView: View {
     }
 }
 
-struct LoginViewView_Previews: PreviewProvider {
+struct LoginViewPreviews: PreviewProvider {
     static var previews: some View {
         LoginView(icon: "Facebook")
     }
