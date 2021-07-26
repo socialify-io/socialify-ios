@@ -6,7 +6,7 @@
   
 */
 
-//ONBOARDING
+// ONBOARDING
 "onboarding.title" = "Witaj w Socialify";
 
 "onboarding.functionality.title" = "Funkcjonalność";
@@ -20,32 +20,37 @@
 
 "onboarding.continue" = "Kontynuuj";
 
-//ADD ACCOUNT
+// ADD ACCOUNT
 "add_account.title" = "Wybierz typ konta";
 
-//GLOBAL LOGIN STRINGS
-"login.title" = "Połącz konto";
+// GLOBAL LOGIN STRINGS
+"login.title" = "Zaloguj się";
+"login.subtitle" = "za pomocą twojego konta Socialify";
 "login.button" = "Zaloguj";
-"login.singup" = "Nie masz konta? Zarejestruj się";
+"login.singup" = "Nie masz konta? Stwórz je!";
 "login.password" = "Hasło";
 
-//LOGIN USING ...
+// LOGIN USING ...
 "login.facebook_login" = "Zaloguj się za pomocą Facebook'a";
 "login.google_login" = "Zaloguj się za pomocą Google'a";
 "login.twitter_login" = "Zaloguj się za pomocą Twitter'a";
 "login.apple_login" = "Zaloguj się za pomocą Apple'a";
 "login.ig_login" = "Zaloguj się za pomocą Instagram'a";
 
-//FACEBOOK LOGIN
+
+// SOCIALIFY LOGIN
+"socialify_login.username" = "Nazwa użytkownika";
+
+// FACEBOOK LOGIN
 "fb_login.username" = "Adres email lub numer telefonu";
 
-//TWITTER LOGIN
+// TWITTER LOGIN
 "tw_login.username" = "Numer telefonu, email lub login";
 
-//INSTAGRAM LOGIN
+// INSTAGRAM LOGIN
 "ig_login.username" = "Numer telefonu, email lub login";
 
-//TIKTOK LOGIN
+// TIKTOK LOGIN
 "tt_login.username" = "Numer telefonu, email lub login";
 "tt_login.another_way" = "Zaloguj się w inny sposób";
 "tt_login.another_way.verified_label" = "Zweryfikowany sposób";

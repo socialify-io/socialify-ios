@@ -31,7 +31,7 @@ struct AccountManagerView: View {
                 .sheet(isPresented: $showLoginModal, onDismiss: {
                     }) {
                     NavigationView {
-                        AddAccountView()
+                        LoginView()
                             .navigationBarTitle(Text("Back"))
                             .navigationBarHidden(true)
                             .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.bottom)

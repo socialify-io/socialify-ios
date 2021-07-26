@@ -13,64 +13,81 @@ struct ChildLoginView: View {
     let cornerRadius: CGFloat = 12
     let cellBackground: Color = Color("LoginInput")
     
-    var icon: String
+    @State private var login = ""
+    @State private var password = ""
+    
+    @State private var buttonText = "login.button"
     
     var body: some View {
         VStack {
             Spacer()
+            
             VStack {
-                HStack {
-                    Image(icon)
-                        .resizable()
-                        .cornerRadius(8)
-                        .frame(width: 60, height: 60)
-                        .padding()
-                    
-                    Image(systemName: "link")
-                        .resizable()
-                        .frame(width: 30, height: 30)
-                        .foregroundColor(Color.accentColor)
-                    
-                    Image("ConnectionIcon")
-                        .resizable()
-                        .cornerRadius(8)
-                        .frame(width: 60, height: 60)
-                        .padding()
-                }
+                Image("LaunchIcon")
+                    .renderingMode(.template)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 160)
+                    .foregroundColor(.accentColor)
+                    .padding(.bottom, -40)
                 
                 Text("login.title")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
-            }
+                    .padding(.bottom, 2)
+                
+                Text("login.subtitle")
+                    .font(.title3)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.secondary)
+                
+            }.padding(.top, -40)
             
             Spacer()
+            Spacer()
             
-            switch(icon) {
-            case "Facebook":
-                FacebookLoginFragment(cellHeight: cellHeight, cornerRadius: cornerRadius, cellBackground: cellBackground)
-            case "Messenger":
-                MessengerLoginFragment(cellHeight: cellHeight, cornerRadius: cornerRadius, cellBackground: cellBackground)
-            case "Twitter":
-                TwitterLoginFragment(cellHeight: cellHeight, cornerRadius: cornerRadius, cellBackground: cellBackground)
-            case "Instagram":
-                InstagramLoginFragment(cellHeight: cellHeight, cornerRadius: cornerRadius, cellBackground: cellBackground)
-            case "TikTok":
-                TikTokLoginFragment(cellHeight: cellHeight, cornerRadius: cornerRadius, cellBackground: cellBackground)
-            case "Pinterest":
-                PinterestLoginFragment(cellHeight: cellHeight, cornerRadius: cornerRadius, cellBackground: cellBackground)
-            default:
-                Text("Cuś nie pykło")
-            }
+            VStack {
+                TextField("socialify_login.username", text: $login)
+                    .autocapitalization(.none)
+                    .font(Font.body.weight(Font.Weight.medium))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                    .frame(height: cellHeight)
+                    .background(cellBackground)
+                    .cornerRadius(cornerRadius)
+                
+                SecureField("login.password", text: $password)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .font(Font.body.weight(Font.Weight.medium))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                    .frame(height: cellHeight)
+                    .background(cellBackground)
+                    .cornerRadius(cornerRadius)
+                
+                NavigationLink("login.singup", destination: LoginView())
+                    .foregroundColor(Color.accentColor)
+                    .padding()
+                
+            }.padding(.bottom, 60)
+            
+            Spacer()
+            Spacer()
+            
+            CustomButtonView(action: {
+                print("Logging to Socialify...")
+            }, title: buttonText)
+            .padding(.bottom)
+            
         }.padding()
     }
 }
 
 struct LoginView: View {
-    var icon: String
-    
     var body: some View {
-        ChildLoginView(icon: icon)
+        ChildLoginView()
             .navigationBarTitle(Text(""), displayMode: .inline)
             .background(Color("BackgroundColor").edgesIgnoringSafeArea(.all))
     }
@@ -78,6 +95,6 @@ struct LoginView: View {
 
 struct LoginViewPreviews: PreviewProvider {
     static var previews: some View {
-        LoginView(icon: "Facebook")
+        LoginView()
     }
 }

@@ -35,7 +35,7 @@ struct SocialifyApp: App {
                     }
                 } else {
                     NavigationView {
-                        AddAccountView()
+                        LoginView()
                             .navigationBarTitle(Text("Back"))
                             .navigationBarHidden(true)
                             .background(Color("BackgroundColor").ignoresSafeArea(.all))
