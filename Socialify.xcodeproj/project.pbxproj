@@ -3,12 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		5C0465102687E868006D3126 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C04650F2687E868006D3126 /* NavigationBarView.swift */; };
-		5C2B2AFA267FFDE200D9E1D1 /* FacebookSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 5C2B2AF9267FFDE200D9E1D1 /* FacebookSdk */; };
 		5C33AB8D2689D16600640F1C /* FacebookItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C33AB8C2689D16600640F1C /* FacebookItemView.swift */; };
 		5C3DD2242613B78F00B8E532 /* CustomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DD2232613B78F00B8E532 /* CustomButtonView.swift */; };
 		5C3DD22A2613C81700B8E532 /* MediaItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DD2292613C81700B8E532 /* MediaItemView.swift */; };
@@ -92,7 +91,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C2B2AFA267FFDE200D9E1D1 /* FacebookSdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,7 +288,6 @@
 			);
 			name = Socialify;
 			packageProductDependencies = (
-				5C2B2AF9267FFDE200D9E1D1 /* FacebookSdk */,
 			);
 			productName = Socialify;
 			productReference = 5C73EA9726112822008F7315 /* Socialify.app */;
@@ -751,13 +748,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		5C2B2AF9267FFDE200D9E1D1 /* FacebookSdk */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = FacebookSdk;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		5C82F52D267FD60100C43D8F /* accounts.xcdatamodeld */ = {
