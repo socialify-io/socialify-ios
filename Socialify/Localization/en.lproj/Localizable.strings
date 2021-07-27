@@ -33,6 +33,7 @@
 // REGISTER
 "register.title" = "Create";
 "register.subtitle" = "your Socialify account";
+"register.repeat_password" = "Repeat password";
 
 // LOGIN USING ...
 "login.facebook_login" = "Log in using Facebook";

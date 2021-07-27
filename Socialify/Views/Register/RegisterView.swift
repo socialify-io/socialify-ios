@@ -15,6 +15,7 @@ struct RegisterView: View {
     
     @State private var login = ""
     @State private var password = ""
+    @State private var repeatedPassword = ""
     
     @State private var buttonText = "register.title"
     
@@ -59,6 +60,16 @@ struct RegisterView: View {
                         .cornerRadius(cornerRadius)
                     
                     SecureField("login.password", text: $password)
+                        .autocapitalization(.none)
+                        .disableAutocorrection(true)
+                        .font(Font.body.weight(Font.Weight.medium))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                        .frame(height: cellHeight)
+                        .background(cellBackground)
+                        .cornerRadius(cornerRadius)
+                    
+                    SecureField("register.repeat_password", text: $repeatedPassword)
                         .autocapitalization(.none)
                         .disableAutocorrection(true)
                         .font(Font.body.weight(Font.Weight.medium))

@@ -40,6 +40,7 @@
 // REGISTER
 "register.title" = "Stwórz";
 "register.subtitle" = "swoje konto Socialify";
+"register.repeat_password" = "Powtórz hasło";
 
 // SOCIALIFY LOGIN
 "socialify_login.username" = "Nazwa użytkownika";

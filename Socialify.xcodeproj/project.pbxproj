@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		5C0465102687E868006D3126 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C04650F2687E868006D3126 /* NavigationBarView.swift */; };
 		5C2B2AFA267FFDE200D9E1D1 /* FacebookSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 5C2B2AF9267FFDE200D9E1D1 /* FacebookSdk */; };
-		5C2B2AFD267FFE3400D9E1D1 /* MQTT in Frameworks */ = {isa = PBXBuildFile; productRef = 5C2B2AFC267FFE3400D9E1D1 /* MQTT */; };
-		5C2D1856267514E300D3EA04 /* TwitterSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 5C2D1855267514E300D3EA04 /* TwitterSdk */; };
-		5C30152A26471B9A001A1FA5 /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 5C30152926471B9A001A1FA5 /* SwiftSoup */; };
 		5C33AB8D2689D16600640F1C /* FacebookItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C33AB8C2689D16600640F1C /* FacebookItemView.swift */; };
 		5C3DD2242613B78F00B8E532 /* CustomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DD2232613B78F00B8E532 /* CustomButtonView.swift */; };
 		5C3DD22A2613C81700B8E532 /* MediaItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DD2292613C81700B8E532 /* MediaItemView.swift */; };
@@ -29,7 +26,6 @@
 		5C82F52F267FD60100C43D8F /* accounts.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5C82F52D267FD60100C43D8F /* accounts.xcdatamodeld */; };
 		5CADDB9C2611E72200F690D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C73EA9E26112823008F7315 /* Assets.xcassets */; };
 		5CADDBB92611F5A100F690D0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5CADDBBB2611F5A100F690D0 /* Localizable.strings */; };
-		5CB6ABFA267D381900D0CBEA /* MessengerSdk in Frameworks */ = {isa = PBXBuildFile; productRef = 5CB6ABF9267D381900D0CBEA /* MessengerSdk */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,7 +68,6 @@
 		5C495BC6261A72100004D538 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		5C4AC87726AF760E005E7027 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		5C4AC88126AF8EFB005E7027 /* SocialifySdk */ = {isa = PBXFileReference; lastKnownFileType = text; path = SocialifySdk; sourceTree = SOURCE_ROOT; };
-		5C4F095C26690CC40080E5A7 /* TwitterSdk */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TwitterSdk; sourceTree = "<group>"; };
 		5C73EA9726112822008F7315 /* Socialify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Socialify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C73EA9A26112822008F7315 /* SocialifyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialifyApp.swift; sourceTree = "<group>"; };
 		5C73EA9C26112822008F7315 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -90,8 +85,6 @@
 		5C82F52E267FD60100C43D8F /* accounts.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = accounts.xcdatamodel; sourceTree = "<group>"; };
 		5CADDBBA2611F5A100F690D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5CADDBBF2611F5DB00F690D0 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
-		5CB6ABF8267D353300D0CBEA /* MessengerSdk */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MessengerSdk; sourceTree = "<group>"; };
-		5CC338482645FF83006F14CF /* FacebookSdk */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FacebookSdk; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,11 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C30152A26471B9A001A1FA5 /* SwiftSoup in Frameworks */,
-				5C2D1856267514E300D3EA04 /* TwitterSdk in Frameworks */,
-				5CB6ABFA267D381900D0CBEA /* MessengerSdk in Frameworks */,
 				5C2B2AFA267FFDE200D9E1D1 /* FacebookSdk in Frameworks */,
-				5C2B2AFD267FFE3400D9E1D1 /* MQTT in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,9 +223,6 @@
 			isa = PBXGroup;
 			children = (
 				5C4AC88126AF8EFB005E7027 /* SocialifySdk */,
-				5CB6ABF8267D353300D0CBEA /* MessengerSdk */,
-				5C4F095C26690CC40080E5A7 /* TwitterSdk */,
-				5CC338482645FF83006F14CF /* FacebookSdk */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -304,11 +290,7 @@
 			);
 			name = Socialify;
 			packageProductDependencies = (
-				5C30152926471B9A001A1FA5 /* SwiftSoup */,
-				5C2D1855267514E300D3EA04 /* TwitterSdk */,
-				5CB6ABF9267D381900D0CBEA /* MessengerSdk */,
 				5C2B2AF9267FFDE200D9E1D1 /* FacebookSdk */,
-				5C2B2AFC267FFE3400D9E1D1 /* MQTT */,
 			);
 			productName = Socialify;
 			productReference = 5C73EA9726112822008F7315 /* Socialify.app */;
@@ -383,8 +365,6 @@
 			);
 			mainGroup = 5C73EA8E26112822008F7315;
 			packageReferences = (
-				5C30152826471B9A001A1FA5 /* XCRemoteSwiftPackageReference "SwiftSoup" */,
-				5C2B2AFB267FFE3400D9E1D1 /* XCRemoteSwiftPackageReference "swift-mqtt" */,
 			);
 			productRefGroup = 5C73EA9826112822008F7315 /* Products */;
 			projectDirPath = "";
@@ -772,47 +752,10 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		5C2B2AFB267FFE3400D9E1D1 /* XCRemoteSwiftPackageReference "swift-mqtt" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/matsune/swift-mqtt";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-		5C30152826471B9A001A1FA5 /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/scinfu/SwiftSoup";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.3.2;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
 		5C2B2AF9267FFDE200D9E1D1 /* FacebookSdk */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FacebookSdk;
-		};
-		5C2B2AFC267FFE3400D9E1D1 /* MQTT */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5C2B2AFB267FFE3400D9E1D1 /* XCRemoteSwiftPackageReference "swift-mqtt" */;
-			productName = MQTT;
-		};
-		5C2D1855267514E300D3EA04 /* TwitterSdk */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TwitterSdk;
-		};
-		5C30152926471B9A001A1FA5 /* SwiftSoup */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5C30152826471B9A001A1FA5 /* XCRemoteSwiftPackageReference "SwiftSoup" */;
-			productName = SwiftSoup;
-		};
-		5CB6ABF9267D381900D0CBEA /* MessengerSdk */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MessengerSdk;
 		};
 /* End XCSwiftPackageProductDependency section */
 
