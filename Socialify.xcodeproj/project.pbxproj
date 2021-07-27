@@ -71,6 +71,7 @@
 		5C44F35926894265003A5768 /* AccountManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagerView.swift; sourceTree = "<group>"; };
 		5C495BC6261A72100004D538 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		5C4AC87726AF760E005E7027 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		5C4AC88126AF8EFB005E7027 /* SocialifySdk */ = {isa = PBXFileReference; lastKnownFileType = text; path = SocialifySdk; sourceTree = SOURCE_ROOT; };
 		5C4F095C26690CC40080E5A7 /* TwitterSdk */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TwitterSdk; sourceTree = "<group>"; };
 		5C73EA9726112822008F7315 /* Socialify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Socialify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C73EA9A26112822008F7315 /* SocialifyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialifyApp.swift; sourceTree = "<group>"; };
@@ -232,6 +233,7 @@
 		5C73EAC826112917008F7315 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				5C4AC88126AF8EFB005E7027 /* SocialifySdk */,
 				5CB6ABF8267D353300D0CBEA /* MessengerSdk */,
 				5C4F095C26690CC40080E5A7 /* TwitterSdk */,
 				5CC338482645FF83006F14CF /* FacebookSdk */,
