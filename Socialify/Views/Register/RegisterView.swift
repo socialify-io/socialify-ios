@@ -6,14 +6,14 @@
 //
 
 import SwiftUI
-import UIKit
+import SocialifySdk
 
 struct RegisterView: View {
     let cellHeight: CGFloat = 55
     let cornerRadius: CGFloat = 12
     let cellBackground: Color = Color(UIColor.systemGray5).opacity(0.5)
     
-    @State private var login = ""
+    @State private var username = ""
     @State private var password = ""
     @State private var repeatedPassword = ""
     
@@ -50,7 +50,7 @@ struct RegisterView: View {
                 Spacer()
                 
                 VStack {
-                    TextField("socialify_login.username", text: $login)
+                    TextField("socialify_login.username", text: $username)
                         .autocapitalization(.none)
                         .font(Font.body.weight(Font.Weight.medium))
                         .multilineTextAlignment(.center)
@@ -85,7 +85,17 @@ struct RegisterView: View {
                 Spacer()
                 
                 CustomButtonView(action: {
-                    print("Logging to Socialify...")
+                    let client = SocialifyClient()
+                    client.register(username: username, password: password, repeatedPassword: repeatedPassword) { value in
+                        switch value {
+                        case .success(_):
+                            buttonText = "Works!"
+                            
+                        case .failure(let error):
+                            print(error)
+                            buttonText = "\(error)"
+                        }
+                    }
                 }, title: buttonText)
                 .padding(.bottom)
             }.padding()

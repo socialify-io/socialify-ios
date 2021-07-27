@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "BCryptSwift",
+        "repositoryURL": "https://github.com/Pengwius/BCryptSwift",
+        "state": {
+          "branch": null,
+          "revision": "f117479d1438c012a88cbe4cb7d3a309ae98f9f9",
+          "version": "1.1.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
