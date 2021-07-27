@@ -8,10 +8,11 @@
 import Foundation
 import SwiftUI
 
-struct ChildLoginView: View {
+
+struct LoginView: View {
     let cellHeight: CGFloat = 55
     let cornerRadius: CGFloat = 12
-    let cellBackground: Color = Color("LoginInput")
+    let cellBackground: Color = Color(UIColor.systemGray5).opacity(0.5)
     
     @State private var login = ""
     @State private var password = ""
@@ -67,7 +68,7 @@ struct ChildLoginView: View {
                     .background(cellBackground)
                     .cornerRadius(cornerRadius)
                 
-                NavigationLink("login.singup", destination: LoginView())
+                NavigationLink("login.singup", destination: RegisterView())
                     .foregroundColor(Color.accentColor)
                     .padding()
                 
@@ -82,14 +83,6 @@ struct ChildLoginView: View {
             .padding(.bottom)
             
         }.padding()
-    }
-}
-
-struct LoginView: View {
-    var body: some View {
-        ChildLoginView()
-            .navigationBarTitle(Text(""), displayMode: .inline)
-            .background(Color("BackgroundColor").edgesIgnoringSafeArea(.all))
     }
 }
 

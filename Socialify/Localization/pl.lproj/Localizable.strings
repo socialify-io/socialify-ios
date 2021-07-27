@@ -37,6 +37,9 @@
 "login.apple_login" = "Zaloguj się za pomocą Apple'a";
 "login.ig_login" = "Zaloguj się za pomocą Instagram'a";
 
+// REGISTER
+"register.title" = "Stwórz";
+"register.subtitle" = "swoje konto Socialify";
 
 // SOCIALIFY LOGIN
 "socialify_login.username" = "Nazwa użytkownika";

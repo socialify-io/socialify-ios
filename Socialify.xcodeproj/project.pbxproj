@@ -18,6 +18,7 @@
 		5C44F355268921E7003A5768 /* TabBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C44F354268921E7003A5768 /* TabBarIcon.swift */; };
 		5C44F35A26894265003A5768 /* AccountManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C44F35926894265003A5768 /* AccountManagerView.swift */; };
 		5C495BC7261A72100004D538 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C495BC6261A72100004D538 /* LoginView.swift */; };
+		5C4AC87826AF760E005E7027 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AC87726AF760E005E7027 /* RegisterView.swift */; };
 		5C73EA9B26112822008F7315 /* SocialifyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EA9A26112822008F7315 /* SocialifyApp.swift */; };
 		5C73EA9D26112822008F7315 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EA9C26112822008F7315 /* ContentView.swift */; };
 		5C73EAA226112823008F7315 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C73EAA126112823008F7315 /* Preview Assets.xcassets */; };
@@ -69,6 +70,7 @@
 		5C44F354268921E7003A5768 /* TabBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarIcon.swift; sourceTree = "<group>"; };
 		5C44F35926894265003A5768 /* AccountManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagerView.swift; sourceTree = "<group>"; };
 		5C495BC6261A72100004D538 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		5C4AC87726AF760E005E7027 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		5C4F095C26690CC40080E5A7 /* TwitterSdk */ = {isa = PBXFileReference; lastKnownFileType = folder; path = TwitterSdk; sourceTree = "<group>"; };
 		5C73EA9726112822008F7315 /* Socialify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Socialify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C73EA9A26112822008F7315 /* SocialifyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialifyApp.swift; sourceTree = "<group>"; };
@@ -155,6 +157,14 @@
 				5C44F35926894265003A5768 /* AccountManagerView.swift */,
 			);
 			path = AccountManager;
+			sourceTree = "<group>";
+		};
+		5C4AC87626AF7594005E7027 /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				5C4AC87726AF760E005E7027 /* RegisterView.swift */,
+			);
+			path = Register;
 			sourceTree = "<group>";
 		};
 		5C73EA8E26112822008F7315 = {
@@ -244,6 +254,7 @@
 				5C04650E2687E829006D3126 /* Navigation */,
 				5C3DD2222613B77F00B8E532 /* Shared */,
 				5C3DD2192613B33600B8E532 /* Login */,
+				5C4AC87626AF7594005E7027 /* Register */,
 				5C73EACE261129D0008F7315 /* Onboarding */,
 				5C73EA9C26112822008F7315 /* ContentView.swift */,
 			);
@@ -418,6 +429,7 @@
 			files = (
 				5C3DD2242613B78F00B8E532 /* CustomButtonView.swift in Sources */,
 				5C33AB8D2689D16600640F1C /* FacebookItemView.swift in Sources */,
+				5C4AC87826AF760E005E7027 /* RegisterView.swift in Sources */,
 				5C3DD22A2613C81700B8E532 /* MediaItemView.swift in Sources */,
 				5C73EA9D26112822008F7315 /* ContentView.swift in Sources */,
 				5C495BC7261A72100004D538 /* LoginView.swift in Sources */,
