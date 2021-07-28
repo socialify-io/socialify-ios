@@ -11,17 +11,7 @@ extension SocialifyClient {
     
     // MARK: - Errors models
     
-    public enum APIError: Error, LocalizedError {
-        case unknown
-        case error(reason: String)
-        
-        public var errorDescription: String? {
-            switch self {
-                case .unknown:
-                    return "Unknown error"
-                case .error (let reason):
-                    return reason
-            }
-        }
+    public enum ApiError: Error {
+        case UnexpectedError
     }
 }

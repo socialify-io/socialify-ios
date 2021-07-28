@@ -12,12 +12,12 @@ extension SocialifyClient {
     
     // MARK: - Sending request
     
-    func request(request: URLRequest, completion: @escaping (Result<Bool, Error>) -> Void) {
+    func request(request: URLRequest, completion: @escaping (Result<Bool, ApiError>) -> Void) {
         var request = request
         let timestamp = NSDate().timeIntervalSince1970
         
         let salt = BCryptSwift.generateSalt()
-        let authToken = BCryptSwift.hashPassword("$begin-register$.\(LIBRARY_VERSION)+\(systemVersion)+\(userAgent)#\(timestamp)#.$end-register$", withSalt: salt)
+        let authToken = BCryptSwift.hashPassword("$begin-getKey$.\(LIBRARY_VERSION)+\(systemVersion)+\(userAgent)#\(timestamp)#.$end-getKey$", withSalt: salt)
         print("Hashed result is: \(authToken)")
         
         request.allHTTPHeaderFields = [
@@ -26,23 +26,23 @@ extension SocialifyClient {
             "OS": systemVersion,
             "Timestamp": "\(timestamp)",
             "AppVersion": LIBRARY_VERSION,
-            "AuthToken": "\(authToken)"
+            "AuthToken": "\(authToken ?? "")"
         ]
         
-//        session?.dataTask(with: request) { (data, response, error) in
-//
-//            guard let data = data else {
-//                  if let _ = error {
-//                    throw APIError.error(reason: "Error with connection.")
-//                  }
-//
-//                throw APIError.error(reason: "Error with connection.")
-//                return
-//                }
-//
-//            return true
-//        }.resume()
-        
-    completion(.success(true))
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+
+            guard let data = data else {
+                  if let _ = error {
+                    completion(.failure(ApiError.UnexpectedError))
+                  }
+
+                completion(.failure(ApiError.UnexpectedError))
+                return
+                }
+            
+            print(String(data: data as! Data, encoding: String.Encoding.utf8))
+            
+            completion(.success(true))
+        }.resume()
     }
 }
