@@ -9,6 +9,8 @@ import SwiftUI
 import SocialifySdk
 
 struct RegisterView: View {
+    @StateObject var client: SocialifyClient = SocialifyClient.shared
+    
     let cellHeight: CGFloat = 55
     let cornerRadius: CGFloat = 12
     let cellBackground: Color = Color(UIColor.systemGray5).opacity(0.5)
@@ -85,7 +87,6 @@ struct RegisterView: View {
                 Spacer()
                 
                 CustomButtonView(action: {
-                    let client = SocialifyClient()
                     client.register(username: username, password: password, repeatedPassword: repeatedPassword) { value in
                         switch value {
                         case .success(_):

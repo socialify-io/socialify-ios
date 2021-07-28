@@ -8,6 +8,7 @@
 import Foundation
 import BCryptSwift
 
+@available(iOS 13.0, *)
 extension SocialifyClient {
     
     // MARK: - Sending request

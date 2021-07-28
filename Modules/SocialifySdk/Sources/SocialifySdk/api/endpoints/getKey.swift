@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(iOS 13.0, *)
 extension SocialifyClient {
     
     // MARK: - Getting public RSA key to encrypt password

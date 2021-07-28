@@ -8,7 +8,9 @@
 import Foundation
 import UIKit
 
-public class SocialifyClient {
+@available(iOS 13.0, *)
+public final class SocialifyClient: ObservableObject {
+    static public let shared: SocialifyClient = SocialifyClient()
     
     public init() {}
     
