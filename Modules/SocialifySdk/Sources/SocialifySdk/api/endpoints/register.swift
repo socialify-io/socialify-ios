@@ -14,6 +14,10 @@ extension SocialifyClient {
     // MARK: - Creating new Socialify account
     
     public func register(username: String, password: String, repeatedPassword: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        if(password != repeatedPassword) {
+            completion(.failure(ApiError.InvalidRepeatPassword))
+        }
+
         self.getKey() { value in
             switch value {
             case .success(let value):
