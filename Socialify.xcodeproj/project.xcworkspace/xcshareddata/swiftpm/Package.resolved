@@ -9,6 +9,24 @@
           "revision": "f117479d1438c012a88cbe4cb7d3a309ae98f9f9",
           "version": "1.1.0"
         }
+      },
+      {
+        "package": "SwiftRSA",
+        "repositoryURL": "https://github.com/puretears/SwiftRSA",
+        "state": {
+          "branch": null,
+          "revision": "6e28e2fb4a83289abdc03554663df9b570df2710",
+          "version": "0.1.2"
+        }
+      },
+      {
+        "package": "SwiftyJSON",
+        "repositoryURL": "https://github.com/SwiftyJSON/SwiftyJSON",
+        "state": {
+          "branch": null,
+          "revision": "2b6054efa051565954e1d2b9da831680026cd768",
+          "version": "5.0.0"
+        }
       }
     ]
   },

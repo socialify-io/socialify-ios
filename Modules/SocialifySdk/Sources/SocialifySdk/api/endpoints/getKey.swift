@@ -6,28 +6,31 @@
 //
 
 import Foundation
+import SwiftyJSON
+import SwiftRSA
 
 @available(iOS 13.0, *)
 extension SocialifyClient {
     
     // MARK: - Getting public RSA key to encrypt password
     
-    func getKey(completion: @escaping (Result<Bool, Error>) -> Void) {
+    func getKey(completion: @escaping (Result<(PublicKey, String), Error>) -> Void) {
         let url = URL(string: "\(self.API_ROUTE)v\(self.API_VERSION)/getKey")!
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         
-        self.request(request: request) { value in
+        self.request(request: request, authTokenHeader: "getKey") { value in
             switch value {
-            case .success(_):
-                print("request works!")
+            case .success(let value):
+                let pubKeyPem = "\(value["data"]["pubKey"])"
+                let publicKey = PublicKey(pemEncoded: pubKeyPem)
+                completion(.success((publicKey!, pubKeyPem)))
                 
             case .failure(let error):
                 print(error)
+                completion(.failure(error))
             }
         }
-        
-        completion(.success(true))
     }
 }

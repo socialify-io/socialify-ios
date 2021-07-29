@@ -7,19 +7,20 @@
 
 import Foundation
 import BCryptSwift
+import SwiftyJSON
+import SwiftRSA
 
 @available(iOS 13.0, *)
 extension SocialifyClient {
     
     // MARK: - Sending request
     
-    func request(request: URLRequest, completion: @escaping (Result<Bool, ApiError>) -> Void) {
+    func request(request: URLRequest, authTokenHeader: String, completion: @escaping (Result<JSON, ApiError>) -> Void) {
         var request = request
         let timestamp = NSDate().timeIntervalSince1970
         
         let salt = BCryptSwift.generateSalt()
-        let authToken = BCryptSwift.hashPassword("$begin-getKey$.\(LIBRARY_VERSION)+\(systemVersion)+\(userAgent)#\(timestamp)#.$end-getKey$", withSalt: salt)
-        print("Hashed result is: \(authToken ?? "")")
+        let authToken = BCryptSwift.hashPassword("$begin-\(authTokenHeader)$.\(LIBRARY_VERSION)+\(systemVersion)+\(userAgent)#\(timestamp)#.$end-\(authTokenHeader)$", withSalt: salt)
         
         request.allHTTPHeaderFields = [
             "Content-Type": "applictaion/json",
@@ -41,9 +42,14 @@ extension SocialifyClient {
                 return
                 }
             
-            print(String(data: data, encoding: String.Encoding.utf8) as Any)
-            
-            completion(.success(true))
+            do {
+                let responseBody = try JSON(data: data)
+                
+                completion(.success(responseBody))
+            } catch {
+                print("nie dziala :(")
+                print(String(data: data, encoding: String.Encoding.utf8))
+            }
         }.resume()
     }
 }
