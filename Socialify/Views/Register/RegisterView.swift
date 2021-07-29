@@ -20,6 +20,31 @@ struct RegisterView: View {
     @State private var repeatedPassword = ""
     
     @State private var buttonText = "register.title"
+    @State private var clicked: Bool = false
+    
+    private func setColor(input: String) -> Color {
+        if(clicked == true){
+            switch(input) {
+            case "username":
+                if (username == "") { return Color.red.opacity(0.4) }
+                else { return cellBackground }
+                    
+            case "password":
+                if (password == "") { return Color.red.opacity(0.4) }
+                else { return cellBackground }
+            
+            case "repeatedPassword":
+                if (repeatedPassword == "") { return Color.red.opacity(0.4) }
+                else { return cellBackground }
+           
+                
+            default:
+                return cellBackground
+            }
+        } else {
+            return cellBackground
+        }
+    }
     
     var body: some View {
         VStack {
@@ -52,7 +77,7 @@ struct RegisterView: View {
                 Spacer()
                 
                 VStack {
-                    TextField("socialify_login.username", text: $username)
+                    TextField(LocalizedStringKey("login.username"), text: $username)
                         .autocapitalization(.none)
                         .font(Font.body.weight(Font.Weight.medium))
                         .multilineTextAlignment(.center)
@@ -60,6 +85,10 @@ struct RegisterView: View {
                         .frame(height: cellHeight)
                         .background(cellBackground)
                         .cornerRadius(cornerRadius)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: cornerRadius)
+                                .stroke(setColor(input: "username"), lineWidth: 2)
+                        )
                     
                     SecureField("login.password", text: $password)
                         .autocapitalization(.none)
@@ -70,6 +99,10 @@ struct RegisterView: View {
                         .frame(height: cellHeight)
                         .background(cellBackground)
                         .cornerRadius(cornerRadius)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: cornerRadius)
+                                .stroke(setColor(input: "password"), lineWidth: 2)
+                        )
                     
                     SecureField("register.repeat_password", text: $repeatedPassword)
                         .autocapitalization(.none)
@@ -80,6 +113,10 @@ struct RegisterView: View {
                         .frame(height: cellHeight)
                         .background(cellBackground)
                         .cornerRadius(cornerRadius)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: cornerRadius)
+                                .stroke(setColor(input: "repeatedPassword"), lineWidth: 2)
+                        )
                     
                 }.padding(.bottom, 80)
                 
@@ -87,14 +124,17 @@ struct RegisterView: View {
                 Spacer()
                 
                 CustomButtonView(action: {
-                    client.register(username: username, password: password, repeatedPassword: repeatedPassword) { value in
-                        switch value {
-                        case .success(_):
-                            buttonText = "Works!"
-                            
-                        case .failure(let error):
-                            print(error)
-                            buttonText = "\(error)"
+                    clicked = true
+                    if(username != "" && password != "" && repeatedPassword != "" ) {
+                        client.register(username: username, password: password, repeatedPassword: repeatedPassword) { value in
+                            switch value {
+                            case .success(_):
+                                buttonText = "Works!"
+                                
+                            case .failure(let error):
+                                print(error)
+                                buttonText = "\(error)"
+                            }
                         }
                     }
                 }, title: buttonText)

@@ -43,7 +43,7 @@
 "login.ig_login" = "Log in using Instagram";
 
 // SOCIALIFY LOGIN
-"socialify_login.username" = "Username";
+"login.username" = "Username";
 
 // FACEBOOK LOGIN
 "fb_login.username" = "Email address or phone number";

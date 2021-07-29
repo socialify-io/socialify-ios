@@ -49,7 +49,7 @@ struct LoginView: View {
             Spacer()
             
             VStack {
-                TextField("socialify_login.username", text: $login)
+                TextField(LocalizedStringKey("login.username"), text: $login)
                     .autocapitalization(.none)
                     .font(Font.body.weight(Font.Weight.medium))
                     .multilineTextAlignment(.center)

@@ -43,7 +43,7 @@
 "register.repeat_password" = "Powtórz hasło";
 
 // SOCIALIFY LOGIN
-"socialify_login.username" = "Nazwa użytkownika";
+"login.username" = "Nazwa użytkownika";
 
 // FACEBOOK LOGIN
 "fb_login.username" = "Adres email lub numer telefonu";

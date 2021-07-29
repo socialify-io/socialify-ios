@@ -19,7 +19,7 @@ extension SocialifyClient {
         
         let salt = BCryptSwift.generateSalt()
         let authToken = BCryptSwift.hashPassword("$begin-getKey$.\(LIBRARY_VERSION)+\(systemVersion)+\(userAgent)#\(timestamp)#.$end-getKey$", withSalt: salt)
-        print("Hashed result is: \(authToken)")
+        print("Hashed result is: \(authToken ?? "")")
         
         request.allHTTPHeaderFields = [
             "Content-Type": "applictaion/json",
@@ -41,7 +41,7 @@ extension SocialifyClient {
                 return
                 }
             
-            print(String(data: data as! Data, encoding: String.Encoding.utf8))
+            print(String(data: data, encoding: String.Encoding.utf8) as Any)
             
             completion(.success(true))
         }.resume()
