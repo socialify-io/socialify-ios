@@ -19,8 +19,7 @@ extension SocialifyClient {
         var request = request
         let timestamp = NSDate().timeIntervalSince1970
         
-        let salt = BCryptSwift.generateSalt()
-        let authToken = BCryptSwift.hashPassword("$begin-\(authTokenHeader)$.\(LIBRARY_VERSION)+\(systemVersion)+\(userAgent)#\(timestamp)#.$end-\(authTokenHeader)$", withSalt: salt)
+        let authToken = generateAuthToken(timestamp: "\(timestamp)", authTokenHeader: authTokenHeader)
         
         request.allHTTPHeaderFields = [
             "Content-Type": "applictaion/json",
@@ -32,7 +31,6 @@ extension SocialifyClient {
         ]
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-
             guard let data = data else {
                   if let _ = error {
                     completion(.failure(ApiError.UnexpectedError))
@@ -57,5 +55,10 @@ extension SocialifyClient {
                 completion(.failure(SdkError.ResponseParseError))
             }
         }.resume()
+    }
+    
+    func generateAuthToken(timestamp: String, authTokenHeader: String) -> String? {
+        let salt = BCryptSwift.generateSalt()
+        return BCryptSwift.hashPassword("$begin-\(authTokenHeader)$.\(LIBRARY_VERSION)+\(systemVersion)+\(userAgent)#\(timestamp)#.$end-\(authTokenHeader)$", withSalt: salt)
     }
 }
