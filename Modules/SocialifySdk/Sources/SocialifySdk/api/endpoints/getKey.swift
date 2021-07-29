@@ -28,7 +28,6 @@ extension SocialifyClient {
                 completion(.success((publicKey!, pubKeyPem)))
                 
             case .failure(let error):
-                print(error)
                 completion(.failure(error))
             }
         }

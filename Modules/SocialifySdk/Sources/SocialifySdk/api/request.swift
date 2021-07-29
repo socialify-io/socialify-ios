@@ -15,7 +15,7 @@ extension SocialifyClient {
     
     // MARK: - Sending request
     
-    func request(request: URLRequest, authTokenHeader: String, completion: @escaping (Result<JSON, ApiError>) -> Void) {
+    func request(request: URLRequest, authTokenHeader: String, completion: @escaping (Result<JSON, Error>) -> Void) {
         var request = request
         let timestamp = NSDate().timeIntervalSince1970
         
@@ -44,11 +44,17 @@ extension SocialifyClient {
             
             do {
                 let responseBody = try JSON(data: data)
+                if(responseBody["success"] == false) {
+                    let errorCode: Int = responseBody["errors"][0]["code"].rawValue as! Int
+                    completion(.failure(self.parseErrorCode(errorCode: errorCode)))
+                } else if(responseBody["success"] == true) {
+                    completion(.success(responseBody))
+                } else {
+                    completion(.failure(SdkError.UnexpectedError))
+                }
                 
-                completion(.success(responseBody))
             } catch {
-                print("nie dziala :(")
-                print(String(data: data, encoding: String.Encoding.utf8))
+                completion(.failure(SdkError.ResponseParseError))
             }
         }.resume()
     }

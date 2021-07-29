@@ -8,6 +8,13 @@
 import SwiftUI
 import SocialifySdk
 
+struct ErrorAlert: Identifiable {
+    var id: String { name }
+    let name: String
+    let errorName: String
+    let errorDescription: String
+}
+
 struct RegisterView: View {
     @StateObject var client: SocialifyClient = SocialifyClient.shared
     
@@ -21,6 +28,8 @@ struct RegisterView: View {
     
     @State private var buttonText = "register.title"
     @State private var clicked: Bool = false
+    
+    @State private var errorAlertShow: ErrorAlert?
     
     private func setColor(input: String) -> Color {
         if(clicked == true){
@@ -129,11 +138,19 @@ struct RegisterView: View {
                         client.register(username: username, password: password, repeatedPassword: repeatedPassword) { value in
                             switch value {
                             case .success(_):
-                                buttonText = "Works!"
+                                buttonText = "Success!"
                                 
                             case .failure(let error):
-                                print(error)
-                                buttonText = "\(error)"
+                                switch error {
+                                    case SocialifyClient.ApiError.InvalidRepeatPassword:
+                                        buttonText = "Passwords are not same."
+                                            
+                                    case SocialifyClient.ApiError.InvalidUsername:
+                                        buttonText = "Username is already taken."
+                                    
+                                    default:
+                                        errorAlertShow = ErrorAlert(name: "Something is wrong...", errorName: "\(error)", errorDescription: "Some error description bla bla bla...")
+                                }
                             }
                         }
                     }
@@ -143,6 +160,9 @@ struct RegisterView: View {
             
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.vertical)
+        .alert(item: $errorAlertShow) { error in
+            Alert(title: Text(error.name), message: Text("\(error.errorName): \(error.errorDescription)"), primaryButton: .cancel(), secondaryButton: .destructive(Text("Report")) { print("Reporting a problem...") } )
+        }
     }
 }
 

@@ -21,9 +21,7 @@ extension SocialifyClient {
                     let passwordClearText = ClearText(string: password)
                     let repeatedPasswordClearText = ClearText(string: repeatedPassword)
                     
-                    let publicKeyString = try value.0.pemString()
-                    
-                    let encryptedPassword = try passwordClearText.encrypted(with: value.0, by: .rsaEncryptionOAEPSHA1).data.base64EncodedString()
+                    let encryptedPassword = try passwordClearText.encrypted(with: value.0, by: .rsaEncryptionOAEPSHA1).data.base64EncodedString() // 0 means model of public key
                     let encryptedRepeatedPassword = try repeatedPasswordClearText.encrypted(with: value.0, by: .rsaEncryptionOAEPSHA1).data.base64EncodedString()
                     
                     let url = URL(string: "\(self.API_ROUTE)v\(self.API_VERSION)/register")!
@@ -35,7 +33,7 @@ extension SocialifyClient {
                         "username": username,
                         "password": encryptedPassword,
                         "repeat_password": encryptedRepeatedPassword,
-                        "pubKey": value.1
+                        "pubKey": value.1 // 1 means public key as string
                     ]
                     
                     let jsonPayload = try? JSONSerialization.data(withJSONObject: payload)
@@ -49,13 +47,12 @@ extension SocialifyClient {
                             completion(.success(true))
                             
                         case .failure(let error):
-                            print(error)
                             completion(.failure(error))
                         }
                     }
 
                 } catch {
-                    print("dupa")
+                    completion(.failure(SdkError.RSAError))
                 }
                 
                 completion(.success(true))
