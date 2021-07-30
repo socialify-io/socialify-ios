@@ -26,11 +26,22 @@ struct RegisterView: View {
     @State private var password = ""
     @State private var repeatedPassword = ""
     
-    @State private var buttonText = "register.title"
+    @State public var buttonText = "register.title"
     @State private var clicked: Bool = false
     
     @State private var errorAlertShow: ErrorAlert?
     
+    public func setButton(textOnStart: String, textOnEnd: String) {
+        withAnimation {
+            buttonText = textOnStart
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                withAnimation {
+                    buttonText = textOnEnd
+                }
+            }
+        }
+    }
+
     private func setColor(input: String) -> Color {
         if(clicked == true){
             switch(input) {
@@ -143,10 +154,10 @@ struct RegisterView: View {
                             case .failure(let error):
                                 switch error {
                                     case SocialifyClient.ApiError.InvalidRepeatPassword:
-                                        buttonText = "Passwords are not same."
+                                        setButton(textOnStart: "Passwords are not same", textOnEnd: "register.title")
                                             
                                     case SocialifyClient.ApiError.InvalidUsername:
-                                        buttonText = "Username is already taken."
+                                        setButton(textOnStart: "Username is already taken", textOnEnd: "register.title")
                                     
                                     default:
                                         errorAlertShow = ErrorAlert(name: "Something is wrong...", errorName: "\(error)", errorDescription: "Some error description bla bla bla...")
