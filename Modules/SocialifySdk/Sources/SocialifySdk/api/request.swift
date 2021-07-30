@@ -36,7 +36,7 @@ extension SocialifyClient {
                     completion(.failure(ApiError.UnexpectedError))
                   }
 
-                completion(.failure(ApiError.UnexpectedError))
+                completion(.failure(SdkError.NoInternetConnection))
                 return
                 }
             

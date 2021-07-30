@@ -42,6 +42,7 @@ extension SocialifyClient {
         
         // Request parsing
         case ResponseParseError
+        case NoInternetConnection
         
         // Crypto
         case RSAError
