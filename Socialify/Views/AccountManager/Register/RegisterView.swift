@@ -11,8 +11,7 @@ import SocialifySdk
 struct ErrorAlert: Identifiable {
     var id: String { name }
     let name: String
-    let errorName: String
-    let errorDescription: String
+    let description: String
 }
 
 struct RegisterView: View {
@@ -30,6 +29,7 @@ struct RegisterView: View {
     @State private var clicked: Bool = false
     
     @State private var errorAlertShow: ErrorAlert?
+    @State private var showErrorReportModal = false
     
     public func setButton(textOnStart: String, textOnEnd: String) {
         withAnimation {
@@ -159,8 +159,11 @@ struct RegisterView: View {
                                     case SocialifyClient.ApiError.InvalidUsername:
                                         setButton(textOnStart: "Username is already taken", textOnEnd: "register.title")
                                     
+                                case SocialifyClient.SdkError.NoInternetConnection:
+                                    errorAlertShow = ErrorAlert(name: "No internet connection", description: "Application can't connect with server. Check your internet connection and try again.")
+                                    
                                     default:
-                                        errorAlertShow = ErrorAlert(name: "Something is wrong...", errorName: "\(error)", errorDescription: "Some error description bla bla bla...")
+                                        errorAlertShow = ErrorAlert(name: "Something is wrong...", description: "Something is wrong. Please report a problem using button below.")
                                 }
                             }
                         }
@@ -172,7 +175,16 @@ struct RegisterView: View {
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.vertical)
         .alert(item: $errorAlertShow) { error in
-            Alert(title: Text(error.name), message: Text("\(error.errorName): \(error.errorDescription)"), primaryButton: .cancel(), secondaryButton: .destructive(Text("Report")) { print("Reporting a problem...") } )
+            Alert(title: Text(error.name), message: Text(error.description), primaryButton: .cancel(), secondaryButton: .destructive(Text("Report")) { self.showErrorReportModal = true } )
+        }
+        .sheet(isPresented: $showErrorReportModal, onDismiss: {
+            }) {
+            NavigationView {
+                ErrorReportView(showErrorReportModal: self.$showErrorReportModal)
+                    .navigationBarTitle(Text("Back"))
+                    .navigationBarHidden(true)
+                    .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.bottom)
+            }
         }
     }
 }
