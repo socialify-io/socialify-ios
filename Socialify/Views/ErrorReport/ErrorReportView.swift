@@ -56,7 +56,7 @@ struct ErrorReportView: View {
                 
                 ZStack(alignment: .top) {
                     if message.isEmpty {
-                        Text("Placeholder Text")
+                        Text("Message")
                             .foregroundColor(Color(UIColor.systemGray))
                             .padding(9)
                     }
