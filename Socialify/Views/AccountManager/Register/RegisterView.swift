@@ -49,15 +49,6 @@ struct RegisterView: View {
             }
         }
     }
-
-    private func setColor(input: String) -> Color {
-        if(clicked == true){
-            if(input == "") { return Color.red.opacity(0.4) }
-            else { return borderColor }
-        } else {
-            return borderColor
-        }
-    }
     
     var body: some View {
         VStack {
@@ -100,7 +91,7 @@ struct RegisterView: View {
                         .cornerRadius(cornerRadius)
                         .overlay(
                             RoundedRectangle(cornerRadius: cornerRadius)
-                                .stroke(setColor(input: username), lineWidth: 2)
+                                .stroke(setColor(input: username, clicked: clicked), lineWidth: 2)
                         )
                     
                     SecureField("login.password", text: $password)
@@ -114,7 +105,7 @@ struct RegisterView: View {
                         .cornerRadius(cornerRadius)
                         .overlay(
                             RoundedRectangle(cornerRadius: cornerRadius)
-                                .stroke(setColor(input: password), lineWidth: 2)
+                                .stroke(setColor(input: password, clicked: clicked), lineWidth: 2)
                         )
                     
                     SecureField("register.repeat_password", text: $repeatedPassword)
@@ -128,7 +119,7 @@ struct RegisterView: View {
                         .cornerRadius(cornerRadius)
                         .overlay(
                             RoundedRectangle(cornerRadius: cornerRadius)
-                                .stroke(setColor(input: repeatedPassword), lineWidth: 2)
+                                .stroke(setColor(input: repeatedPassword, clicked: clicked), lineWidth: 2)
                         )
                     
                 }.padding(.bottom, 80)
