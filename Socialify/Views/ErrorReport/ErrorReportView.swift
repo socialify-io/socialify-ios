@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SocialifySdk
 
 struct ErrorReportView: View {
     
+    @StateObject var client: SocialifyClient = SocialifyClient.shared
     @Binding var showErrorReportModal: Bool
     
     let cellHeight: CGFloat = 55
@@ -78,7 +80,21 @@ struct ErrorReportView: View {
             Spacer()
             
             CustomButtonView(action: {
-                print("Reporting a problem...")
+                let report = SocialifyClient.ErrorReport(errorType: nil,
+                                                         errorContext: nil,
+                                                         messageTitle: title,
+                                                         message: message)
+                
+                client.reportError(report: report) { result in
+                    switch result {
+                    case .success(let response):
+                        buttonText = "Success!"
+                        print(response)
+                        
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
             }, title: buttonText)
             .padding(.bottom)
             
