@@ -25,6 +25,7 @@ struct RegisterView: View {
     let cellHeight: CGFloat = 55
     let cornerRadius: CGFloat = 12
     let cellBackground: Color = Color(UIColor.systemGray5).opacity(0.5)
+    let borderColor: Color = Color(UIColor.systemGray).opacity(0)
     
     @State private var username = ""
     @State private var password = ""
@@ -54,22 +55,22 @@ struct RegisterView: View {
             switch(input) {
             case "username":
                 if (username == "") { return Color.red.opacity(0.4) }
-                else { return cellBackground }
+                else { return borderColor }
                     
             case "password":
                 if (password == "") { return Color.red.opacity(0.4) }
-                else { return cellBackground }
+                else { return borderColor }
             
             case "repeatedPassword":
                 if (repeatedPassword == "") { return Color.red.opacity(0.4) }
-                else { return cellBackground }
+                else { return borderColor }
            
                 
             default:
-                return cellBackground
+                return borderColor
             }
         } else {
-            return cellBackground
+            return borderColor
         }
     }
     
