@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ErrorReportView: View {
     
-    @Environment(\.presentationMode) var presentationMode
     @Binding var showErrorReportModal: Bool
     
     let cellHeight: CGFloat = 55
@@ -84,7 +83,6 @@ struct ErrorReportView: View {
             .padding(.bottom)
             
             Button(action: {
-                self.presentationMode.projectedValue.wrappedValue.dismiss()
                 self.showErrorReportModal = false
             }) {
                 Text("Nevermind")

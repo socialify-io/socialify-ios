@@ -19,46 +19,48 @@ extension SocialifyClient {
         var request = request
         let timestamp = NSDate().timeIntervalSince1970
         
-        let authToken = generateAuthToken(timestamp: "\(timestamp)", authTokenHeader: authTokenHeader)
+        let authToken = generateAuthToken(timestamp: "\(Int(timestamp))", authTokenHeader: authTokenHeader)
         
         request.allHTTPHeaderFields = [
-            "Content-Type": "applictaion/json",
+            "Content-Type": "application/json",
             "User-Agent": userAgent,
             "OS": systemVersion,
-            "Timestamp": "\(timestamp)",
+            "Timestamp": "\(Int(timestamp))",
             "AppVersion": LIBRARY_VERSION,
             "AuthToken": "\(authToken ?? "")"
         ]
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let data = data else {
-                  if let _ = error {
-                    completion(.failure(ApiError.UnexpectedError))
-                  }
-
+            if(error?._code.littleEndian == -1004) {
                 completion(.failure(SdkError.NoInternetConnection))
-                return
-                }
-            
-            do {
-                let responseBody = try JSON(data: data)
-                if(responseBody["success"] == false) {
-                    let errorCode: Int = responseBody["errors"][0]["code"].rawValue as! Int
-                    completion(.failure(self.parseErrorCode(errorCode: errorCode)))
-                } else if(responseBody["success"] == true) {
-                    completion(.success(responseBody))
-                } else {
-                    completion(.failure(SdkError.UnexpectedError))
-                }
+            } else {
+                guard let data = data else {
+                      if let _ = error {
+                        completion(.failure(ApiError.UnexpectedError))
+                      }
+                    return
+                    }
                 
-            } catch {
-                completion(.failure(SdkError.ResponseParseError))
+                do {
+                    let responseBody = try JSON(data: data)
+                    if(responseBody["success"] == false) {
+                        let errorCode: Int = responseBody["errors"][0]["code"].rawValue as! Int
+                        completion(.failure(self.parseErrorCode(errorCode: errorCode)))
+                    } else if(responseBody["success"] == true) {
+                        completion(.success(responseBody))
+                    } else {
+                        completion(.failure(SdkError.UnexpectedError))
+                    }
+                    
+                } catch {
+                    completion(.failure(SdkError.ResponseParseError))
+                }
             }
         }.resume()
     }
     
     func generateAuthToken(timestamp: String, authTokenHeader: String) -> String? {
         let salt = BCryptSwift.generateSalt()
-        return BCryptSwift.hashPassword("$egin-\(authTokenHeader)$.\(LIBRARY_VERSION)+\(systemVersion)+\(userAgent)#\(timestamp)#.$end-\(authTokenHeader)$", withSalt: salt)
+        return BCryptSwift.hashPassword("$begin-\(authTokenHeader)$.\(LIBRARY_VERSION)+\(systemVersion)+\(userAgent)#\(timestamp)#.$end-\(authTokenHeader)$", withSalt: salt)
     }
 }

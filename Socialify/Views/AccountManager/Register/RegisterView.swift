@@ -14,8 +14,13 @@ struct ErrorAlert: Identifiable {
     let description: String
 }
 
+enum ActiveAlert {
+    case success, failure
+}
+
 struct RegisterView: View {
     @StateObject var client: SocialifyClient = SocialifyClient.shared
+    @Environment(\.presentationMode) var presentationMode
     
     let cellHeight: CGFloat = 55
     let cornerRadius: CGFloat = 12
@@ -28,8 +33,10 @@ struct RegisterView: View {
     @State public var buttonText = "register.title"
     @State private var clicked: Bool = false
     
+    @State private var showAlert = false
     @State private var errorAlertShow: ErrorAlert?
     @State private var showErrorReportModal = false
+    @State private var activeAlert: ActiveAlert = .success
     
     public func setButton(textOnStart: String, textOnEnd: String) {
         withAnimation {
@@ -149,7 +156,8 @@ struct RegisterView: View {
                         client.register(username: username, password: password, repeatedPassword: repeatedPassword) { value in
                             switch value {
                             case .success(_):
-                                buttonText = "Success!"
+                                self.activeAlert = .success
+                                self.showAlert = true
                                 
                             case .failure(let error):
                                 switch error {
@@ -159,11 +167,16 @@ struct RegisterView: View {
                                     case SocialifyClient.ApiError.InvalidUsername:
                                         setButton(textOnStart: "Username is already taken", textOnEnd: "register.title")
                                     
-                                case SocialifyClient.SdkError.NoInternetConnection:
-                                    errorAlertShow = ErrorAlert(name: "No internet connection", description: "Application can't connect with server. Check your internet connection and try again.")
-                                    
+                                    case SocialifyClient.SdkError.NoInternetConnection:
+                                        errorAlertShow = ErrorAlert(name: "No internet connection", description: "Application can't connect with server. Check your internet connection and try again.")
+                                        self.activeAlert = .failure
+                                        self.showAlert = true
+                                        
                                     default:
+                                        print(value)
                                         errorAlertShow = ErrorAlert(name: "Something is wrong...", description: "Something is wrong. Please report a problem using button below.")
+                                        self.activeAlert = .failure
+                                        self.showAlert = true
                                 }
                             }
                         }
@@ -171,12 +184,8 @@ struct RegisterView: View {
                 }, title: buttonText)
                 .padding(.bottom)
             }.padding()
-            
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.vertical)
-        .alert(item: $errorAlertShow) { error in
-            Alert(title: Text(error.name), message: Text(error.description), primaryButton: .cancel(), secondaryButton: .destructive(Text("Report")) { self.showErrorReportModal = true } )
-        }
         .sheet(isPresented: $showErrorReportModal, onDismiss: {
             }) {
             NavigationView {
@@ -186,6 +195,18 @@ struct RegisterView: View {
                     .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.bottom)
             }
         }
+        .alert(isPresented: $showAlert) {
+                    switch activeAlert {
+                    case .success:
+                        return Alert(title: Text("Success"), message: Text("Account has been successfully created. Now you'll be moved to login panel."), dismissButton: .default(Text("Got it!")){
+                                                DispatchQueue.main.async{
+                                                    self.presentationMode.wrappedValue.dismiss()
+                                                }
+                                            })
+                    case .failure:
+                        return Alert(title: Text(errorAlertShow?.name ?? "Something is wrong..."), message: Text(errorAlertShow?.description ?? "Something is wrong. Please report a problem using button below."), primaryButton: .cancel(), secondaryButton: .destructive(Text("Report")) { self.showErrorReportModal = true } )
+                    }
+                }
     }
 }
 
