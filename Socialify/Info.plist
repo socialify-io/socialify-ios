@@ -29,10 +29,10 @@
 	<true/>
 	<key>UILaunchScreen</key>
 	<dict>
+		<key>UIImageName</key>
+		<string>SocialifyIcon</string>
 		<key>UIColorName</key>
 		<string>AccentColor</string>
-		<key>UIImageName</key>
-		<string>LaunchIcon</string>
 	</dict>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

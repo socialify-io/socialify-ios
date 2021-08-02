@@ -31,7 +31,7 @@ struct RegisterView: View {
     @State private var password = ""
     @State private var repeatedPassword = ""
     
-    @State public var buttonText = "register.title"
+    @State private var buttonText = "register.title"
     @State private var clicked: Bool = false
     
     @State private var showAlert = false
@@ -56,7 +56,7 @@ struct RegisterView: View {
                 Spacer()
                 
                 VStack {
-                    Image("LaunchIcon")
+                    Image("SocialifyIcon")
                         .renderingMode(.template)
                         .resizable()
                         .aspectRatio(contentMode: .fit)

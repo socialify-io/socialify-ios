@@ -24,7 +24,7 @@ struct LoginView: View {
             Spacer()
             
             VStack {
-                Image("LaunchIcon")
+                Image("SocialifyIcon")
                     .renderingMode(.template)
                     .resizable()
                     .aspectRatio(contentMode: .fit)

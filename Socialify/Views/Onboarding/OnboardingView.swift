@@ -45,7 +45,7 @@ struct OnboardingView: View {
     var body: some View {
         VStack {
             Spacer()
-            Image("LaunchIcon")
+            Image("SocialifyIcon")
                 .renderingMode(.template)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
