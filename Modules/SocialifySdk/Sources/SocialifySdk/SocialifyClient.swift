@@ -22,6 +22,7 @@ public final class SocialifyClient: ObservableObject {
     let API_VERSION = "0.1"
     let API_ROUTE = "http://127.0.0.1:5000/api/"
     
+    let deviceModel = UIDevice.modelName
     let systemVersion = "iOS_\(UIDevice.current.systemVersion)"
     let userAgent = "Socialify-iOS"
 }

@@ -24,7 +24,7 @@ struct LoginView: View {
     @State private var showErrorReportModal = false
     @State private var activeAlert: ActiveAlert = .success
     
-    @State private var login = ""
+    @State private var username = ""
     @State private var password = ""
     
     @State private var buttonText = "login.button"
@@ -70,7 +70,7 @@ struct LoginView: View {
             Spacer()
             
             VStack {
-                TextField(LocalizedStringKey("login.username"), text: $login)
+                TextField(LocalizedStringKey("login.username"), text: $username)
                     .autocapitalization(.none)
                     .font(Font.body.weight(Font.Weight.medium))
                     .multilineTextAlignment(.center)
@@ -80,7 +80,7 @@ struct LoginView: View {
                     .cornerRadius(cornerRadius)
                     .overlay(
                         RoundedRectangle(cornerRadius: cornerRadius)
-                            .stroke(setColor(input: login, clicked: clicked), lineWidth: 2)
+                            .stroke(setColor(input: username, clicked: clicked), lineWidth: 2)
                     )
                 
                 SecureField("login.password", text: $password)
@@ -108,6 +108,15 @@ struct LoginView: View {
             
             CustomButtonView(action: {
                 clicked = true
+                client.registerDevice(username: username, password: password) { value in
+                    switch(value) {
+                    case .success(let value):
+                        print(value)
+                    
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
             }, title: buttonText)
             .padding(.bottom)
             
