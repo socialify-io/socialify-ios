@@ -139,19 +139,19 @@ struct RegisterView: View {
                             case .failure(let error):
                                 switch error {
                                     case SocialifyClient.ApiError.InvalidRepeatPassword:
-                                        setButton(textOnStart: "Passwords are not same", textOnEnd: "register.title")
+                                        setButton(textOnStart: "login.different_passwords", textOnEnd: "register.title")
                                             
                                     case SocialifyClient.ApiError.InvalidUsername:
-                                        setButton(textOnStart: "Username is already taken", textOnEnd: "register.title")
+                                        setButton(textOnStart: "register.taken_username", textOnEnd: "register.title")
                                     
                                     case SocialifyClient.SdkError.NoInternetConnection:
-                                        errorAlertShow = ErrorAlert(name: "No internet connection", description: "Application can't connect with server. Check your internet connection and try again.")
+                                    errorAlertShow = ErrorAlert(name: "errors.no_connection".localized, description: "errors.no_connection_description".localized)
                                         self.activeAlert = .failure
                                         self.showAlert = true
                                         
                                     default:
                                         print(value)
-                                        errorAlertShow = ErrorAlert(name: "Something is wrong...", description: "Something is wrong. Please report a problem using button below.")
+                                    errorAlertShow = ErrorAlert(name: "errors.default".localized, description: "errors.default_description".localized)
                                         self.activeAlert = .failure
                                         self.showAlert = true
                                 }
@@ -175,13 +175,13 @@ struct RegisterView: View {
         .alert(isPresented: $showAlert) {
                     switch activeAlert {
                     case .success:
-                        return Alert(title: Text("Success"), message: Text("Account has been successfully created. Now you'll be moved to login panel."), dismissButton: .default(Text("Got it!")){
+                        return Alert(title: Text("success"), message: Text("register.success"), dismissButton: .default(Text("got_it")){
                                                 DispatchQueue.main.async{
                                                     self.presentationMode.wrappedValue.dismiss()
                                                 }
                                             })
                     case .failure:
-                        return Alert(title: Text(errorAlertShow?.name ?? "Something is wrong..."), message: Text(errorAlertShow?.description ?? "Something is wrong. Please report a problem using button below."), primaryButton: .cancel(), secondaryButton: .destructive(Text("Report")) { self.showErrorReportModal = true } )
+                        return Alert(title: Text(errorAlertShow?.name ?? "errors.default"), message: Text(errorAlertShow?.description ?? "errors.default_description"), primaryButton: .cancel(), secondaryButton: .destructive(Text("errors.button")) { self.showErrorReportModal = true } )
                     }
                 }
     }

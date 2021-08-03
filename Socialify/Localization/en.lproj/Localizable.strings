@@ -6,6 +6,10 @@
   
 */
 
+// GLOBAL
+"success" = "Success";
+"got_it" = "Got it!";
+
 // ONBOARDING
 "onboarding.title" = "Welcome to Socialify";
 
@@ -29,11 +33,14 @@
 "login.button" = "Log in";
 "login.singup" = "Don't have an account? Create it!";
 "login.password" = "Password";
+"login.different_passwords" = "Passwords are not same";
 
 // REGISTER
 "register.title" = "Create";
 "register.subtitle" = "your Socialify account";
 "register.repeat_password" = "Repeat password";
+"register.taken_username" = "Username is already taken";
+"register.success" = "Account has been successfully created. Now you'll be moved to login panel.";
 
 // LOGIN USING ...
 "login.facebook_login" = "Log in using Facebook";
@@ -44,6 +51,15 @@
 
 // SOCIALIFY LOGIN
 "login.username" = "Username";
+
+// ERRORS
+"errors.no_connection" = "No connection";
+"errors.no_connection_description" = "Application can't connect with server. Check your internet connection and try again.";
+
+"errors.default" = "Something is wrong...";
+"errors.default_description" = "Something is wrong. Please report a problem using button below.";
+
+"errors.button" = "Report";
 
 // FACEBOOK LOGIN
 "fb_login.username" = "Email address or phone number";
