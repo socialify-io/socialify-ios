@@ -7,17 +7,38 @@
 
 import Foundation
 import SwiftUI
-
+import SocialifySdk
 
 struct LoginView: View {
+    @StateObject var client: SocialifyClient = SocialifyClient.shared
+    
     let cellHeight: CGFloat = 55
     let cornerRadius: CGFloat = 12
     let cellBackground: Color = Color(UIColor.systemGray5).opacity(0.5)
+    let borderColor: Color = Color(UIColor.systemGray).opacity(0)
+    
+    @State private var clicked: Bool = false
+    
+    @State private var showAlert = false
+    @State private var errorAlertShow: ErrorAlert?
+    @State private var showErrorReportModal = false
+    @State private var activeAlert: ActiveAlert = .success
     
     @State private var login = ""
     @State private var password = ""
     
     @State private var buttonText = "login.button"
+    
+    private func setButton(textOnStart: String, textOnEnd: String) {
+        withAnimation {
+            buttonText = textOnStart
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                withAnimation {
+                    buttonText = textOnEnd
+                }
+            }
+        }
+    }
     
     var body: some View {
         VStack {
@@ -57,6 +78,10 @@ struct LoginView: View {
                     .frame(height: cellHeight)
                     .background(cellBackground)
                     .cornerRadius(cornerRadius)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: cornerRadius)
+                            .stroke(setColor(input: login, clicked: clicked), lineWidth: 2)
+                    )
                 
                 SecureField("login.password", text: $password)
                     .autocapitalization(.none)
@@ -67,6 +92,10 @@ struct LoginView: View {
                     .frame(height: cellHeight)
                     .background(cellBackground)
                     .cornerRadius(cornerRadius)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: cornerRadius)
+                            .stroke(setColor(input: password, clicked: clicked), lineWidth: 2)
+                    )
                 
                 NavigationLink("login.singup", destination: RegisterView())
                     .foregroundColor(Color.accentColor)
@@ -78,7 +107,7 @@ struct LoginView: View {
             Spacer()
             
             CustomButtonView(action: {
-                print("Logging to Socialify...")
+                clicked = true
             }, title: buttonText)
             .padding(.bottom)
             

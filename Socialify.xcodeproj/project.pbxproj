@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5C0465102687E868006D3126 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C04650F2687E868006D3126 /* NavigationBarView.swift */; };
+		5C2A2EDE26B9F46D006CC3D6 /* models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A2EDD26B9F46D006CC3D6 /* models.swift */; };
 		5C33AB8D2689D16600640F1C /* FacebookItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C33AB8C2689D16600640F1C /* FacebookItemView.swift */; };
 		5C3DD2242613B78F00B8E532 /* CustomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DD2232613B78F00B8E532 /* CustomButtonView.swift */; };
 		5C3DD22A2613C81700B8E532 /* MediaItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DD2292613C81700B8E532 /* MediaItemView.swift */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		5C04650F2687E868006D3126 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
+		5C2A2EDD26B9F46D006CC3D6 /* models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = models.swift; sourceTree = "<group>"; };
 		5C33AB8C2689D16600640F1C /* FacebookItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookItemView.swift; sourceTree = "<group>"; };
 		5C3DD2232613B78F00B8E532 /* CustomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonView.swift; sourceTree = "<group>"; };
 		5C3DD2292613C81700B8E532 /* MediaItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemView.swift; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				5C66589A26B5A72F00614E9C /* ErrorReportView.swift */,
+				5C2A2EDD26B9F46D006CC3D6 /* models.swift */,
 			);
 			path = ErrorReport;
 			sourceTree = "<group>";
@@ -437,6 +440,7 @@
 				5C44F35A26894265003A5768 /* AccountManagerView.swift in Sources */,
 				5C88D8D726B8CA0600BAC9A7 /* string.swift in Sources */,
 				5C0465102687E868006D3126 /* NavigationBarView.swift in Sources */,
+				5C2A2EDE26B9F46D006CC3D6 /* models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

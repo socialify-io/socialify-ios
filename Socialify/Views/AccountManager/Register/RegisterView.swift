@@ -8,16 +8,6 @@
 import SwiftUI
 import SocialifySdk
 
-struct ErrorAlert: Identifiable {
-    var id: String { name }
-    let name: String
-    let description: String
-}
-
-enum ActiveAlert {
-    case success, failure
-}
-
 struct RegisterView: View {
     @StateObject var client: SocialifyClient = SocialifyClient.shared
     @Environment(\.presentationMode) var presentationMode
@@ -39,7 +29,7 @@ struct RegisterView: View {
     @State private var showErrorReportModal = false
     @State private var activeAlert: ActiveAlert = .success
     
-    public func setButton(textOnStart: String, textOnEnd: String) {
+    private func setButton(textOnStart: String, textOnEnd: String) {
         withAnimation {
             buttonText = textOnStart
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
