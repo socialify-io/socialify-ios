@@ -9,6 +9,7 @@
 // GLOBAL
 "success" = "Success";
 "got_it" = "Got it!";
+"nevermind" = "Nevermind";
 
 // ONBOARDING
 "onboarding.title" = "Welcome to Socialify";
@@ -23,6 +24,9 @@
 "onboarding.cross.platform.content" = "Available on iPhone. And on iPad. And on watch. On mac too.";
 
 "onboarding.continue" = "Continue";
+
+// ACCOUNT MANAGER
+"account_manager.no_accounts" = "No accounts added";
 
 // ADD ACCOUNT
 "add_account.title" = "Choose an account type";
@@ -60,6 +64,13 @@
 "errors.default_description" = "Something is wrong. Please report a problem using button below.";
 
 "errors.button" = "Report";
+
+/* ErrorReportView */
+"error_report.title" = "Report a problem";
+"error_report.message_title_placeholder" = "Title";
+"error_report.message_placeholder" = "Message";
+
+"error_report.optional_info" = "All fields are optional.";
 
 // FACEBOOK LOGIN
 "fb_login.username" = "Email address or phone number";

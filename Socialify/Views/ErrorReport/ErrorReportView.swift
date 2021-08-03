@@ -20,14 +20,14 @@ struct ErrorReportView: View {
     @State private var title = ""
     @State private var message = ""
     
-    @State private var buttonText = "Report"
+    @State private var buttonText = "errors.button"
     
     var body: some View {
         VStack {
             Spacer()
             
             VStack {
-                Image("LaunchIcon")
+                Image("SocialifyIcon")
                     .renderingMode(.template)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -35,7 +35,7 @@ struct ErrorReportView: View {
                     .foregroundColor(.accentColor)
                     .padding(.bottom, -40)
                 
-                Text("Report a problem")
+                Text("error_report.title")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
@@ -46,7 +46,7 @@ struct ErrorReportView: View {
             Spacer()
             
             VStack {
-                TextField(LocalizedStringKey("Title"), text: $title)
+                TextField(LocalizedStringKey("error_report.message_title_placeholder"), text: $title)
                     .autocapitalization(.none)
                     .font(Font.body.weight(Font.Weight.medium))
                     .multilineTextAlignment(.center)
@@ -57,7 +57,7 @@ struct ErrorReportView: View {
                 
                 ZStack(alignment: .top) {
                     if message.isEmpty {
-                        Text("Message")
+                        Text("error_report.message_placeholder")
                             .foregroundColor(Color(UIColor.systemGray))
                             .padding(9)
                     }
@@ -70,7 +70,7 @@ struct ErrorReportView: View {
                         .cornerRadius(cornerRadius)
                 }
                 
-               Label("All fields are optional.", systemImage: "info.circle")
+               Label("error_report.optional_info", systemImage: "info.circle")
                     .padding()
                     .font(.callout)
                     .foregroundColor(Color.accentColor)
@@ -101,7 +101,7 @@ struct ErrorReportView: View {
             Button(action: {
                 self.showErrorReportModal = false
             }) {
-                Text("Nevermind")
+                Text("nevermind")
                     .padding(.bottom)
             }
             .padding(.bottom)

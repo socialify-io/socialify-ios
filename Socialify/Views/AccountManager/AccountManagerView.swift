@@ -18,7 +18,7 @@ struct AccountManagerView: View {
     var body: some View {
         VStack {
             Spacer()
-            Text("No accounts added")
+            Text("account_manager.no_accounts")
             Spacer()
         }
         .toolbar {
