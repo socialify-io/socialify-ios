@@ -28,6 +28,7 @@ extension SocialifyClient {
 
         // Server
         case InternalServerError
+        case BadRequest
 
         // Request sign
         case InvalidAuthToken
@@ -42,6 +43,7 @@ extension SocialifyClient {
         
         // Request parsing
         case ResponseParseError
+        case NoInternetConnection
         
         // Crypto
         case RSAError
@@ -66,13 +68,14 @@ extension SocialifyClient {
             
             // Server
             case 6:     return ApiError.InternalServerError
+            case 7:     return ApiError.BadRequest
             
             // Request sign
-            case 7:     return ApiError.InvalidAuthToken
-            case 8:     return ApiError.InvalidHeaders
-            case 9:     return ApiError.InvalidFingerprint
-            case 10:    return ApiError.InvalidSignature
-            case 11:    return ApiError.InvalidRequestPayload
+            case 8:     return ApiError.InvalidAuthToken
+            case 9:     return ApiError.InvalidHeaders
+            case 10:     return ApiError.InvalidFingerprint
+            case 11:    return ApiError.InvalidSignature
+            case 12:    return ApiError.InvalidRequestPayload
         
             default:    return ApiError.UnexpectedError
         }

@@ -6,6 +6,11 @@
   
 */
 
+// GLOBAL
+"success" = "Gotowe";
+"got_it" = "OK";
+"nevermind" = "Nieważne";
+
 // ONBOARDING
 "onboarding.title" = "Witaj w Socialify";
 
@@ -20,6 +25,9 @@
 
 "onboarding.continue" = "Kontynuuj";
 
+// ACCOUNT MANAGER
+"account_manager.no_accounts" = "Nie dodano żadnych kont";
+
 // ADD ACCOUNT
 "add_account.title" = "Wybierz typ konta";
 
@@ -29,6 +37,14 @@
 "login.button" = "Zaloguj";
 "login.singup" = "Nie masz konta? Stwórz je!";
 "login.password" = "Hasło";
+"login.different_passwords" = "Hasła nie są jednakowe";
+
+// REGISTER
+"register.title" = "Stwórz";
+"register.subtitle" = "swoje konto Socialify";
+"register.repeat_password" = "Powtórz hasło";
+"register.taken_username" = "Nazwa użytkownika jest już zajęta";
+"register.success" = "Konto zostało pomyślnie utworzone. Teraz zostaniesz przeniesiony do panelu logowania.";
 
 // LOGIN USING ...
 "login.facebook_login" = "Zaloguj się za pomocą Facebook'a";
@@ -37,13 +53,24 @@
 "login.apple_login" = "Zaloguj się za pomocą Apple'a";
 "login.ig_login" = "Zaloguj się za pomocą Instagram'a";
 
-// REGISTER
-"register.title" = "Stwórz";
-"register.subtitle" = "swoje konto Socialify";
-"register.repeat_password" = "Powtórz hasło";
-
 // SOCIALIFY LOGIN
 "login.username" = "Nazwa użytkownika";
+
+// ERRORS
+"errors.no_connection" = "Brak połączenia";
+"errors.no_connection_description" = "Aplikacja nie może połączyć się z serwerem. Sprawdź swoje połączenie internetowe i spróbuj ponownie.";
+
+"errors.default" = "Coś poszło nie tak...";
+"errors.default_description" = "Coś poszło nie tak. Proszę zgłoś problem używając poniższego przycisku.";
+
+"errors.button" = "Zgłoś";
+
+/* ErrorReportView */
+"error_report.title" = "Zgłoś problem";
+"error_report.message_title_placeholder" = "Tytuł";
+"error_report.message_placeholder" = "Wiadomość";
+
+"error_report.optional_info" = "Wszystkie pola są opcjonalne.";
 
 // FACEBOOK LOGIN
 "fb_login.username" = "Adres email lub numer telefonu";

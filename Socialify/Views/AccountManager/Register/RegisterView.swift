@@ -11,16 +11,21 @@ import SocialifySdk
 struct ErrorAlert: Identifiable {
     var id: String { name }
     let name: String
-    let errorName: String
-    let errorDescription: String
+    let description: String
+}
+
+enum ActiveAlert {
+    case success, failure
 }
 
 struct RegisterView: View {
     @StateObject var client: SocialifyClient = SocialifyClient.shared
+    @Environment(\.presentationMode) var presentationMode
     
     let cellHeight: CGFloat = 55
     let cornerRadius: CGFloat = 12
     let cellBackground: Color = Color(UIColor.systemGray5).opacity(0.5)
+    let borderColor: Color = Color(UIColor.systemGray).opacity(0)
     
     @State private var username = ""
     @State private var password = ""
@@ -29,29 +34,19 @@ struct RegisterView: View {
     @State private var buttonText = "register.title"
     @State private var clicked: Bool = false
     
+    @State private var showAlert = false
     @State private var errorAlertShow: ErrorAlert?
+    @State private var showErrorReportModal = false
+    @State private var activeAlert: ActiveAlert = .success
     
-    private func setColor(input: String) -> Color {
-        if(clicked == true){
-            switch(input) {
-            case "username":
-                if (username == "") { return Color.red.opacity(0.4) }
-                else { return cellBackground }
-                    
-            case "password":
-                if (password == "") { return Color.red.opacity(0.4) }
-                else { return cellBackground }
-            
-            case "repeatedPassword":
-                if (repeatedPassword == "") { return Color.red.opacity(0.4) }
-                else { return cellBackground }
-           
-                
-            default:
-                return cellBackground
+    public func setButton(textOnStart: String, textOnEnd: String) {
+        withAnimation {
+            buttonText = textOnStart
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                withAnimation {
+                    buttonText = textOnEnd
+                }
             }
-        } else {
-            return cellBackground
         }
     }
     
@@ -61,7 +56,7 @@ struct RegisterView: View {
                 Spacer()
                 
                 VStack {
-                    Image("LaunchIcon")
+                    Image("SocialifyIcon")
                         .renderingMode(.template)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -96,7 +91,7 @@ struct RegisterView: View {
                         .cornerRadius(cornerRadius)
                         .overlay(
                             RoundedRectangle(cornerRadius: cornerRadius)
-                                .stroke(setColor(input: "username"), lineWidth: 2)
+                                .stroke(setColor(input: username, clicked: clicked), lineWidth: 2)
                         )
                     
                     SecureField("login.password", text: $password)
@@ -110,7 +105,7 @@ struct RegisterView: View {
                         .cornerRadius(cornerRadius)
                         .overlay(
                             RoundedRectangle(cornerRadius: cornerRadius)
-                                .stroke(setColor(input: "password"), lineWidth: 2)
+                                .stroke(setColor(input: password, clicked: clicked), lineWidth: 2)
                         )
                     
                     SecureField("register.repeat_password", text: $repeatedPassword)
@@ -124,7 +119,7 @@ struct RegisterView: View {
                         .cornerRadius(cornerRadius)
                         .overlay(
                             RoundedRectangle(cornerRadius: cornerRadius)
-                                .stroke(setColor(input: "repeatedPassword"), lineWidth: 2)
+                                .stroke(setColor(input: repeatedPassword, clicked: clicked), lineWidth: 2)
                         )
                     
                 }.padding(.bottom, 80)
@@ -138,18 +133,27 @@ struct RegisterView: View {
                         client.register(username: username, password: password, repeatedPassword: repeatedPassword) { value in
                             switch value {
                             case .success(_):
-                                buttonText = "Success!"
+                                self.activeAlert = .success
+                                self.showAlert = true
                                 
                             case .failure(let error):
                                 switch error {
                                     case SocialifyClient.ApiError.InvalidRepeatPassword:
-                                        buttonText = "Passwords are not same."
+                                        setButton(textOnStart: "login.different_passwords", textOnEnd: "register.title")
                                             
                                     case SocialifyClient.ApiError.InvalidUsername:
-                                        buttonText = "Username is already taken."
+                                        setButton(textOnStart: "register.taken_username", textOnEnd: "register.title")
                                     
+                                    case SocialifyClient.SdkError.NoInternetConnection:
+                                    errorAlertShow = ErrorAlert(name: "errors.no_connection".localized, description: "errors.no_connection_description".localized)
+                                        self.activeAlert = .failure
+                                        self.showAlert = true
+                                        
                                     default:
-                                        errorAlertShow = ErrorAlert(name: "Something is wrong...", errorName: "\(error)", errorDescription: "Some error description bla bla bla...")
+                                        print(value)
+                                    errorAlertShow = ErrorAlert(name: "errors.default".localized, description: "errors.default_description".localized)
+                                        self.activeAlert = .failure
+                                        self.showAlert = true
                                 }
                             }
                         }
@@ -157,12 +161,29 @@ struct RegisterView: View {
                 }, title: buttonText)
                 .padding(.bottom)
             }.padding()
-            
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.vertical)
-        .alert(item: $errorAlertShow) { error in
-            Alert(title: Text(error.name), message: Text("\(error.errorName): \(error.errorDescription)"), primaryButton: .cancel(), secondaryButton: .destructive(Text("Report")) { print("Reporting a problem...") } )
+        .sheet(isPresented: $showErrorReportModal, onDismiss: {
+            }) {
+            NavigationView {
+                ErrorReportView(showErrorReportModal: self.$showErrorReportModal)
+                    .navigationBarTitle(Text("Back"))
+                    .navigationBarHidden(true)
+                    .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.bottom)
+            }
         }
+        .alert(isPresented: $showAlert) {
+                    switch activeAlert {
+                    case .success:
+                        return Alert(title: Text("success"), message: Text("register.success"), dismissButton: .default(Text("got_it")){
+                                                DispatchQueue.main.async{
+                                                    self.presentationMode.wrappedValue.dismiss()
+                                                }
+                                            })
+                    case .failure:
+                        return Alert(title: Text(errorAlertShow?.name ?? "errors.default"), message: Text(errorAlertShow?.description ?? "errors.default_description"), primaryButton: .cancel(), secondaryButton: .destructive(Text("errors.button")) { self.showErrorReportModal = true } )
+                    }
+                }
     }
 }
 
