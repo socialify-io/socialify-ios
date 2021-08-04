@@ -41,7 +41,6 @@ extension SocialifyClient {
                     }
                     
                     let fingerprint = Insecure.SHA1.hash(data: keys["privateKey"]!.data(using: .utf8)!).hexStr
-                    print(fingerprint)
                     
                     let payload: [String: Any] = [
                         "username": username,

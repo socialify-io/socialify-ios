@@ -47,6 +47,9 @@ extension SocialifyClient {
         
         // Crypto
         case RSAError
+        case RSAKeyGenerationError
+        case RSAPublicKeyToStringError
+        case RSAPrivateKeyToStringError
     }
     
     // MARK: - Errors functions

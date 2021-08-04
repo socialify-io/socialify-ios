@@ -39,17 +39,21 @@ func genKeysPair() -> Result<[String: String], Error> {
         if statusPublicKey == noErr {
             if let publicKey = resultPublicKey as? Data {
                 response.updateValue(publicKey.base64EncodedString(), forKey: "publicKey")
+            } else {
+                return .failure(SocialifyClient.SdkError.RSAPublicKeyToStringError)
             }
         } else {
-            return .failure(SocialifyClient.SdkError.UnexpectedError)
+            return .failure(SocialifyClient.SdkError.RSAPublicKeyToStringError)
         }
         
         if statusPrivateKey == noErr {
             if let privateKey = resultPrivateKey as? Data {
                 response.updateValue(privateKey.base64EncodedString(), forKey: "privateKey")
+            } else {
+                return .failure(SocialifyClient.SdkError.RSAPrivateKeyToStringError)
             }
         } else {
-            return .failure(SocialifyClient.SdkError.UnexpectedError)
+            return .failure(SocialifyClient.SdkError.RSAPrivateKeyToStringError)
         }
         
         print("Key pair generated OK")
@@ -57,6 +61,6 @@ func genKeysPair() -> Result<[String: String], Error> {
         return .success(response)
     } else {
         print("Error generating key pair: \(statusCode)")
-        return .failure(SocialifyClient.SdkError.UnexpectedError)
+        return .failure(SocialifyClient.SdkError.RSAKeyGenerationError)
     }
 }
