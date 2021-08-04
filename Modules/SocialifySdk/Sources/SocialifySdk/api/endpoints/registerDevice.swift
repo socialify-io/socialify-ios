@@ -79,17 +79,17 @@ extension SocialifyClient {
                             
                             model.username = username
 
-                            try! context.save()
-                            
                             
                             
                             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
+                            let accounts = try! context.fetch(fetchRequest) as! [NSManagedObject]
                             
-                            let accounts = try! context.fetch(fetchRequest)
+                            let userId = accounts[accounts.count-1].value(forKey: "id") as! Int64 + 1
+                            model.id = userId
                             
-                            for account in accounts as! [NSManagedObject] {
-                                print(account.value(forKey: "username"))
-                            }
+                            try! context.save()
+                            
+                            self.ud.setValue(userId, forKey: "actualAccount")
                             
                             completion(.success(true))
                             

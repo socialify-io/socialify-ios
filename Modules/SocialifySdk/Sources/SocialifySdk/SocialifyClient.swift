@@ -30,4 +30,5 @@ public final class SocialifyClient: ObservableObject {
     let userAgent = "Socialify-iOS"
     
     let persistentContainer: NSPersistentContainer = CoreDataModel.shared.persistentContainer
+    let ud = UserDefaults.group
 }
