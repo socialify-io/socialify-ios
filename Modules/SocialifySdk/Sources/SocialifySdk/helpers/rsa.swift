@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(iOS 14.0, *)
 func genKeysPair() -> Result<[String: String], Error> {
     let publicKeyAttr: [NSObject: NSObject] = [
                 kSecAttrIsPermanent:true as NSObject,

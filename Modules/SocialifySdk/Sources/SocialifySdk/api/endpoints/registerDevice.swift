@@ -1,5 +1,5 @@
 //
-//  login.swift
+//  registerDevice.swift
 //
 //
 //  Created by Tomasz on 04/08/2021.
@@ -9,8 +9,10 @@ import Foundation
 import SwiftRSA
 import SwiftUI
 import CryptoKit
+import SwiftUI
+import CoreData
 
-@available(iOS 13.0, *)
+@available(iOS 14.0, *)
 extension SocialifyClient {
     
     // MARK: - Register new device
@@ -62,8 +64,33 @@ extension SocialifyClient {
                     
                     self.request(request: request, authTokenHeader: "newDevice") { value in
                         switch value {
-                        case .success(let value):
-                            print(value)
+                        case .success(_):
+                            let context = self.persistentContainer.viewContext
+                            
+                            let entityDescription = NSEntityDescription.entity(
+                                forEntityName: "Account",
+                                in: context
+                            )!
+                                    
+                            let model = Account(
+                                entity: entityDescription,
+                                insertInto: context
+                            )
+                            
+                            model.username = username
+
+                            try! context.save()
+                            
+                            
+                            
+                            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
+                            
+                            let accounts = try! context.fetch(fetchRequest)
+                            
+                            for account in accounts as! [NSManagedObject] {
+                                print(account.value(forKey: "username"))
+                            }
+                            
                             completion(.success(true))
                             
                         case .failure(let error):

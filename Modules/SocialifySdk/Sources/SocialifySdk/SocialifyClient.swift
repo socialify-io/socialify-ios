@@ -7,8 +7,11 @@
 
 import Foundation
 import UIKit
+import os
+import Combine
+import CoreData
 
-@available(iOS 13.0, *)
+@available(iOS 14.0, *)
 public final class SocialifyClient: ObservableObject {
     static public let shared: SocialifyClient = SocialifyClient()
     
@@ -25,4 +28,6 @@ public final class SocialifyClient: ObservableObject {
     let deviceModel = UIDevice.modelName
     let systemVersion = "iOS_\(UIDevice.current.systemVersion)"
     let userAgent = "Socialify-iOS"
+    
+    let persistentContainer: NSPersistentContainer = CoreDataModel.shared.persistentContainer
 }

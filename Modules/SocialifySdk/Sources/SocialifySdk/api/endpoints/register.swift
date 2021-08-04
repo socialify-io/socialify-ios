@@ -8,7 +8,7 @@
 import Foundation
 import SwiftRSA
 
-@available(iOS 13.0, *)
+@available(iOS 14.0, *)
 extension SocialifyClient {
     
     // MARK: - Creating new Socialify account
