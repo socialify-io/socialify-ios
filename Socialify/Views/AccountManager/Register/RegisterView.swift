@@ -163,17 +163,17 @@ struct RegisterView: View {
             }
         }
         .alert(isPresented: $showAlert) {
-                    switch activeAlert {
-                    case .success:
-                        return Alert(title: Text("success"), message: Text("register.success"), dismissButton: .default(Text("got_it")){
-                                                DispatchQueue.main.async{
-                                                    self.presentationMode.wrappedValue.dismiss()
-                                                }
-                                            })
-                    case .failure:
-                        return Alert(title: Text(errorAlertShow?.name ?? "errors.default"), message: Text(errorAlertShow?.description ?? "errors.default_description"), primaryButton: .cancel(), secondaryButton: .destructive(Text("errors.button")) { self.showErrorReportModal = true } )
-                    }
-                }
+            switch activeAlert {
+            case .success:
+                return Alert(title: Text("success"), message: Text("register.success"), dismissButton: .default(Text("got_it")){
+                                        DispatchQueue.main.async{
+                                            self.presentationMode.wrappedValue.dismiss()
+                                        }
+                                    })
+            case .failure:
+                return Alert(title: Text(errorAlertShow?.name ?? "errors.default"), message: Text(errorAlertShow?.description ?? "errors.default_description"), primaryButton: .cancel(), secondaryButton: .destructive(Text("errors.button")) { self.showErrorReportModal = true } )
+            }
+        }
     }
 }
 
