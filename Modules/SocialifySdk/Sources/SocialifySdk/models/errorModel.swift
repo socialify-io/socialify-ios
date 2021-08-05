@@ -50,6 +50,9 @@ extension SocialifyClient {
         case RSAKeyGenerationError
         case RSAPublicKeyToStringError
         case RSAPrivateKeyToStringError
+        
+        // Core Data
+        case SavingContextError
     }
     
     // MARK: - Errors functions

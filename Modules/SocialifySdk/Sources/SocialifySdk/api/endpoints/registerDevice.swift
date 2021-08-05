@@ -87,7 +87,9 @@ extension SocialifyClient {
                             let accountId = accounts[accounts.count-1].value(forKey: "id") as! Int64 + 1
                             model.id = accountId
                             
-                            try! context.save()
+                            do {
+                                try context.save()
+                            } catch { completion(.failure(SdkError.SavingContextError)) }
                             
                             self.ud.setValue(accountId, forKey: "actualAccount")
                             self.keychain["\(accountId)-privateKey"] = keys["privateKey"]
