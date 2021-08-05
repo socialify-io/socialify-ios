@@ -11,6 +11,8 @@ import SocialifySdk
 
 struct LoginView: View {
     @StateObject var client: SocialifyClient = SocialifyClient.shared
+    @Environment(\.presentationMode) var presentationMode
+    @Binding var showLoginModal: Bool
     
     let cellHeight: CGFloat = 55
     let cornerRadius: CGFloat = 12
@@ -110,7 +112,9 @@ struct LoginView: View {
                     switch(value) {
                     case .success(let value):
                         print(value)
-                    
+                        self.showLoginModal = false
+                        //self.presentationMode.wrappedValue.dismiss()
+                        
                     case .failure(let error):
                         switch error {
                         case SocialifyClient.ApiError.InvalidUsername:
@@ -149,6 +153,6 @@ struct LoginView: View {
 
 struct LoginViewPreviews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(showLoginModal: .constant(true))
     }
 }

@@ -9,11 +9,8 @@ import SwiftUI
 
 struct AccountManagerView: View {
     
+    @Environment(\.presentationMode) var presentationMode
     @State private var showLoginModal = false
-      
-    private func addAccount() {
-        self.showLoginModal = true
-    }
     
     var body: some View {
         VStack {
@@ -29,9 +26,10 @@ struct AccountManagerView: View {
                 .padding()
                 .padding(.bottom, 16)
                 .sheet(isPresented: $showLoginModal, onDismiss: {
-                    }) {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
                     NavigationView {
-                        LoginView()
+                        LoginView(showLoginModal: self.$showLoginModal)
                             .navigationBarTitle(Text("Back"))
                             .navigationBarHidden(true)
                             .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.bottom)

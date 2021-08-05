@@ -88,7 +88,7 @@ struct ErrorReportView: View {
                 client.reportError(report: report) { result in
                     switch result {
                     case .success(let response):
-                        buttonText = "Success!"
+                        self.showErrorReportModal = false
                         print(response)
                         
                     case .failure(let error):

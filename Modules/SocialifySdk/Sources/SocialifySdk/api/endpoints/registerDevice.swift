@@ -105,8 +105,6 @@ extension SocialifyClient {
                     completion(.failure(SdkError.RSAError))
                 }
                 
-                completion(.success(true))
-                
             case .failure(let error):
                 completion(.failure(error))
             }
