@@ -11,6 +11,8 @@
 		5C2A2EDE26B9F46D006CC3D6 /* models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A2EDD26B9F46D006CC3D6 /* models.swift */; };
 		5C33AB8D2689D16600640F1C /* FacebookItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C33AB8C2689D16600640F1C /* FacebookItemView.swift */; };
 		5C3AD25E26BC062800D04367 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 5C3AD25D26BC062800D04367 /* KeychainAccess */; };
+		5C3AD26026BC5A5600D04367 /* AccountCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3AD25F26BC5A5600D04367 /* AccountCardView.swift */; };
+		5C3AD26226BC5C3B00D04367 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3AD26126BC5C3B00D04367 /* AccountView.swift */; };
 		5C3DD2242613B78F00B8E532 /* CustomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DD2232613B78F00B8E532 /* CustomButtonView.swift */; };
 		5C3DD22A2613C81700B8E532 /* MediaItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DD2292613C81700B8E532 /* MediaItemView.swift */; };
 		5C44F355268921E7003A5768 /* TabBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C44F354268921E7003A5768 /* TabBarIcon.swift */; };
@@ -55,6 +57,8 @@
 		5C04650F2687E868006D3126 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
 		5C2A2EDD26B9F46D006CC3D6 /* models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = models.swift; sourceTree = "<group>"; };
 		5C33AB8C2689D16600640F1C /* FacebookItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookItemView.swift; sourceTree = "<group>"; };
+		5C3AD25F26BC5A5600D04367 /* AccountCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCardView.swift; sourceTree = "<group>"; };
+		5C3AD26126BC5C3B00D04367 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		5C3DD2232613B78F00B8E532 /* CustomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonView.swift; sourceTree = "<group>"; };
 		5C3DD2292613C81700B8E532 /* MediaItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemView.swift; sourceTree = "<group>"; };
 		5C44F354268921E7003A5768 /* TabBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarIcon.swift; sourceTree = "<group>"; };
@@ -137,6 +141,7 @@
 				5C7D56112642010100B518C9 /* LoginWithOptionView.swift */,
 				5C33AB8C2689D16600640F1C /* FacebookItemView.swift */,
 				5C88D8CD26B8B0F900BAC9A7 /* setColor.swift */,
+				5C3AD25F26BC5A5600D04367 /* AccountCardView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -147,6 +152,7 @@
 				5C3DD2192613B33600B8E532 /* Login */,
 				5C4AC87626AF7594005E7027 /* Register */,
 				5C44F35926894265003A5768 /* AccountManagerView.swift */,
+				5C3AD26126BC5C3B00D04367 /* AccountView.swift */,
 			);
 			path = AccountManager;
 			sourceTree = "<group>";
@@ -426,10 +432,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C3DD2242613B78F00B8E532 /* CustomButtonView.swift in Sources */,
+				5C3AD26026BC5A5600D04367 /* AccountCardView.swift in Sources */,
 				5C33AB8D2689D16600640F1C /* FacebookItemView.swift in Sources */,
 				5C4AC87826AF760E005E7027 /* RegisterView.swift in Sources */,
 				5C3DD22A2613C81700B8E532 /* MediaItemView.swift in Sources */,
 				5C73EA9D26112822008F7315 /* ContentView.swift in Sources */,
+				5C3AD26226BC5C3B00D04367 /* AccountView.swift in Sources */,
 				5C495BC7261A72100004D538 /* LoginView.swift in Sources */,
 				5C7D56122642010100B518C9 /* LoginWithOptionView.swift in Sources */,
 				5C73EAD0261129E1008F7315 /* OnboardingView.swift in Sources */,
