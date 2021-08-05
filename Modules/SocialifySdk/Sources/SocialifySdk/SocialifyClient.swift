@@ -10,6 +10,7 @@ import UIKit
 import os
 import Combine
 import CoreData
+import KeychainAccess
 
 @available(iOS 14.0, *)
 public final class SocialifyClient: ObservableObject {
@@ -31,4 +32,5 @@ public final class SocialifyClient: ObservableObject {
     
     let persistentContainer: NSPersistentContainer = CoreDataModel.shared.persistentContainer
     let ud = UserDefaults.group
+    let keychain = Keychain()
 }

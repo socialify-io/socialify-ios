@@ -84,12 +84,13 @@ extension SocialifyClient {
                             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
                             let accounts = try! context.fetch(fetchRequest) as! [NSManagedObject]
                             
-                            let userId = accounts[accounts.count-1].value(forKey: "id") as! Int64 + 1
-                            model.id = userId
+                            let accountId = accounts[accounts.count-1].value(forKey: "id") as! Int64 + 1
+                            model.id = accountId
                             
                             try! context.save()
                             
-                            self.ud.setValue(userId, forKey: "actualAccount")
+                            self.ud.setValue(accountId, forKey: "actualAccount")
+                            self.keychain["\(accountId)-privateKey"] = keys["privateKey"]
                             
                             completion(.success(true))
                             

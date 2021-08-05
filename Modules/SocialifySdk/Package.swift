@@ -23,13 +23,14 @@ let package = Package(
         .package(url: "https://github.com/Pengwius/BCryptSwift", from: "1.1.0"),
         .package(url: "https://github.com/puretears/SwiftRSA", from: "0.1.2"),
         .package(url: "https://github.com/SwiftyJSON/SwiftyJSON", from: "5.0.0"),
+        .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", from: "4.2.2")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "SocialifySdk",
-            dependencies: ["BCryptSwift", "SwiftRSA", "SwiftyJSON"]),
+            dependencies: ["BCryptSwift", "SwiftRSA", "SwiftyJSON", "KeychainAccess"]),
         .testTarget(
             name: "SocialifySdkTests",
             dependencies: ["SocialifySdk"]),
