@@ -13,17 +13,25 @@ extension SocialifyClient {
     
     // MARK: - Getting accounts from Core Data
     
-    public func fetchAccounts(completion: @escaping (Result<[Account], Error>) -> Void) {
+    public func fetchAccounts() -> [Account] {
         let context = self.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
         let accounts = try! context.fetch(fetchRequest) as! [Account]
         
-        var response: [Account] = []
-
-        for account in accounts as [Account] {
-            response.append(account)
-        }
+        return accounts
+    }
+    
+    public func setCurrentAccount(account: Account) {
+        let context = self.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
+        let accounts = try! context.fetch(fetchRequest) as! [Account]
         
-        completion(.success(response))
+        for cd_account in accounts {
+            if(cd_account.isCurrentAccount) {
+                cd_account.isCurrentAccount = false
+            } else if(cd_account.id == account.id) {
+                cd_account.isCurrentAccount = true
+            }
+        }
     }
 }

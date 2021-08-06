@@ -17,6 +17,10 @@ struct AccountManagerView: View {
     @State private var showLoginModal = false
     @State private var accounts: [Account] = []
     
+    init() {
+        
+    }
+    
     var body: some View {
         VStack {
             if(isLogged) {
@@ -32,7 +36,7 @@ struct AccountManagerView: View {
                 
                 ForEach(accounts, id: \.self) { account in
                     if(account.isCurrentAccount) {
-                        AccountCardView(account: account)
+                        AccountTileView(account: account)
                             .padding(.bottom)
                     }
                 }
@@ -50,7 +54,7 @@ struct AccountManagerView: View {
                 ScrollView {
                     ForEach(accounts, id: \.self) { account in
                         if(!account.isCurrentAccount) {
-                            AccountCardView(account: account)
+                            AccountTileView(account: account)
                         }
                     }
                 }
@@ -82,16 +86,13 @@ struct AccountManagerView: View {
             }
         }
         .onAppear {
-            client.fetchAccounts() { response in
-                switch(response) {
-                case .success(let accounts) :
-                    self.accounts = accounts
-                    
-                case .failure(let error):
-                    print(error)
-                }
-                
-            }
+            self.accounts = client.fetchAccounts()
+            print(accounts)
+        }
+        .onDisappear {
+            self.accounts = client.fetchAccounts()
+            print(accounts)
+            
         }
     }
 }
