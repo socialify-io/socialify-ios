@@ -42,6 +42,10 @@ extension SocialifyClient {
         
         for cd_account in accounts {
             if(cd_account.id == account.id) {
+                print("+++++++++++++++++cd+++++++++++++++++++")
+                print(cd_account)
+                print("+++++++++++++++++non cd+++++++++++++++++++")
+                print(account)
                 context.delete(cd_account)
             }
         }

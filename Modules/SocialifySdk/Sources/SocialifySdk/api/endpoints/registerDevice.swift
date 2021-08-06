@@ -84,7 +84,12 @@ extension SocialifyClient {
                             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
                             let accounts = try! context.fetch(fetchRequest) as! [NSManagedObject]
                             
-                            let accountId = accounts[accounts.count-1].value(forKey: "id") as! Int64 + 1
+                            var accountId: Int64 = 0 as Int64
+                            
+                            if(accounts != []) {
+                                accountId = accounts[accounts.count-1].value(forKey: "id") as! Int64 + 1
+                            }
+                            
                             model.id = accountId
                             
                             for account in accounts as! [Account] {
