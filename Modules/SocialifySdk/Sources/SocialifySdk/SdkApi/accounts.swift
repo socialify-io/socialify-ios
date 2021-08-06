@@ -15,16 +15,12 @@ extension SocialifyClient {
     
     public func fetchAccounts() -> [Account] {
         let context = self.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
-        let accounts = try! context.fetch(fetchRequest) as! [Account]
-        
-        return accounts
+        return getAccountsFromCoreData(context: context)
     }
     
     public func setCurrentAccount(account: Account) {
         let context = self.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
-        let accounts = try! context.fetch(fetchRequest) as! [Account]
+        let accounts = getAccountsFromCoreData(context: context)
         
         for cd_account in accounts {
             if(cd_account.isCurrentAccount) {
@@ -37,19 +33,19 @@ extension SocialifyClient {
     
     public func deleteAccount(account: Account) {
         let context = self.persistentContainer.viewContext
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
-        let accounts = try! context.fetch(fetchRequest) as! [Account]
+        let accounts = getAccountsFromCoreData(context: context)
         
         for cd_account in accounts {
             if(cd_account.id == account.id) {
-                print("+++++++++++++++++cd+++++++++++++++++++")
-                print(cd_account)
-                print("+++++++++++++++++non cd+++++++++++++++++++")
-                print(account)
                 context.delete(cd_account)
             }
         }
         
         try! context.save()
+    }
+    
+    private func getAccountsFromCoreData(context: NSManagedObjectContext) -> [Account] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
+        return try! context.fetch(fetchRequest) as! [Account]
     }
 }
