@@ -6,14 +6,16 @@
 //
 
 import SwiftUI
+import CoreData
+import SocialifySdk
 
 struct AccountCardView: View {
-    var isActualAccount: Bool
+    var account: Account
     
     var body: some View {
         NavigationLink(destination: AccountView()) {
             HStack {
-                    if(isActualAccount) {
+                if(account.isCurrentAccount) {
                         ZStack {
                             Image("Facebook")
                                 .resizable()
@@ -36,7 +38,7 @@ struct AccountCardView: View {
                     }
                     
                 VStack {
-                    Text(LocalizedStringKey("Example Account Name"))
+                    Text(LocalizedStringKey(account.username ?? "<username can't be loaded>"))
                         .font(.callout)
                         .foregroundColor(Color("CustomForegroundColor"))
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -69,8 +71,8 @@ struct AccountCardView: View {
     }
 }
 
-struct AccountCardView_Previews: PreviewProvider {
-    static var previews: some View {
-        AccountCardView(isActualAccount: false)
-    }
-}
+//struct AccountCardView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AccountCardView(account: account)
+//    }
+//}

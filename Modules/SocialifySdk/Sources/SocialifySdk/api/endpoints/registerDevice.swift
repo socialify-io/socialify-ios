@@ -81,7 +81,6 @@ extension SocialifyClient {
                             model.isCurrentAccount = true
 
                             
-                            
                             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
                             let accounts = try! context.fetch(fetchRequest) as! [NSManagedObject]
                             

@@ -15,6 +15,7 @@ struct AccountManagerView: View {
     @AppStorage("isLogged") private var isLogged: Bool = true
     
     @State private var showLoginModal = false
+    @State private var accounts: [Account] = []
     
     var body: some View {
         VStack {
@@ -29,8 +30,12 @@ struct AccountManagerView: View {
                     
                 }.padding(.vertical, 2)
                 
-                AccountCardView(isActualAccount: true)
-                    .padding(.bottom)
+                ForEach(accounts, id: \.self) { account in
+                    if(account.isCurrentAccount) {
+                        AccountCardView(account: account)
+                            .padding(.bottom)
+                    }
+                }
                 
                 HStack {
                     Text("Your accounts")
@@ -43,9 +48,11 @@ struct AccountManagerView: View {
                 }.padding(2)
                 
                 ScrollView {
-                    AccountCardView(isActualAccount: false)
-                    AccountCardView(isActualAccount: false)
-                    AccountCardView(isActualAccount: false)
+                    ForEach(accounts, id: \.self) { account in
+                        if(!account.isCurrentAccount) {
+                            AccountCardView(account: account)
+                        }
+                    }
                 }
                 
             } else {
@@ -78,9 +85,7 @@ struct AccountManagerView: View {
             client.fetchAccounts() { response in
                 switch(response) {
                 case .success(let accounts) :
-                    for account in accounts {
-                        print(account.isCurrentAccount)
-                    }
+                    self.accounts = accounts
                     
                 case .failure(let error):
                     print(error)
@@ -91,8 +96,8 @@ struct AccountManagerView: View {
     }
 }
 
-struct AccountManagerView_Previews: PreviewProvider {
-    static var previews: some View {
-        AccountManagerView()
-    }
-}
+//struct AccountManagerView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AccountManagerView()
+//    }
+//}
