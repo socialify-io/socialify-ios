@@ -71,6 +71,7 @@ struct AccountTileView: View {
             .padding(.vertical, 10)
             .background(Color("CustomAppearanceItemColor"))
             .cornerRadius(20)
+            .shadow(color: .black, radius: 5)
     }
 }
 

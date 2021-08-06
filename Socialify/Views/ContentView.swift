@@ -25,13 +25,13 @@ struct ContentView: View {
             }
             
             ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: { /*showLoginModal = true*/ }) {
+                Button(action: {}) {
                     Image(systemName: "magnifyingglass")
                 }
             }
         }
         .navigationBarTitle("Homepage", displayMode: .inline)
-        .background(Color("BackgroundColor"))//.ignoresSafeArea(.all))
+        .background(Color("BackgroundColor"))
     }
 }
 

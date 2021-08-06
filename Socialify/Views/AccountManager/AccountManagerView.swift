@@ -74,26 +74,18 @@ struct AccountManagerView: View {
                 }
                 .padding()
                 .padding(.bottom, 16)
-                .sheet(isPresented: $showLoginModal, onDismiss: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }) {
-                    NavigationView {
-                        LoginView(showLoginModal: self.$showLoginModal)
-                            .navigationBarTitle(Text("Back"))
-                            .navigationBarHidden(true)
-                            .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.bottom)
-                    }
-                }
+            }
+        }
+        .sheet(isPresented: $showLoginModal, onDismiss: { self.accounts = client.fetchAccounts() }) {
+            NavigationView {
+                LoginView()
+                    .navigationBarTitle(Text("Back"))
+                    .navigationBarHidden(true)
+                    .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.bottom)
             }
         }
         .onAppear {
             self.accounts = client.fetchAccounts()
-            print(accounts)
-        }
-        .onDisappear {
-            self.accounts = client.fetchAccounts()
-            print(accounts)
-            
         }
     }
 }

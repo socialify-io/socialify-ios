@@ -19,25 +19,10 @@ struct SocialifyApp: App {
                 OnboardingView()
             } else {
                 if(isLogged) {
-//                    GeometryReader { geometry in
-//                        ZStack {
-//                            Image("Facebook")
-//                                .resizable()
-//                                .clipShape(Circle())
-//                                //.overlay(Circle().stroke(Color("CustomAppearanceItemColor"), lineWidth: 3))
-//                                .shadow(radius: 4)
-//                                .zIndex(2)
-//                                .offset(y: geometry.size.height/10*4.42)
-//                                .frame(width: geometry.size.width/6 , height: geometry.size.width/6)
-//
-//                            NavigationBarView()
-//                                .zIndex(1)
-//                        }
-//                    }
                     NavigationBarView()
                 } else {
                     NavigationView {
-                        LoginView(showLoginModal: .constant(true))
+                        LoginView()
                             .navigationBarTitle(Text("Back"))
                             .navigationBarHidden(true)
                             .background(Color("BackgroundColor").ignoresSafeArea(.all))
