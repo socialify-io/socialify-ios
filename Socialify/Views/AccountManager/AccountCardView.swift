@@ -138,7 +138,7 @@ struct AccountCardView: View {
                 Divider()
                     .padding(8)
                 
-                Button(action: { isLogOutAlertPresented = true }) {
+                Button(action: {}) {
                     HStack {
                         Image(systemName: "trash.fill")
                             .renderingMode(.template)
@@ -164,7 +164,7 @@ struct AccountCardView: View {
                 .padding()
                 .shadow(color: .black, radius: 5)
             
-            Button(LocalizedStringKey("Log out")) { client.deleteAccount(account: account) }
+            Button(LocalizedStringKey("Log out")) { isLogOutAlertPresented = true }
                 .font(.headline)
                 .multilineTextAlignment(.center)
                 .padding()
