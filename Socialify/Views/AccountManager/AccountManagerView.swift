@@ -17,13 +17,9 @@ struct AccountManagerView: View {
     @State private var showLoginModal = false
     @State private var accounts: [Account] = []
     
-    init() {
-        
-    }
-    
     var body: some View {
         VStack {
-            if(isLogged) {
+            if(isLogged && accounts != []) {
                 HStack {
                     Text("Current account")
                         .font(.headline)
@@ -66,6 +62,7 @@ struct AccountManagerView: View {
             }
         }.navigationBarTitle("Accounts")
         .padding()
+        .background(Color("BackgroundColor"))
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button(action: { showLoginModal = true }) {

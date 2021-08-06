@@ -47,37 +47,13 @@ struct NavigationBarView: View {
                 ContentView()
                         }
                 .tabItem {
-                Label("Home", systemImage: "house")
+                Label("Home", systemImage: "house.fill")
                     .accessibility(label: Text("Home"))
-            }
-            
-            NavigationView {
-                ContentView()
-                    .navigationBarItems(trailing: NavigationLink(destination: AccountManagerView()) {
-                        Image(systemName: "person.circle")
-                    })
-                        }
-                .tabItem {
-                Label("Friends", systemImage: "person.2")
-                    .accessibility(label: Text("Friends"))
-            }
-
-            Spacer()
-            
-            NavigationView {
-                ContentView()
-                    .navigationBarItems(trailing: NavigationLink(destination: AccountManagerView()) {
-                        Image(systemName: "person.circle")
-                    })
-                        }
-                .tabItem {
-                Label("Marketplace", systemImage: "cart")
-                    .accessibility(label: Text("Marketplace"))
-            }
+            } 
             
             ContentView()
             .tabItem {
-                Label("More", systemImage: "ellipsis.circle")
+                Label("More", systemImage: "ellipsis.circle.fill")
                     .accessibility(label: Text("More"))
             }
         }
