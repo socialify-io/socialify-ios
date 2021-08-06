@@ -60,17 +60,9 @@ struct AccountTileView: View {
                 let cardImage = Image(uiImage: UIImage(systemName: "ellipsis")!)
                     .renderingMode(.template)
                     
-                let trashImage = Image(uiImage: UIImage(systemName: "trash")!)
-                    .renderingMode(.template)
-                    
-                Button("\(cardImage)") {
-                    print("going to account setajngs")
-                }.foregroundColor(Color.accentColor)
-                .padding(.trailing, 8)
-                
-                Button("\(trashImage)") {
-                    print("deleting...")
-                }.foregroundColor(Color.red)
+                NavigationLink("\(cardImage)", destination: AccountCardView(account: account))
+                    .foregroundColor(Color.accentColor)
+                    .padding(.trailing, 8)
 
             }.font(.headline)
             .multilineTextAlignment(.center)

@@ -75,7 +75,8 @@ struct OnboardingView: View {
             Spacer()
             CustomButtonView(action: {
                 needsAppOnboarding = false
-            }, title: "onboarding.continue").padding(.bottom)
+            }, title: "onboarding.continue")
+                .padding(.bottom)
         }.padding(.horizontal)
         .background(Color("BackgroundColor").edgesIgnoringSafeArea(.all))
     }

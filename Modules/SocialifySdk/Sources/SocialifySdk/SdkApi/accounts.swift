@@ -34,4 +34,18 @@ extension SocialifyClient {
             }
         }
     }
+    
+    public func deleteAccount(account: Account) {
+        let context = self.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
+        let accounts = try! context.fetch(fetchRequest) as! [Account]
+        
+        for cd_account in accounts {
+            if(cd_account.id == account.id) {
+                context.delete(cd_account)
+            }
+        }
+        
+        try! context.save()
+    }
 }
