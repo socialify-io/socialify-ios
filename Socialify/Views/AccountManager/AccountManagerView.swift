@@ -57,7 +57,11 @@ struct AccountManagerView: View {
                 
             } else {
                 Spacer()
-                Text("account_manager.no_accounts")
+                HStack {
+                    Spacer()
+                    Text("account_manager.no_accounts")
+                    Spacer()
+                }
                 Spacer()
             }
         }.navigationBarTitle("Accounts")

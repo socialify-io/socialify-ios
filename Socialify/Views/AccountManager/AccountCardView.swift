@@ -11,6 +11,8 @@ import SocialifySdk
 
 struct AccountCardView: View {
     @StateObject var client: SocialifyClient = SocialifyClient.shared
+    @State private var isLogOutAlertPresented = false
+    
     var account: Account
     
     var body: some View {
@@ -53,14 +55,6 @@ struct AccountCardView: View {
                 
             }.padding(.horizontal)
             .padding(.top, 20)
-            
-//            Button("Change username") {}
-//            Button("Change password") {}
-//            Button("See logs") {}
-//            Button("Delete account") {}
-//                .foregroundColor(Color.red)
-            
-            //Spacer()
             
             VStack {
                 HStack {
@@ -144,7 +138,7 @@ struct AccountCardView: View {
                 Divider()
                     .padding(8)
                 
-                Button(action: {}) {
+                Button(action: { isLogOutAlertPresented = true }) {
                     HStack {
                         Image(systemName: "trash.fill")
                             .renderingMode(.template)
@@ -184,7 +178,10 @@ struct AccountCardView: View {
                 .shadow(color: .black, radius: 5)
             
         }.background(Color("BackgroundColor"))
-            .frame(width: .infinity, height: .infinity)
+        .frame(width: .infinity, height: .infinity)
+        .alert(isPresented: $isLogOutAlertPresented) {
+            Alert(title: Text("Log out"), message: Text("Do you want to log out from \(account.username ?? "<username can't be loaded>") account? All account data will be deleted from this device."), primaryButton: .cancel(), secondaryButton: .destructive(Text("Log out")) { client.deleteAccount(account: account) } )
+        }
     }
 }
 
