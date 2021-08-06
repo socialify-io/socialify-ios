@@ -15,7 +15,6 @@ struct AccountManagerView: View {
     @AppStorage("isLogged") private var isLogged: Bool = true
     
     @State private var showLoginModal = false
-    @State private var selectedFilter = 0
     
     var body: some View {
         VStack {
@@ -76,7 +75,7 @@ struct AccountManagerView: View {
             }
         }
         .onAppear {
-            
+
         }
     }
 }
