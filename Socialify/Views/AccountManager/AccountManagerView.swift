@@ -75,7 +75,18 @@ struct AccountManagerView: View {
             }
         }
         .onAppear {
-
+            client.fetchAccounts() { response in
+                switch(response) {
+                case .success(let accounts) :
+                    for account in accounts {
+                        print(account.isCurrentAccount)
+                    }
+                    
+                case .failure(let error):
+                    print(error)
+                }
+                
+            }
         }
     }
 }
