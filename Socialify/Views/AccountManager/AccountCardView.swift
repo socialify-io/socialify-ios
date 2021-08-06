@@ -10,7 +10,9 @@ import CoreData
 import SocialifySdk
 
 struct AccountCardView: View {
+    
     @StateObject var client: SocialifyClient = SocialifyClient.shared
+    @Environment(\.presentationMode) var presentationMode
     @State private var isLogOutAlertPresented = false
     
     var account: Account
@@ -180,7 +182,9 @@ struct AccountCardView: View {
         }.background(Color("BackgroundColor"))
         .frame(width: .infinity, height: .infinity)
         .alert(isPresented: $isLogOutAlertPresented) {
-            Alert(title: Text("Log out"), message: Text("Do you want to log out from \(account.username ?? "<username can't be loaded>") account? All account data will be deleted from this device."), primaryButton: .cancel(), secondaryButton: .destructive(Text("Log out")) { client.deleteAccount(account: account) } )
+            Alert(title: Text("Log out"), message: Text("Do you want to log out from \(account.username ?? "<username can't be loaded>") account? All account data will be deleted from this device."), primaryButton: .cancel(), secondaryButton: .destructive(Text("Log out")) { client.deleteAccount(account: account)
+                self.presentationMode.wrappedValue.dismiss()
+            } )
         }
     }
 }
