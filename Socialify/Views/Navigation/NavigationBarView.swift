@@ -44,14 +44,14 @@ struct NavigationBarView: View {
         
         TabView() {
             NavigationView {
-                ContentView()
+                ChatsView()
                         }
                 .tabItem {
-                Label("Home", systemImage: "house.fill")
-                    .accessibility(label: Text("Home"))
+                Label("Chats", systemImage: "message.fill")
+                    .accessibility(label: Text("Chats"))
             } 
             
-            ContentView()
+            ChatsView()
             .tabItem {
                 Label("More", systemImage: "ellipsis.circle.fill")
                     .accessibility(label: Text("More"))

@@ -45,14 +45,17 @@ struct AccountManagerView: View {
                     
                     Spacer()
                     
-                }.padding(2)
+                }.padding(.top, 2)
+                .padding(.bottom, -16)
                 
-                ForEach(accounts, id: \.self) { account in
-                    if(!account.isCurrentAccount) {
-                        AccountTileView(account: account)
-                            .padding(.vertical, 2)
-                    }
-                }
+                ScrollView {
+                    ForEach(accounts, id: \.self) { account in
+                        if(!account.isCurrentAccount) {
+                            AccountTileView(account: account)
+                                .padding(.vertical, 2)
+                        }
+                    }.padding()
+                }.padding(.horizontal, -20)
                 
                 Spacer()
                 

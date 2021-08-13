@@ -18,6 +18,18 @@ extension SocialifyClient {
         return getAccountsFromCoreData(context: context)
     }
     
+    public func getCurrentAccount() -> Account {
+        var currentAccount: Account?
+        
+        for account in fetchAccounts() {
+            if(account.isCurrentAccount) {
+                currentAccount =  account
+            }
+        }
+        
+        return currentAccount!
+    }
+    
     public func setCurrentAccount(account: Account) {
         let context = self.persistentContainer.viewContext
         let accounts = getAccountsFromCoreData(context: context)

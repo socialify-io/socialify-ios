@@ -11,10 +11,13 @@ import os
 import Combine
 import CoreData
 import KeychainAccess
+import SocketIO
 
 @available(iOS 14.0, *)
 public final class SocialifyClient: ObservableObject {
     static public let shared: SocialifyClient = SocialifyClient()
+    
+    let manager = SocketManager(socketURL: URL(string: "ws://localhost:80")!, config: [.log(true), .compress, .forcePolling(true)])
     
     public init() {}
     

@@ -64,7 +64,7 @@ extension SocialifyClient {
                     
                     self.request(request: request, authTokenHeader: "newDevice") { value in
                         switch value {
-                        case .success(_):
+                        case .success(let response):
                             let context = self.persistentContainer.viewContext
                             
                             let entityDescription = NSEntityDescription.entity(
@@ -78,11 +78,11 @@ extension SocialifyClient {
                             )
                             
                             model.username = username
+                            model.deviceId = Int64("\(response["data"]["id"])")!
                             model.isCurrentAccount = true
 
                             
-                            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Account")
-                            let accounts = try! context.fetch(fetchRequest) as! [NSManagedObject]
+                            let accounts = self.fetchAccounts()
                             
                             var accountId: Int64 = 0 as Int64
                             
