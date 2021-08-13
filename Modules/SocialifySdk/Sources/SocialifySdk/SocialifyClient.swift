@@ -17,7 +17,7 @@ import SocketIO
 public final class SocialifyClient: ObservableObject {
     static public let shared: SocialifyClient = SocialifyClient()
     
-    let manager = SocketManager(socketURL: URL(string: "ws://localhost:80")!, config: [.log(true), .compress, .forcePolling(true)])
+    let manager = SocketManager(socketURL: URL(string: "http://localhost:80")!, config: [.log(true), .compress, .forcePolling(true)])
     
     public init() {}
     
