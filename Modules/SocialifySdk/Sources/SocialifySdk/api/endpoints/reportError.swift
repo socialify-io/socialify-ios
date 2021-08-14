@@ -7,6 +7,7 @@
 
 import Foundation
 
+@available(iOS 14.0, *)
 extension SocialifyClient {
     
     public func reportError(report: ErrorReport, completion: @escaping (Result<Bool, Error>) -> Void) {

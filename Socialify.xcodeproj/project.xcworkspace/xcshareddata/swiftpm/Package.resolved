@@ -11,6 +11,33 @@
         }
       },
       {
+        "package": "KeychainAccess",
+        "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess",
+        "state": {
+          "branch": null,
+          "revision": "84e546727d66f1adc5439debad16270d0fdd04e7",
+          "version": "4.2.2"
+        }
+      },
+      {
+        "package": "SocketIO",
+        "repositoryURL": "https://github.com/socketio/socket.io-client-swift",
+        "state": {
+          "branch": "master",
+          "revision": "d031afdbc4aaf87c3b84cbec04bfaa7666e1fa0a",
+          "version": null
+        }
+      },
+      {
+        "package": "Starscream",
+        "repositoryURL": "https://github.com/daltoniam/Starscream",
+        "state": {
+          "branch": null,
+          "revision": "df8d82047f6654d8e4b655d1b1525c64e1059d21",
+          "version": "4.0.4"
+        }
+      },
+      {
         "package": "SwiftRSA",
         "repositoryURL": "https://github.com/puretears/SwiftRSA",
         "state": {
@@ -26,6 +53,15 @@
           "branch": null,
           "revision": "2b6054efa051565954e1d2b9da831680026cd768",
           "version": "5.0.0"
+        }
+      },
+      {
+        "package": "SwiftyRSA",
+        "repositoryURL": "https://github.com/bednarj4/SwiftyRSA",
+        "state": {
+          "branch": "master",
+          "revision": "c18eb3c617bc087eb4d48bf910ae704e865ac5c8",
+          "version": null
         }
       }
     ]

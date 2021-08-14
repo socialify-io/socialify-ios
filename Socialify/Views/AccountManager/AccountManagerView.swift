@@ -6,21 +6,71 @@
 //
 
 import SwiftUI
+import SocialifySdk
 
 struct AccountManagerView: View {
     
+    @StateObject var client: SocialifyClient = SocialifyClient.shared
+    @Environment(\.presentationMode) var presentationMode
+    @AppStorage("isLogged") private var isLogged: Bool = true
+    
     @State private var showLoginModal = false
-      
-    private func addAccount() {
-        self.showLoginModal = true
-    }
+    @State private var accounts: [Account] = []
     
     var body: some View {
         VStack {
-            Spacer()
-            Text("account_manager.no_accounts")
-            Spacer()
-        }
+            if(isLogged && accounts != []) {
+                HStack {
+                    Text("Current account")
+                        .font(.headline)
+                        .padding(.leading, 3)
+                        .foregroundColor(.secondary)
+                    
+                    Spacer()
+                    
+                }.padding(.vertical, 2)
+                
+                ForEach(accounts, id: \.self) { account in
+                    if(account.isCurrentAccount) {
+                        AccountTileView(account: account)
+                            .padding(.bottom)
+                    }
+                }
+                
+                HStack {
+                    Text("Your accounts")
+                        .font(.headline)
+                        .padding(.leading, 3)
+                        .foregroundColor(.secondary)
+                    
+                    Spacer()
+                    
+                }.padding(.top, 2)
+                .padding(.bottom, -16)
+                
+                ScrollView {
+                    ForEach(accounts, id: \.self) { account in
+                        if(!account.isCurrentAccount) {
+                            AccountTileView(account: account)
+                                .padding(.vertical, 2)
+                        }
+                    }.padding()
+                }.padding(.horizontal, -20)
+                
+                Spacer()
+                
+            } else {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Text("account_manager.no_accounts")
+                    Spacer()
+                }
+                Spacer()
+            }
+        }.navigationBarTitle("Accounts")
+        .padding()
+        .background(Color("BackgroundColor"))
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button(action: { showLoginModal = true }) {
@@ -28,22 +78,24 @@ struct AccountManagerView: View {
                 }
                 .padding()
                 .padding(.bottom, 16)
-                .sheet(isPresented: $showLoginModal, onDismiss: {
-                    }) {
-                    NavigationView {
-                        LoginView()
-                            .navigationBarTitle(Text("Back"))
-                            .navigationBarHidden(true)
-                            .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.bottom)
-                    }
-                }
             }
+        }
+        .sheet(isPresented: $showLoginModal, onDismiss: { self.accounts = client.fetchAccounts() }) {
+            NavigationView {
+                LoginView()
+                    .navigationBarTitle(Text("Back"))
+                    .navigationBarHidden(true)
+                    .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.bottom)
+            }
+        }
+        .onAppear {
+            self.accounts = client.fetchAccounts()
         }
     }
 }
 
-struct AccountManagerView_Previews: PreviewProvider {
-    static var previews: some View {
-        AccountManagerView()
-    }
-}
+//struct AccountManagerView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AccountManagerView()
+//    }
+//}

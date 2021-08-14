@@ -44,40 +44,16 @@ struct NavigationBarView: View {
         
         TabView() {
             NavigationView {
-                ContentView()
+                ChatsView()
                         }
                 .tabItem {
-                Label("Home", systemImage: "house")
-                    .accessibility(label: Text("Home"))
-            }
+                Label("Chats", systemImage: "message.fill")
+                    .accessibility(label: Text("Chats"))
+            } 
             
-            NavigationView {
-                ContentView()
-                    .navigationBarItems(trailing: NavigationLink(destination: AccountManagerView()) {
-                        Image(systemName: "person.circle")
-                    })
-                        }
-                .tabItem {
-                Label("Friends", systemImage: "person.2")
-                    .accessibility(label: Text("Friends"))
-            }
-
-            Spacer()
-            
-            NavigationView {
-                ContentView()
-                    .navigationBarItems(trailing: NavigationLink(destination: AccountManagerView()) {
-                        Image(systemName: "person.circle")
-                    })
-                        }
-                .tabItem {
-                Label("Marketplace", systemImage: "cart")
-                    .accessibility(label: Text("Marketplace"))
-            }
-            
-            ContentView()
+            ChatsView()
             .tabItem {
-                Label("More", systemImage: "ellipsis.circle")
+                Label("More", systemImage: "ellipsis.circle.fill")
                     .accessibility(label: Text("More"))
             }
         }

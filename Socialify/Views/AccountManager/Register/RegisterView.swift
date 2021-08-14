@@ -8,16 +8,6 @@
 import SwiftUI
 import SocialifySdk
 
-struct ErrorAlert: Identifiable {
-    var id: String { name }
-    let name: String
-    let description: String
-}
-
-enum ActiveAlert {
-    case success, failure
-}
-
 struct RegisterView: View {
     @StateObject var client: SocialifyClient = SocialifyClient.shared
     @Environment(\.presentationMode) var presentationMode
@@ -39,7 +29,7 @@ struct RegisterView: View {
     @State private var showErrorReportModal = false
     @State private var activeAlert: ActiveAlert = .success
     
-    public func setButton(textOnStart: String, textOnEnd: String) {
+    private func setButton(textOnStart: String, textOnEnd: String) {
         withAnimation {
             buttonText = textOnStart
             DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
@@ -173,17 +163,17 @@ struct RegisterView: View {
             }
         }
         .alert(isPresented: $showAlert) {
-                    switch activeAlert {
-                    case .success:
-                        return Alert(title: Text("success"), message: Text("register.success"), dismissButton: .default(Text("got_it")){
-                                                DispatchQueue.main.async{
-                                                    self.presentationMode.wrappedValue.dismiss()
-                                                }
-                                            })
-                    case .failure:
-                        return Alert(title: Text(errorAlertShow?.name ?? "errors.default"), message: Text(errorAlertShow?.description ?? "errors.default_description"), primaryButton: .cancel(), secondaryButton: .destructive(Text("errors.button")) { self.showErrorReportModal = true } )
-                    }
-                }
+            switch activeAlert {
+            case .success:
+                return Alert(title: Text("success"), message: Text("register.success"), dismissButton: .default(Text("got_it")){
+                        DispatchQueue.main.async{
+                            self.presentationMode.wrappedValue.dismiss()
+                        }
+                    })
+            case .failure:
+                return Alert(title: Text(errorAlertShow?.name ?? "errors.default"), message: Text(errorAlertShow?.description ?? "errors.default_description"), primaryButton: .cancel(), secondaryButton: .destructive(Text("errors.button")) { self.showErrorReportModal = true } )
+            }
+        }
     }
 }
 

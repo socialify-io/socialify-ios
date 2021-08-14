@@ -8,24 +8,31 @@
 
 /* Begin PBXBuildFile section */
 		5C0465102687E868006D3126 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C04650F2687E868006D3126 /* NavigationBarView.swift */; };
+		5C2A2EDE26B9F46D006CC3D6 /* models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A2EDD26B9F46D006CC3D6 /* models.swift */; };
 		5C33AB8D2689D16600640F1C /* FacebookItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C33AB8C2689D16600640F1C /* FacebookItemView.swift */; };
+		5C3AD25E26BC062800D04367 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 5C3AD25D26BC062800D04367 /* KeychainAccess */; };
+		5C3AD26026BC5A5600D04367 /* AccountTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3AD25F26BC5A5600D04367 /* AccountTileView.swift */; };
+		5C3AD26226BC5C3B00D04367 /* AccountCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3AD26126BC5C3B00D04367 /* AccountCardView.swift */; };
 		5C3DD2242613B78F00B8E532 /* CustomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DD2232613B78F00B8E532 /* CustomButtonView.swift */; };
 		5C3DD22A2613C81700B8E532 /* MediaItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DD2292613C81700B8E532 /* MediaItemView.swift */; };
 		5C44F355268921E7003A5768 /* TabBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C44F354268921E7003A5768 /* TabBarIcon.swift */; };
 		5C44F35A26894265003A5768 /* AccountManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C44F35926894265003A5768 /* AccountManagerView.swift */; };
+		5C47E84426C32079005F4D0E /* RoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C47E84326C32079005F4D0E /* RoomView.swift */; };
+		5C47E84626C32662005F4D0E /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C47E84526C32662005F4D0E /* ChatView.swift */; };
 		5C495BC7261A72100004D538 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C495BC6261A72100004D538 /* LoginView.swift */; };
 		5C4AC87826AF760E005E7027 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AC87726AF760E005E7027 /* RegisterView.swift */; };
+		5C58B52726C14720008AE2B0 /* NewRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C58B52626C14720008AE2B0 /* NewRoomView.swift */; };
 		5C5FF0E226B2343C00FD6636 /* SwiftRSA in Frameworks */ = {isa = PBXBuildFile; productRef = 5C5FF0E126B2343C00FD6636 /* SwiftRSA */; };
+		5C624B3926C1CE0E00E6432B /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 5C624B3826C1CE0E00E6432B /* SocketIO */; };
 		5C66589B26B5A72F00614E9C /* ErrorReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C66589A26B5A72F00614E9C /* ErrorReportView.swift */; };
 		5C73EA9B26112822008F7315 /* SocialifyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EA9A26112822008F7315 /* SocialifyApp.swift */; };
-		5C73EA9D26112822008F7315 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EA9C26112822008F7315 /* ContentView.swift */; };
+		5C73EA9D26112822008F7315 /* ChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EA9C26112822008F7315 /* ChatsView.swift */; };
 		5C73EAA226112823008F7315 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C73EAA126112823008F7315 /* Preview Assets.xcassets */; };
 		5C73EAAD26112823008F7315 /* SocialifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EAAC26112823008F7315 /* SocialifyTests.swift */; };
 		5C73EAB826112823008F7315 /* SocialifyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EAB726112823008F7315 /* SocialifyUITests.swift */; };
 		5C73EAD0261129E1008F7315 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EACF261129E1008F7315 /* OnboardingView.swift */; };
 		5C773D7B26B0C152007DE945 /* BCryptSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5C773D7A26B0C152007DE945 /* BCryptSwift */; };
 		5C7D56122642010100B518C9 /* LoginWithOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7D56112642010100B518C9 /* LoginWithOptionView.swift */; };
-		5C82F52F267FD60100C43D8F /* accounts.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5C82F52D267FD60100C43D8F /* accounts.xcdatamodeld */; };
 		5C88D8CE26B8B0F900BAC9A7 /* setColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C88D8CD26B8B0F900BAC9A7 /* setColor.swift */; };
 		5C88D8D726B8CA0600BAC9A7 /* string.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C88D8D626B8CA0600BAC9A7 /* string.swift */; };
 		5CADDB9C2611E72200F690D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C73EA9E26112823008F7315 /* Assets.xcassets */; };
@@ -52,18 +59,24 @@
 
 /* Begin PBXFileReference section */
 		5C04650F2687E868006D3126 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
+		5C2A2EDD26B9F46D006CC3D6 /* models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = models.swift; sourceTree = "<group>"; };
 		5C33AB8C2689D16600640F1C /* FacebookItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookItemView.swift; sourceTree = "<group>"; };
+		5C3AD25F26BC5A5600D04367 /* AccountTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTileView.swift; sourceTree = "<group>"; };
+		5C3AD26126BC5C3B00D04367 /* AccountCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCardView.swift; sourceTree = "<group>"; };
 		5C3DD2232613B78F00B8E532 /* CustomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonView.swift; sourceTree = "<group>"; };
 		5C3DD2292613C81700B8E532 /* MediaItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaItemView.swift; sourceTree = "<group>"; };
 		5C44F354268921E7003A5768 /* TabBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarIcon.swift; sourceTree = "<group>"; };
 		5C44F35926894265003A5768 /* AccountManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountManagerView.swift; sourceTree = "<group>"; };
+		5C47E84326C32079005F4D0E /* RoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomView.swift; sourceTree = "<group>"; };
+		5C47E84526C32662005F4D0E /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		5C495BC6261A72100004D538 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		5C4AC87726AF760E005E7027 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		5C4AC88126AF8EFB005E7027 /* SocialifySdk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SocialifySdk; path = Modules/SocialifySdk; sourceTree = SOURCE_ROOT; };
+		5C58B52626C14720008AE2B0 /* NewRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRoomView.swift; sourceTree = "<group>"; };
 		5C66589A26B5A72F00614E9C /* ErrorReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReportView.swift; sourceTree = "<group>"; };
 		5C73EA9726112822008F7315 /* Socialify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Socialify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C73EA9A26112822008F7315 /* SocialifyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialifyApp.swift; sourceTree = "<group>"; };
-		5C73EA9C26112822008F7315 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		5C73EA9C26112822008F7315 /* ChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsView.swift; sourceTree = "<group>"; };
 		5C73EA9E26112823008F7315 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5C73EAA126112823008F7315 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5C73EAA326112823008F7315 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -75,7 +88,6 @@
 		5C73EAB926112823008F7315 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5C73EACF261129E1008F7315 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		5C7D56112642010100B518C9 /* LoginWithOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithOptionView.swift; sourceTree = "<group>"; };
-		5C82F52E267FD60100C43D8F /* accounts.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = accounts.xcdatamodel; sourceTree = "<group>"; };
 		5C88D8CD26B8B0F900BAC9A7 /* setColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setColor.swift; sourceTree = "<group>"; };
 		5C88D8D626B8CA0600BAC9A7 /* string.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = string.swift; sourceTree = "<group>"; };
 		5CADDBBA2611F5A100F690D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -87,8 +99,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C3AD25E26BC062800D04367 /* KeychainAccess in Frameworks */,
 				5C5FF0E226B2343C00FD6636 /* SwiftRSA in Frameworks */,
 				5C773D7B26B0C152007DE945 /* BCryptSwift in Frameworks */,
+				5C624B3926C1CE0E00E6432B /* SocketIO in Frameworks */,
 				5CC47C6126B0A2E90001BB7D /* SocialifySdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,6 +159,8 @@
 				5C3DD2192613B33600B8E532 /* Login */,
 				5C4AC87626AF7594005E7027 /* Register */,
 				5C44F35926894265003A5768 /* AccountManagerView.swift */,
+				5C3AD26126BC5C3B00D04367 /* AccountCardView.swift */,
+				5C3AD25F26BC5A5600D04367 /* AccountTileView.swift */,
 			);
 			path = AccountManager;
 			sourceTree = "<group>";
@@ -157,10 +173,22 @@
 			path = Register;
 			sourceTree = "<group>";
 		};
+		5C58B52526C146F5008AE2B0 /* Chats */ = {
+			isa = PBXGroup;
+			children = (
+				5C73EA9C26112822008F7315 /* ChatsView.swift */,
+				5C58B52626C14720008AE2B0 /* NewRoomView.swift */,
+				5C47E84326C32079005F4D0E /* RoomView.swift */,
+				5C47E84526C32662005F4D0E /* ChatView.swift */,
+			);
+			path = Chats;
+			sourceTree = "<group>";
+		};
 		5C66589926B5A71C00614E9C /* ErrorReport */ = {
 			isa = PBXGroup;
 			children = (
 				5C66589A26B5A72F00614E9C /* ErrorReportView.swift */,
+				5C2A2EDD26B9F46D006CC3D6 /* models.swift */,
 			);
 			path = ErrorReport;
 			sourceTree = "<group>";
@@ -196,7 +224,6 @@
 				5C73EA9E26112823008F7315 /* Assets.xcassets */,
 				5C73EAA326112823008F7315 /* Info.plist */,
 				5C73EAA026112823008F7315 /* Preview Content */,
-				5C82F52D267FD60100C43D8F /* accounts.xcdatamodeld */,
 			);
 			path = Socialify;
 			sourceTree = "<group>";
@@ -246,12 +273,12 @@
 		5C73EACA261129B0008F7315 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5C58B52526C146F5008AE2B0 /* Chats */,
 				5C66589926B5A71C00614E9C /* ErrorReport */,
 				5C44F3562689422F003A5768 /* AccountManager */,
 				5C04650E2687E829006D3126 /* Navigation */,
 				5C3DD2222613B77F00B8E532 /* Shared */,
 				5C73EACE261129D0008F7315 /* Onboarding */,
-				5C73EA9C26112822008F7315 /* ContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -300,6 +327,8 @@
 				5CC47C6026B0A2E90001BB7D /* SocialifySdk */,
 				5C773D7A26B0C152007DE945 /* BCryptSwift */,
 				5C5FF0E126B2343C00FD6636 /* SwiftRSA */,
+				5C3AD25D26BC062800D04367 /* KeychainAccess */,
+				5C624B3826C1CE0E00E6432B /* SocketIO */,
 			);
 			productName = Socialify;
 			productReference = 5C73EA9726112822008F7315 /* Socialify.app */;
@@ -377,6 +406,8 @@
 				5C773D7926B0C152007DE945 /* XCRemoteSwiftPackageReference "BCryptSwift" */,
 				5C5FF0E026B2343C00FD6636 /* XCRemoteSwiftPackageReference "SwiftRSA" */,
 				5C5FF0E426B2354700FD6636 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				5C3AD25C26BC062800D04367 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				5C624B3726C1CE0E00E6432B /* XCRemoteSwiftPackageReference "socket" */,
 			);
 			productRefGroup = 5C73EA9826112822008F7315 /* Products */;
 			projectDirPath = "";
@@ -422,21 +453,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C3DD2242613B78F00B8E532 /* CustomButtonView.swift in Sources */,
+				5C3AD26026BC5A5600D04367 /* AccountTileView.swift in Sources */,
 				5C33AB8D2689D16600640F1C /* FacebookItemView.swift in Sources */,
 				5C4AC87826AF760E005E7027 /* RegisterView.swift in Sources */,
+				5C47E84626C32662005F4D0E /* ChatView.swift in Sources */,
 				5C3DD22A2613C81700B8E532 /* MediaItemView.swift in Sources */,
-				5C73EA9D26112822008F7315 /* ContentView.swift in Sources */,
+				5C73EA9D26112822008F7315 /* ChatsView.swift in Sources */,
+				5C3AD26226BC5C3B00D04367 /* AccountCardView.swift in Sources */,
+				5C58B52726C14720008AE2B0 /* NewRoomView.swift in Sources */,
 				5C495BC7261A72100004D538 /* LoginView.swift in Sources */,
 				5C7D56122642010100B518C9 /* LoginWithOptionView.swift in Sources */,
 				5C73EAD0261129E1008F7315 /* OnboardingView.swift in Sources */,
 				5C44F355268921E7003A5768 /* TabBarIcon.swift in Sources */,
 				5C88D8CE26B8B0F900BAC9A7 /* setColor.swift in Sources */,
-				5C82F52F267FD60100C43D8F /* accounts.xcdatamodeld in Sources */,
 				5C73EA9B26112822008F7315 /* SocialifyApp.swift in Sources */,
 				5C66589B26B5A72F00614E9C /* ErrorReportView.swift in Sources */,
 				5C44F35A26894265003A5768 /* AccountManagerView.swift in Sources */,
 				5C88D8D726B8CA0600BAC9A7 /* string.swift in Sources */,
+				5C47E84426C32079005F4D0E /* RoomView.swift in Sources */,
 				5C0465102687E868006D3126 /* NavigationBarView.swift in Sources */,
+				5C2A2EDE26B9F46D006CC3D6 /* models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -774,6 +810,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5C3AD25C26BC062800D04367 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				kind = exactVersion;
+				version = 4.2.2;
+			};
+		};
 		5C5FF0E026B2343C00FD6636 /* XCRemoteSwiftPackageReference "SwiftRSA" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/puretears/SwiftRSA";
@@ -790,6 +834,14 @@
 				version = 5.0.0;
 			};
 		};
+		5C624B3726C1CE0E00E6432B /* XCRemoteSwiftPackageReference "socket" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		5C773D7926B0C152007DE945 /* XCRemoteSwiftPackageReference "BCryptSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Pengwius/BCryptSwift";
@@ -801,10 +853,20 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5C3AD25D26BC062800D04367 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5C3AD25C26BC062800D04367 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
 		5C5FF0E126B2343C00FD6636 /* SwiftRSA */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5C5FF0E026B2343C00FD6636 /* XCRemoteSwiftPackageReference "SwiftRSA" */;
 			productName = SwiftRSA;
+		};
+		5C624B3826C1CE0E00E6432B /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5C624B3726C1CE0E00E6432B /* XCRemoteSwiftPackageReference "socket" */;
+			productName = SocketIO;
 		};
 		5C773D7A26B0C152007DE945 /* BCryptSwift */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -816,19 +878,6 @@
 			productName = SocialifySdk;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		5C82F52D267FD60100C43D8F /* accounts.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				5C82F52E267FD60100C43D8F /* accounts.xcdatamodel */,
-			);
-			currentVersion = 5C82F52E267FD60100C43D8F /* accounts.xcdatamodel */;
-			path = accounts.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 5C73EA8F26112822008F7315 /* Project object */;
 }

@@ -7,10 +7,16 @@
 
 import Foundation
 import UIKit
+import Combine
+import CoreData
+import KeychainAccess
+import SocketIO
 
-@available(iOS 13.0, *)
+@available(iOS 14.0, *)
 public final class SocialifyClient: ObservableObject {
     static public let shared: SocialifyClient = SocialifyClient()
+    
+    let manager = SocketManager(socketURL: URL(string: "http://localhost:80")!, config: [.log(true), .compress, .forcePolling(true)])
     
     public init() {}
     
@@ -22,6 +28,11 @@ public final class SocialifyClient: ObservableObject {
     let API_VERSION = "0.1"
     let API_ROUTE = "http://127.0.0.1:5000/api/"
     
+    let deviceModel = UIDevice.modelName
     let systemVersion = "iOS_\(UIDevice.current.systemVersion)"
     let userAgent = "Socialify-iOS"
+    
+    let persistentContainer: NSPersistentContainer = CoreDataModel.shared.persistentContainer
+    let ud = UserDefaults.group
+    let keychain = Keychain()
 }

@@ -9,7 +9,7 @@ import Foundation
 import SwiftyJSON
 import SwiftRSA
 
-@available(iOS 13.0, *)
+@available(iOS 14.0, *)
 extension SocialifyClient {
     
     // MARK: - Getting public RSA key to encrypt password

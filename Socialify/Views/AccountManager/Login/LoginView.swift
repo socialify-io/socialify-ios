@@ -7,17 +7,37 @@
 
 import Foundation
 import SwiftUI
-
+import SocialifySdk
 
 struct LoginView: View {
+    @StateObject var client: SocialifyClient = SocialifyClient.shared
+    @Environment(\.presentationMode) var presentationMode
+    
     let cellHeight: CGFloat = 55
     let cornerRadius: CGFloat = 12
     let cellBackground: Color = Color(UIColor.systemGray5).opacity(0.5)
+    let borderColor: Color = Color(UIColor.systemGray).opacity(0)
     
-    @State private var login = ""
+    @State private var clicked: Bool = false
+
+    @State private var errorAlertShow: ErrorAlert?
+    @State private var showErrorReportModal = false
+    
+    @State private var username = ""
     @State private var password = ""
     
     @State private var buttonText = "login.button"
+    
+    private func setButton(textOnStart: String, textOnEnd: String) {
+        withAnimation {
+            buttonText = textOnStart
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                withAnimation {
+                    buttonText = textOnEnd
+                }
+            }
+        }
+    }
     
     var body: some View {
         VStack {
@@ -49,7 +69,7 @@ struct LoginView: View {
             Spacer()
             
             VStack {
-                TextField(LocalizedStringKey("login.username"), text: $login)
+                TextField(LocalizedStringKey("login.username"), text: $username)
                     .autocapitalization(.none)
                     .font(Font.body.weight(Font.Weight.medium))
                     .multilineTextAlignment(.center)
@@ -57,6 +77,10 @@ struct LoginView: View {
                     .frame(height: cellHeight)
                     .background(cellBackground)
                     .cornerRadius(cornerRadius)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: cornerRadius)
+                            .stroke(setColor(input: username, clicked: clicked), lineWidth: 2)
+                    )
                 
                 SecureField("login.password", text: $password)
                     .autocapitalization(.none)
@@ -67,6 +91,10 @@ struct LoginView: View {
                     .frame(height: cellHeight)
                     .background(cellBackground)
                     .cornerRadius(cornerRadius)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: cornerRadius)
+                            .stroke(setColor(input: password, clicked: clicked), lineWidth: 2)
+                    )
                 
                 NavigationLink("login.singup", destination: RegisterView())
                     .foregroundColor(Color.accentColor)
@@ -78,11 +106,45 @@ struct LoginView: View {
             Spacer()
             
             CustomButtonView(action: {
-                print("Logging to Socialify...")
+                clicked = true
+                client.registerDevice(username: username, password: password) { value in
+                    switch(value) {
+                    case .success(let value):
+                        print(value)
+                        self.presentationMode.wrappedValue.dismiss()
+                        
+                    case .failure(let error):
+                        switch error {
+                        case SocialifyClient.ApiError.InvalidUsername:
+                            setButton(textOnStart: "Invalid username", textOnEnd: "login.button")
+                            
+                        case SocialifyClient.ApiError.InvalidPassword:
+                            setButton(textOnStart: "Invalid password", textOnEnd: "login.button")
+                            
+                        case SocialifyClient.SdkError.NoInternetConnection:
+                            errorAlertShow = ErrorAlert(name: "errors.no_connection".localized, description: "errors.no_connection_description".localized)
+                            
+                        default:
+                            print(value)
+                            errorAlertShow = ErrorAlert(name: "errors.default".localized, description: "errors.default_description".localized)
+                        }
+                    }
+                }
             }, title: buttonText)
             .padding(.bottom)
-            
         }.padding()
+        .sheet(isPresented: $showErrorReportModal, onDismiss: {
+            }) {
+            NavigationView {
+                ErrorReportView(showErrorReportModal: self.$showErrorReportModal)
+                    .navigationBarTitle(Text("Back"))
+                    .navigationBarHidden(true)
+                    .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.bottom)
+            }
+        }
+        .alert(item: $errorAlertShow) { error in
+            Alert(title: Text(errorAlertShow?.name ?? "errors.default"), message: Text(errorAlertShow?.description ?? "errors.default_description"), primaryButton: .cancel(), secondaryButton: .destructive(Text("errors.button")) { self.showErrorReportModal = true } )
+        }
     }
 }
 
