@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SwiftRSA
+import SwiftyRSA
 import SwiftUI
 import CryptoKit
 import SwiftUI
@@ -22,27 +22,18 @@ extension SocialifyClient {
             switch value {
             case .success(let value):
                 do {
-                    let passwordClearText = ClearText(string: password)
+                    let passwordClear = try ClearMessage(string: password, using: .utf8)
                     
-                    let encryptedPassword = try passwordClearText.encrypted(with: value.0, by: .rsaEncryptionOAEPSHA1).data.base64EncodedString() // 0 means model of public key
+                    let encryptedPassword = try passwordClear.encrypted(with: value.0, padding: .OAEP).data.base64EncodedString() // 0 means model of public key
                     
                     let url = URL(string: "\(self.API_ROUTE)v\(self.API_VERSION)/newDevice")!
                     
                     var request = URLRequest(url: url)
                     request.httpMethod = "POST"
                     
+                    let keys = try SwiftyRSA.generateRSAKeyPair(sizeInBits: 2048)
                     
-                    var keys: [String: String] = [:]
-                    
-                    switch(genKeysPair()) {
-                    case .success(let value):
-                        keys = value
-                        
-                    case .failure(let error):
-                        completion(.failure(error))
-                    }
-                    
-                    let fingerprint = Insecure.SHA1.hash(data: keys["privateKey"]!.data(using: .utf8)!).hexStr
+                    let fingerprint = try Insecure.SHA1.hash(data: keys.privateKey.pemString().data(using: .utf8)!).hexStr
                     
                     let payload: [String: Any] = [
                         "username": username,
@@ -53,7 +44,7 @@ extension SocialifyClient {
                             "timestamp": "\(Int(NSDate().timeIntervalSince1970))",
                             "appVersion": self.LIBRARY_VERSION,
                             "os": self.systemVersion,
-                            "signPubKey": keys["publicKey"],
+                            "signPubKey": try keys.publicKey.pemString(),
                             "fingerprint": fingerprint
                         ]
                     ]
@@ -104,7 +95,7 @@ extension SocialifyClient {
                                 try context.save()
                             } catch { completion(.failure(SdkError.SavingContextError)) }
                             
-                            self.keychain["\(accountId)-privateKey"] = keys["privateKey"]
+                            self.keychain["\(accountId)-privateKey"] = try? keys.privateKey.pemString()
                             
                             completion(.success(true))
                             

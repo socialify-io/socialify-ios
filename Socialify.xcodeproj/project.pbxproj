@@ -22,7 +22,6 @@
 		5C495BC7261A72100004D538 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C495BC6261A72100004D538 /* LoginView.swift */; };
 		5C4AC87826AF760E005E7027 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AC87726AF760E005E7027 /* RegisterView.swift */; };
 		5C58B52726C14720008AE2B0 /* NewRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C58B52626C14720008AE2B0 /* NewRoomView.swift */; };
-		5C5FF0E226B2343C00FD6636 /* SwiftRSA in Frameworks */ = {isa = PBXBuildFile; productRef = 5C5FF0E126B2343C00FD6636 /* SwiftRSA */; };
 		5C624B3926C1CE0E00E6432B /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 5C624B3826C1CE0E00E6432B /* SocketIO */; };
 		5C66589B26B5A72F00614E9C /* ErrorReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C66589A26B5A72F00614E9C /* ErrorReportView.swift */; };
 		5C73EA9B26112822008F7315 /* SocialifyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EA9A26112822008F7315 /* SocialifyApp.swift */; };
@@ -100,7 +99,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C3AD25E26BC062800D04367 /* KeychainAccess in Frameworks */,
-				5C5FF0E226B2343C00FD6636 /* SwiftRSA in Frameworks */,
 				5C773D7B26B0C152007DE945 /* BCryptSwift in Frameworks */,
 				5C624B3926C1CE0E00E6432B /* SocketIO in Frameworks */,
 				5CC47C6126B0A2E90001BB7D /* SocialifySdk in Frameworks */,
@@ -326,7 +324,6 @@
 			packageProductDependencies = (
 				5CC47C6026B0A2E90001BB7D /* SocialifySdk */,
 				5C773D7A26B0C152007DE945 /* BCryptSwift */,
-				5C5FF0E126B2343C00FD6636 /* SwiftRSA */,
 				5C3AD25D26BC062800D04367 /* KeychainAccess */,
 				5C624B3826C1CE0E00E6432B /* SocketIO */,
 			);
@@ -404,7 +401,6 @@
 			mainGroup = 5C73EA8E26112822008F7315;
 			packageReferences = (
 				5C773D7926B0C152007DE945 /* XCRemoteSwiftPackageReference "BCryptSwift" */,
-				5C5FF0E026B2343C00FD6636 /* XCRemoteSwiftPackageReference "SwiftRSA" */,
 				5C5FF0E426B2354700FD6636 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				5C3AD25C26BC062800D04367 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				5C624B3726C1CE0E00E6432B /* XCRemoteSwiftPackageReference "socket" */,
@@ -818,14 +814,6 @@
 				version = 4.2.2;
 			};
 		};
-		5C5FF0E026B2343C00FD6636 /* XCRemoteSwiftPackageReference "SwiftRSA" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/puretears/SwiftRSA";
-			requirement = {
-				kind = exactVersion;
-				version = 0.1.2;
-			};
-		};
 		5C5FF0E426B2354700FD6636 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
@@ -857,11 +845,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5C3AD25C26BC062800D04367 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
-		};
-		5C5FF0E126B2343C00FD6636 /* SwiftRSA */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5C5FF0E026B2343C00FD6636 /* XCRemoteSwiftPackageReference "SwiftRSA" */;
-			productName = SwiftRSA;
 		};
 		5C624B3826C1CE0E00E6432B /* SocketIO */ = {
 			isa = XCSwiftPackageProductDependency;

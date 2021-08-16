@@ -21,7 +21,6 @@ let package = Package(
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
         .package(url: "https://github.com/Pengwius/BCryptSwift", from: "1.1.0"),
-        .package(url: "https://github.com/puretears/SwiftRSA", from: "0.1.2"),
         .package(url: "https://github.com/SwiftyJSON/SwiftyJSON", from: "5.0.0"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess", from: "4.2.2"),
         .package(url: "https://github.com/bednarj4/SwiftyRSA", branch: "master"),
@@ -32,7 +31,7 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "SocialifySdk",
-            dependencies: ["BCryptSwift", "SwiftRSA", "SwiftyJSON", "KeychainAccess", "SwiftyRSA", .product(name: "SocketIO", package: "socket.io-client-swift")]),
+            dependencies: ["BCryptSwift", "SwiftyJSON", "KeychainAccess", "SwiftyRSA", .product(name: "SocketIO", package: "socket.io-client-swift")]),
         .testTarget(
             name: "SocialifySdkTests",
             dependencies: ["SocialifySdk"]),

@@ -8,7 +8,7 @@
 import Foundation
 import BCryptSwift
 import SwiftyJSON
-import SwiftRSA
+import SwiftyRSA
 
 @available(iOS 14.0, *)
 extension SocialifyClient {

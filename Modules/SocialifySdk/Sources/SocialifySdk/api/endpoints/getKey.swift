@@ -7,7 +7,7 @@
 
 import Foundation
 import SwiftyJSON
-import SwiftRSA
+import SwiftyRSA
 
 @available(iOS 14.0, *)
 extension SocialifyClient {
@@ -24,8 +24,8 @@ extension SocialifyClient {
             switch value {
             case .success(let value):
                 let pubKeyPem = "\(value["data"]["pubKey"])"
-                let publicKey = PublicKey(pemEncoded: pubKeyPem)
-                completion(.success((publicKey!, pubKeyPem)))
+                let publicKey = try! PublicKey(pemEncoded: pubKeyPem)
+                completion(.success((publicKey, pubKeyPem)))
                 
             case .failure(let error):
                 completion(.failure(error))

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SwiftRSA
+import SwiftyRSA
 
 @available(iOS 14.0, *)
 extension SocialifyClient {
@@ -21,11 +21,11 @@ extension SocialifyClient {
                 switch value {
                 case .success(let value):
                     do {
-                        let passwordClearText = ClearText(string: password)
-                        let repeatedPasswordClearText = ClearText(string: repeatedPassword)
+                        let passwordClear = try ClearMessage(string: password, using: .utf8)
+                        let repeatedPasswordClear = try ClearMessage(string: repeatedPassword, using: .utf8)
                         
-                        let encryptedPassword = try passwordClearText.encrypted(with: value.0, by: .rsaEncryptionOAEPSHA1).data.base64EncodedString() // 0 means model of public key
-                        let encryptedRepeatedPassword = try repeatedPasswordClearText.encrypted(with: value.0, by: .rsaEncryptionOAEPSHA1).data.base64EncodedString()
+                        let encryptedPassword = try passwordClear.encrypted(with: value.0, padding: .OAEP).data.base64EncodedString() // 0 means model of public key
+                        let encryptedRepeatedPassword = try repeatedPasswordClear.encrypted(with: value.0, padding: .OAEP).data.base64EncodedString()
                         
                         let url = URL(string: "\(self.API_ROUTE)v\(self.API_VERSION)/register")!
                         
