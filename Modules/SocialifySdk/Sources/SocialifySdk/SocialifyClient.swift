@@ -16,8 +16,6 @@ import SocketIO
 public final class SocialifyClient: ObservableObject {
     static public let shared: SocialifyClient = SocialifyClient()
     
-    let manager = SocketManager(socketURL: URL(string: "http://localhost:80")!)
-    
     public init() {}
     
     // MARK: - Public variables

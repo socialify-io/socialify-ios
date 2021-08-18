@@ -64,7 +64,7 @@ struct NewRoomView: View {
             
             CustomButtonView(action: {
                 clicked = true
-                client.join(roomId: roomId)
+                SocketIOManager.sharedInstance.join(roomId: roomId)
             }, title: buttonText)
         }.padding()
     }

@@ -31,7 +31,7 @@ struct ChatView: View {
                     .background(cellBackground)
                     .cornerRadius(cornerRadius)
                 
-                Button(action: { client.send(message: message, room: chat) }) {
+                Button(action: { SocketIOManager.sharedInstance.send(message: message, room: chat) }) {
                     Image(systemName: "paperplane.fill")
                         .resizable()
                         .frame(width: 26, height: 26)
@@ -46,6 +46,9 @@ struct ChatView: View {
                     Image(systemName: "gear")
                 }
             }
+        }
+        .onAppear {
+            SocketIOManager.sharedInstance.join(roomId: chat.roomId ?? "")
         }
     }
 }
