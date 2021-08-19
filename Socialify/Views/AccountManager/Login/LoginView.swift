@@ -8,8 +8,11 @@
 import Foundation
 import SwiftUI
 import SocialifySdk
+import UIKit
 
 struct LoginView: View {
+    @AppStorage("isLogged") private var isLogged: Bool = false
+    
     @StateObject var client: SocialifyClient = SocialifyClient.shared
     @Environment(\.presentationMode) var presentationMode
     
@@ -111,7 +114,15 @@ struct LoginView: View {
                     switch(value) {
                     case .success(let value):
                         print(value)
-                        self.presentationMode.wrappedValue.dismiss()
+                        if(isLogged) {
+                            self.presentationMode.wrappedValue.dismiss()
+                        } else {
+                            isLogged = true
+                            NavigationBarView()
+                                .onAppear {
+                                    SocketIOManager.sharedInstance.connect()
+                                }
+                        }
                         
                     case .failure(let error):
                         switch error {

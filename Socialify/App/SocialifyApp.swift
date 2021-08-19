@@ -11,7 +11,7 @@ import SocialifySdk
 @main
 @available(iOS 13.0, *)
 struct SocialifyApp: App {
-    @AppStorage("isLogged") private var isLogged: Bool = true
+    @AppStorage("isLogged") private var isLogged: Bool = false
     @AppStorage("needsAppOnboarding") private var needsAppOnboarding: Bool = true
     
     var body: some Scene {
