@@ -1,5 +1,5 @@
 //
-//  errorModel.swift
+//  ErrorModel.swift
 //  
 //
 //  Created by Tomasz on 27/07/2021.

@@ -83,7 +83,7 @@ extension SocialifyClient {
                             
                             model.id = accountId
                             
-                            for account in accounts as! [Account] {
+                            for account in accounts {
                                 if(account.isCurrentAccount) {
                                     account.isCurrentAccount = false
                                 }

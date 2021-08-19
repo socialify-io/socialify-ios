@@ -50,9 +50,26 @@ extension SocketIOManager {
         socket.emit("message", ["room": room.roomId, "message": message])
     }
     
-    public func listenForMessages() {
-        socket.on("message") {_,_ in
-            print("Message received")
+    public func getChatMessage(completion: @escaping (Message) -> Void) {
+        socket.on("message") { dataArray, socketAck in
+            let context = self.client.persistentContainer.viewContext
+
+            let entityDescription = NSEntityDescription.entity(
+                forEntityName: "Message",
+                in: context
+            )!
+
+            let model = Message(
+                entity: entityDescription,
+                insertInto: context
+            )
+
+            let data = dataArray[0] as! [String: String]
+            model.username = data["username"]
+            model.message = data["message"]
+            model.date = data["date"]
+            
+            completion(model)
         }
     }
 }

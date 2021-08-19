@@ -14,13 +14,6 @@ struct SocialifyApp: App {
     @AppStorage("isLogged") private var isLogged: Bool = true
     @AppStorage("needsAppOnboarding") private var needsAppOnboarding: Bool = true
     
-    init () {
-        if(isLogged) {
-            SocketIOManager.sharedInstance.connect()
-            SocketIOManager.sharedInstance.listenForMessages()
-        }
-    }
-    
     var body: some Scene {
         WindowGroup {
             if(needsAppOnboarding) {
@@ -28,6 +21,9 @@ struct SocialifyApp: App {
             } else {
                 if(isLogged) {
                     NavigationBarView()
+                        .onAppear {
+                            SocketIOManager.sharedInstance.connect()
+                        }
                 } else {
                     NavigationView {
                         LoginView()
