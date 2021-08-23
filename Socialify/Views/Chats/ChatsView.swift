@@ -7,11 +7,13 @@
 
 import SwiftUI
 import SocialifySdk
+import CoreData
 
 struct ChatsView: View {
     @StateObject var client: SocialifyClient = SocialifyClient.shared
     
     @State private var chats: [Room] = []
+    @State private var searchResults: [User] = []
     @State private var selectedView = ""
     
     @State var searchText = ""
@@ -22,6 +24,11 @@ struct ChatsView: View {
         VStack{
             HStack {
                 TextField("Search ...", text: $searchText)
+                    .onChange(of: searchText) { value in
+                        if(value != "") {
+                            SocketIOManager.sharedInstance.findUser(phrase: searchText)
+                        }
+                    }
                     .padding(7)
                     .padding(.horizontal, 25)
                     .background(Color(.systemGray6))
@@ -67,93 +74,119 @@ struct ChatsView: View {
             .padding(.bottom, -4)
             
             ScrollView {
-                VStack {
-                    HStack {
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 12) {
-                                Image("Facebook")
-                                    .resizable()
-                                    .cornerRadius(360)
-                                    .frame(width: 50, height: 50)
-                                    .shadow(color: Color("ShadowColor"), radius: 5)
-                                    .padding(.leading, 8)
-                                Image("Facebook")
-                                    .resizable()
-                                    .cornerRadius(360)
-                                    .frame(width: 50, height: 50)
-                                    .shadow(color: Color("ShadowColor"), radius: 5)
-                                Image("Facebook")
-                                    .resizable()
-                                    .cornerRadius(360)
-                                    .frame(width: 50, height: 50)
-                                    .shadow(color: Color("ShadowColor"), radius: 5)
-                                Image("Facebook")
-                                    .resizable()
-                                    .cornerRadius(360)
-                                    .frame(width: 50, height: 50)
-                                    .shadow(color: Color("ShadowColor"), radius: 5)
-                                Image("Facebook")
-                                    .resizable()
-                                    .cornerRadius(360)
-                                    .frame(width: 50, height: 50)
-                                    .shadow(color: Color("ShadowColor"), radius: 5)
-                                Image("Facebook")
-                                    .resizable()
-                                    .cornerRadius(360)
-                                    .frame(width: 50, height: 50)
-                                    .shadow(color: Color("ShadowColor"), radius: 5)
-                                Image("Facebook")
-                                    .resizable()
-                                    .cornerRadius(360)
-                                    .frame(width: 50, height: 50)
-                                    .shadow(color: Color("ShadowColor"), radius: 5)
-                                Image("Facebook")
-                                    .resizable()
-                                    .cornerRadius(360)
-                                    .frame(width: 50, height: 50)
-                                    .shadow(color: Color("ShadowColor"), radius: 5)
-                                Image("Facebook")
-                                    .resizable()
-                                    .cornerRadius(360)
-                                    .frame(width: 50, height: 50)
-                                    .shadow(color: Color("ShadowColor"), radius: 5)
-                            }.padding(.vertical)
-                        }
-                    }.padding(.vertical, -8)
-                    
+                if !isSearchBarEditing {
                     VStack {
-                        ForEach(chats, id: \.self) { chat in
-                            NavigationLink(destination: ChatView(chat: chat).navigationBarTitle(chat.roomId ?? "<room id couldn't be loaded>")) {
-                                HStack {
+                        HStack {
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 12) {
                                     Image("Facebook")
                                         .resizable()
                                         .cornerRadius(360)
                                         .frame(width: 50, height: 50)
-                                        .padding(.trailing, 4)
-                                    
-                                    VStack {
-                                        Text(chat.roomId ?? "<room id couldn't be loaded>")
-                                            .font(.callout)
-                                            .foregroundColor(Color("CustomForegroundColor"))
-                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        .shadow(color: Color("ShadowColor"), radius: 5)
+                                        .padding(.leading, 8)
+                                    Image("Facebook")
+                                        .resizable()
+                                        .cornerRadius(360)
+                                        .frame(width: 50, height: 50)
+                                        .shadow(color: Color("ShadowColor"), radius: 5)
+                                    Image("Facebook")
+                                        .resizable()
+                                        .cornerRadius(360)
+                                        .frame(width: 50, height: 50)
+                                        .shadow(color: Color("ShadowColor"), radius: 5)
+                                    Image("Facebook")
+                                        .resizable()
+                                        .cornerRadius(360)
+                                        .frame(width: 50, height: 50)
+                                        .shadow(color: Color("ShadowColor"), radius: 5)
+                                    Image("Facebook")
+                                        .resizable()
+                                        .cornerRadius(360)
+                                        .frame(width: 50, height: 50)
+                                        .shadow(color: Color("ShadowColor"), radius: 5)
+                                    Image("Facebook")
+                                        .resizable()
+                                        .cornerRadius(360)
+                                        .frame(width: 50, height: 50)
+                                        .shadow(color: Color("ShadowColor"), radius: 5)
+                                    Image("Facebook")
+                                        .resizable()
+                                        .cornerRadius(360)
+                                        .frame(width: 50, height: 50)
+                                        .shadow(color: Color("ShadowColor"), radius: 5)
+                                    Image("Facebook")
+                                        .resizable()
+                                        .cornerRadius(360)
+                                        .frame(width: 50, height: 50)
+                                        .shadow(color: Color("ShadowColor"), radius: 5)
+                                    Image("Facebook")
+                                        .resizable()
+                                        .cornerRadius(360)
+                                        .frame(width: 50, height: 50)
+                                        .shadow(color: Color("ShadowColor"), radius: 5)
+                                }.padding(.vertical)
+                            }
+                        }.padding(.vertical, -8)
+                        
+                        VStack {
+                            ForEach(chats, id: \.self) { chat in
+                                NavigationLink(destination: ChatView(chat: chat).navigationBarTitle(chat.roomId ?? "<room id couldn't be loaded>")) {
+                                    HStack {
+                                        Image("Facebook")
+                                            .resizable()
+                                            .cornerRadius(360)
+                                            .frame(width: 50, height: 50)
+                                            .padding(.trailing, 4)
                                         
-                                        Text("Od kogo: Ostatnio wysłana wiadomość • 21:15")
-                                            .font(.caption)
-                                            .foregroundColor(Color("CustomForegroundColor"))
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                    }
-                                }.font(.headline)
-                                .multilineTextAlignment(.center)
-                                .frame(maxWidth: .infinity)
-                                .padding(.horizontal)
-                                .padding(.vertical, 16)
-                                .background(Color("CustomAppearanceItemColor"))
-                                .cornerRadius(20)
-                                .shadow(color: Color("ShadowColor"), radius: 5)
-                            }.padding(.vertical, 4)
+                                        VStack {
+                                            Text(chat.roomId ?? "<room id couldn't be loaded>")
+                                                .font(.callout)
+                                                .foregroundColor(Color("CustomForegroundColor"))
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                            
+                                            Text("Od kogo: Ostatnio wysłana wiadomość • 21:15")
+                                                .font(.caption)
+                                                .foregroundColor(Color("CustomForegroundColor"))
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                        }
+                                    }.font(.headline)
+                                    .multilineTextAlignment(.center)
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.horizontal)
+                                    .padding(.vertical, 16)
+                                    .background(Color("CustomAppearanceItemColor"))
+                                    .cornerRadius(20)
+                                    .shadow(color: Color("ShadowColor"), radius: 5)
+                                }.padding(.vertical, 4)
+                            }
                         }
+                    }.padding(.horizontal)
+                } else {
+                    ForEach(searchResults, id: \.self) { user in
+                        NavigationLink(destination: DMView(receiver: user).navigationBarTitle(user.username ?? "<username couldn't be loaded>")) {
+                            HStack {
+                                Image(uiImage: UIImage(data: Data(base64Encoded: user.avatar!)!)!)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(height: 40)
+                                    .clipShape(Circle())
+                                
+                                Text(user.username ?? "<username can't be loaded>")
+                                
+                                Spacer()
+                            }.font(.headline)
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal)
+                            .padding(.vertical, 10)
+                            .background(Color("CustomAppearanceItemColor"))
+                            .cornerRadius(20)
+                            .shadow(color: Color("ShadowColor"), radius: 5)
+                        }.padding(.horizontal)
+                        .foregroundColor(Color("CustomForegroundColor"))
                     }
-                }.padding(.horizontal)
+                }
             }
         }.toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -172,6 +205,12 @@ struct ChatsView: View {
         .background(Color("BackgroundColor"))
         .onAppear {
             chats = client.fetchRooms()
+            
+            SocketIOManager.sharedInstance.getFindUserResponse { result in
+                DispatchQueue.main.async(execute: { () -> Void in
+                    self.searchResults = result
+                })
+            }
         }
     }
 }

@@ -34,6 +34,7 @@
 		5C7D56122642010100B518C9 /* LoginWithOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7D56112642010100B518C9 /* LoginWithOptionView.swift */; };
 		5C88D8CE26B8B0F900BAC9A7 /* setColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C88D8CD26B8B0F900BAC9A7 /* setColor.swift */; };
 		5C88D8D726B8CA0600BAC9A7 /* string.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C88D8D626B8CA0600BAC9A7 /* string.swift */; };
+		5C89D9C526D2F08C0099564E /* DMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C89D9C426D2F08C0099564E /* DMView.swift */; };
 		5CADDB9C2611E72200F690D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C73EA9E26112823008F7315 /* Assets.xcassets */; };
 		5CADDBB92611F5A100F690D0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5CADDBBB2611F5A100F690D0 /* Localizable.strings */; };
 		5CC47C6126B0A2E90001BB7D /* SocialifySdk in Frameworks */ = {isa = PBXBuildFile; productRef = 5CC47C6026B0A2E90001BB7D /* SocialifySdk */; };
@@ -89,6 +90,7 @@
 		5C7D56112642010100B518C9 /* LoginWithOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithOptionView.swift; sourceTree = "<group>"; };
 		5C88D8CD26B8B0F900BAC9A7 /* setColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setColor.swift; sourceTree = "<group>"; };
 		5C88D8D626B8CA0600BAC9A7 /* string.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = string.swift; sourceTree = "<group>"; };
+		5C89D9C426D2F08C0099564E /* DMView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMView.swift; sourceTree = "<group>"; };
 		5CADDBBA2611F5A100F690D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5CADDBBF2611F5DB00F690D0 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -178,6 +180,7 @@
 				5C58B52626C14720008AE2B0 /* NewRoomView.swift */,
 				5C47E84326C32079005F4D0E /* RoomView.swift */,
 				5C47E84526C32662005F4D0E /* ChatView.swift */,
+				5C89D9C426D2F08C0099564E /* DMView.swift */,
 			);
 			path = Chats;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				5C73EA9B26112822008F7315 /* SocialifyApp.swift in Sources */,
 				5C66589B26B5A72F00614E9C /* ErrorReportView.swift in Sources */,
 				5C44F35A26894265003A5768 /* AccountManagerView.swift in Sources */,
+				5C89D9C526D2F08C0099564E /* DMView.swift in Sources */,
 				5C88D8D726B8CA0600BAC9A7 /* string.swift in Sources */,
 				5C47E84426C32079005F4D0E /* RoomView.swift in Sources */,
 				5C0465102687E868006D3126 /* NavigationBarView.swift in Sources */,
