@@ -1,6 +1,6 @@
 //
-//  NewRoomView.swift
-//  NewRoomView
+//  AddRoomView.swift
+//  AddRoomView
 //
 //  Created by Tomasz on 09/08/2021.
 //
@@ -8,8 +8,8 @@
 import SwiftUI
 import SocialifySdk
 
-struct NewRoomView: View {
-    @StateObject var client: SocialifyClient = SocialifyClient.shared
+struct AddRoomView: View {
+    @Environment(\.presentationMode) var presentationMode
     
     let cellHeight: CGFloat = 55
     let cornerRadius: CGFloat = 12
@@ -64,14 +64,18 @@ struct NewRoomView: View {
             
             CustomButtonView(action: {
                 clicked = true
-                SocketIOManager.sharedInstance.join(roomId: roomId)
+                if(roomId != "") {
+                    SocketIOManager.sharedInstance.addRoom(roomId: roomId)
+                    self.presentationMode.wrappedValue.dismiss()
+                }
             }, title: buttonText)
         }.padding()
+        .background(Color("BackgroundColor"))
     }
 }
 
-struct NewRoomView_Previews: PreviewProvider {
+struct AddRoomView_Previews: PreviewProvider {
     static var previews: some View {
-        NewRoomView()
+        AddRoomView()
     }
 }

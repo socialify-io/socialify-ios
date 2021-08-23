@@ -18,7 +18,9 @@ extension SocketIOManager {
     
     public func join(roomId: String) {
         socket.emit("join", ["room": roomId])
-                    
+    }
+    
+    public func addRoom(roomId: String) {
         let context = client.persistentContainer.viewContext
         
         let entityDescription = NSEntityDescription.entity(
@@ -42,6 +44,7 @@ extension SocketIOManager {
         }
         
         model.id = id
+        model.messages = Data([])
     
         try! context.save()
     }
@@ -73,3 +76,4 @@ extension SocketIOManager {
         }
     }
 }
+

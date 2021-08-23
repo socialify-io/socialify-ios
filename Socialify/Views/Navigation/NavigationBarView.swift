@@ -45,6 +45,19 @@ struct NavigationBarView: View {
         TabView() {
             NavigationView {
                 ChatsView()
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            NavigationLink(destination: AccountManagerView()) {
+                                Image(systemName: "person.circle")
+                            }
+                        }
+                        
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            NavigationLink(destination: AddRoomView()) {
+                                Image(systemName: "plus")
+                            }
+                        }
+                    }
                         }
                 .tabItem {
                 Label("Chats", systemImage: "message.fill")

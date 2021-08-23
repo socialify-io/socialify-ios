@@ -188,18 +188,6 @@ struct ChatsView: View {
                     }
                 }
             }
-        }.toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                NavigationLink(destination: AccountManagerView()) {
-                    Image(systemName: "person.circle")
-                }
-            }
-            
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: NewRoomView()) {
-                    Image(systemName: "plus")
-                }
-            }
         }
         .navigationBarTitle("Chats", displayMode: .inline)
         .background(Color("BackgroundColor"))

@@ -14,6 +14,7 @@
     </entity>
     <entity name="Room" representedClassName="Room" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="messages" optional="YES" attributeType="Binary" valueTransformerName=""/>
         <attribute name="roomId" optional="YES" attributeType="String"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
@@ -24,7 +25,7 @@
     <elements>
         <element name="Account" positionX="-63" positionY="-18" width="128" height="89"/>
         <element name="Message" positionX="-63" positionY="9" width="128" height="89"/>
-        <element name="Room" positionX="-63" positionY="9" width="128" height="59"/>
+        <element name="Room" positionX="-63" positionY="9" width="128" height="74"/>
         <element name="User" positionX="-63" positionY="18" width="128" height="74"/>
     </elements>
 </model>
