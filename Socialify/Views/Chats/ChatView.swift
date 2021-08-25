@@ -129,6 +129,7 @@ struct ChatView: View {
         }
         .onAppear {
             self.currentAccount = client.getCurrentAccount()
+            self.messages = SocketIOManager.sharedInstance.getMessagesFromDB(room: chat)
             SocketIOManager.sharedInstance.join(roomId: chat.roomId ?? "")
             
             SocketIOManager.sharedInstance.getChatMessage() { response in

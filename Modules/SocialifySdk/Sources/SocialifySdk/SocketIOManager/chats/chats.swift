@@ -44,7 +44,6 @@ extension SocketIOManager {
         }
         
         model.id = id
-        model.messages = Data([])
     
         try! context.save()
     }
@@ -71,9 +70,43 @@ extension SocketIOManager {
             model.username = data["username"]
             model.message = data["message"]
             model.date = data["date"]
+            model.id = self.getLastMessageId(roomId: data["roomId"]!) + 1
+            model.userId = self.client.getCurrentAccount().id
+            model.roomId = data["roomId"]
+            
+            try! context.save()
             
             completion(model)
         }
     }
+    
+    public func getMessagesFromDB(room: Room) -> [Message] {
+        let context = client.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
+        let messages = try! context.fetch(fetchRequest) as! [Message]
+        
+        var messagesForRoom: [Message] = []
+        for message in messages {
+            if(message.roomId == room.roomId) {
+                messagesForRoom.append(message)
+            }
+        }
+        
+        return messagesForRoom
+    }
+    
+    private func getLastMessageId(roomId: String) -> Int64 {
+        let context = client.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
+        let messages = try! context.fetch(fetchRequest) as! [Message]
+        
+        print(messages)
+        
+        var messageId: Int64 = 0 as Int64
+        if(messages != []) {
+            messageId = messages[messages.count-1].value(forKey: "id") as! Int64
+        }
+        
+        return messageId
+    }
 }
-
