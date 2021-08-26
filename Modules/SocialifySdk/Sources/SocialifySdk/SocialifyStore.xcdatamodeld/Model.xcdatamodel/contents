@@ -4,13 +4,22 @@
         <attribute name="deviceId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" valueTransformerName="Int" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="isCurrentAccount" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="username" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="DM" representedClassName="DM" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="message" optional="YES" attributeType="String"/>
+        <attribute name="receiverId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="senderId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="username" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Message" representedClassName="Message" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="message" optional="YES" attributeType="String"/>
-        <attribute name="roomId" optional="YES" attributeType="String"/>
+        <attribute name="sourceId" optional="YES" attributeType="String"/>
         <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="username" optional="YES" attributeType="String"/>
     </entity>
@@ -24,7 +33,8 @@
         <attribute name="username" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Account" positionX="-63" positionY="-18" width="128" height="89"/>
+        <element name="Account" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="DM" positionX="-63" positionY="45" width="128" height="133"/>
         <element name="Message" positionX="-63" positionY="9" width="128" height="119"/>
         <element name="Room" positionX="-63" positionY="9" width="128" height="59"/>
         <element name="User" positionX="-63" positionY="18" width="128" height="74"/>

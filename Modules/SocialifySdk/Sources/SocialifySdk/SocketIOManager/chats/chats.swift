@@ -72,7 +72,7 @@ extension SocketIOManager {
             model.date = data["date"]
             model.id = self.getLastMessageId(roomId: data["roomId"]!) + 1
             model.userId = self.client.getCurrentAccount().id
-            model.roomId = data["roomId"]
+            model.sourceId = data["roomId"]
             
             try! context.save()
             
@@ -85,9 +85,11 @@ extension SocketIOManager {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
         let messages = try! context.fetch(fetchRequest) as! [Message]
         
+        let currentAccount = client.getCurrentAccount()
+        
         var messagesForRoom: [Message] = []
         for message in messages {
-            if(message.roomId == room.roomId) {
+            if(message.sourceId == room.roomId && message.userId == currentAccount.id) {
                 messagesForRoom.append(message)
             }
         }
@@ -104,7 +106,11 @@ extension SocketIOManager {
         
         var messageId: Int64 = 0 as Int64
         if(messages != []) {
-            messageId = messages[messages.count-1].value(forKey: "id") as! Int64
+            for message in messages {
+                if(message.sourceId == roomId) {
+                    messageId+=1
+                }
+            }
         }
         
         return messageId

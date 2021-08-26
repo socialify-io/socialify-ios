@@ -20,7 +20,7 @@ struct DMView: View {
     let cellBackground: Color = Color(.systemGray6)
     
     @State private var message = ""
-    @State var messages: [Message] = []
+    @State var messages: [DM] = []
     
     @State private var sameSenderInARow: CGFloat = 0
     
@@ -129,12 +129,12 @@ struct DMView: View {
         }
         .onAppear {
             self.currentAccount = client.getCurrentAccount()
-            print(receiver)
+            self.messages = SocketIOManager.sharedInstance.getDMsFromDB(user: receiver)
+            print(messages)
+            
             SocketIOManager.sharedInstance.getDMMessage() { response in
                 DispatchQueue.main.async(execute: { () -> Void in
-                    print(response.id)
-                    print(receiver.id)
-                    if(response.id == receiver.id || response.username == currentAccount?.username) {
+                    if(response.receiverId == receiver.id && response.senderId == currentAccount?.userId || response.receiverId == currentAccount?.userId && response.senderId == receiver.id) {
                         self.messages.append(response)
                     }
                 })

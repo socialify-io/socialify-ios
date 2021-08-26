@@ -32,7 +32,6 @@ extension SocketIOManager {
                 )
                 
                 model.id = user["id"] as! Int64
-                print(model.id)
                 model.username = user["username"] as? String
                 model.avatar = String(data: user["avatar"] as! Data, encoding: .utf8)
                 
