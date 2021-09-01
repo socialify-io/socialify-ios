@@ -130,7 +130,6 @@ struct DMView: View {
         .onAppear {
             self.currentAccount = client.getCurrentAccount()
             self.messages = SocketIOManager.sharedInstance.getDMsFromDB(user: receiver)
-            print(messages)
             
             SocketIOManager.sharedInstance.getDMMessage() { response in
                 DispatchQueue.main.async(execute: { () -> Void in

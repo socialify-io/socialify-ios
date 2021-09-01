@@ -14,6 +14,7 @@ struct ChatsView: View {
     
     @State private var chats: [Room] = []
     @State private var searchResults: [User] = []
+    @State private var lastDMs: [LastDM] = []
     @State private var selectedView = ""
     
     @State var searchText = ""
@@ -79,52 +80,28 @@ struct ChatsView: View {
                         HStack {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 12) {
-                                    Image("Facebook")
-                                        .resizable()
-                                        .cornerRadius(360)
-                                        .frame(width: 50, height: 50)
-                                        .shadow(color: Color("ShadowColor"), radius: 5)
-                                        .padding(.leading, 8)
-                                    Image("Facebook")
-                                        .resizable()
-                                        .cornerRadius(360)
-                                        .frame(width: 50, height: 50)
-                                        .shadow(color: Color("ShadowColor"), radius: 5)
-                                    Image("Facebook")
-                                        .resizable()
-                                        .cornerRadius(360)
-                                        .frame(width: 50, height: 50)
-                                        .shadow(color: Color("ShadowColor"), radius: 5)
-                                    Image("Facebook")
-                                        .resizable()
-                                        .cornerRadius(360)
-                                        .frame(width: 50, height: 50)
-                                        .shadow(color: Color("ShadowColor"), radius: 5)
-                                    Image("Facebook")
-                                        .resizable()
-                                        .cornerRadius(360)
-                                        .frame(width: 50, height: 50)
-                                        .shadow(color: Color("ShadowColor"), radius: 5)
-                                    Image("Facebook")
-                                        .resizable()
-                                        .cornerRadius(360)
-                                        .frame(width: 50, height: 50)
-                                        .shadow(color: Color("ShadowColor"), radius: 5)
-                                    Image("Facebook")
-                                        .resizable()
-                                        .cornerRadius(360)
-                                        .frame(width: 50, height: 50)
-                                        .shadow(color: Color("ShadowColor"), radius: 5)
-                                    Image("Facebook")
-                                        .resizable()
-                                        .cornerRadius(360)
-                                        .frame(width: 50, height: 50)
-                                        .shadow(color: Color("ShadowColor"), radius: 5)
-                                    Image("Facebook")
-                                        .resizable()
-                                        .cornerRadius(360)
-                                        .frame(width: 50, height: 50)
-                                        .shadow(color: Color("ShadowColor"), radius: 5)
+                                    ForEach(lastDMs, id: \.self) { dm in
+                                        VStack {
+                                            if(dm.avatar != nil) {
+                                                Image(uiImage: UIImage(data: Data(base64Encoded: dm.avatar!)!)!)
+                                                    .resizable()
+                                                    .cornerRadius(360)
+                                                    .frame(width: 45, height: 45)
+                                                    .shadow(color: Color("ShadowColor"), radius: 5)
+                                                    .clipShape(Circle())
+                                            } else {
+                                                Image(systemName: "person.circle.fill")
+                                                    .resizable()
+                                                    .cornerRadius(360)
+                                                    .frame(width: 45, height: 45)
+                                                    .shadow(color: Color("ShadowColor"), radius: 5)
+                                                    .clipShape(Circle())
+                                            }
+                                            
+                                            Text(dm.username ?? "<username couldn't be loaded>")
+                                                .font(.caption)
+                                        }
+                                    }
                                 }.padding(.vertical)
                             }
                         }.padding(.vertical, -8)
@@ -192,7 +169,8 @@ struct ChatsView: View {
         .navigationBarTitle("Chats", displayMode: .inline)
         .background(Color("BackgroundColor"))
         .onAppear {
-            chats = client.fetchRooms()
+            self.chats = client.fetchRooms()
+            self.lastDMs = SocketIOManager.sharedInstance.getLastDMs()
             
             SocketIOManager.sharedInstance.getFindUserResponse { result in
                 DispatchQueue.main.async(execute: { () -> Void in
