@@ -11,13 +11,14 @@ import CoreData
 @available(iOSApplicationExtension 14.0, *)
 extension SocialifyClient {
     
-    public func fetchRooms() ->[Room] {
+    public func fetchRooms() -> [Room] {
         let context = self.persistentContainer.viewContext
         return getRoomsFromCoreData(context: context)
     }
     
     private func getRoomsFromCoreData(context: NSManagedObjectContext) -> [Room] {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Room")
-        return try! context.fetch(fetchRequest) as! [Room]
+        let rooms = try! context.fetch(fetchRequest) as! [Room]
+        return rooms.sorted { $0.id < $1.id }
     }
 }

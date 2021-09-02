@@ -36,14 +36,12 @@ extension SocketIOManager {
         model.roomId = roomId
 
         let rooms = client.fetchRooms()
-    
-        var id: Int64 = 0 as Int64
         
-        if(rooms != []) {
-            id = rooms[rooms.count-1].value(forKey: "id") as! Int64 + 1
+        for room in rooms {
+            room.id += 1
         }
-        
-        model.id = id
+    
+        model.id = 0
     
         try! context.save()
     }
@@ -74,6 +72,8 @@ extension SocketIOManager {
             model.userId = self.client.getCurrentAccount().id
             model.sourceId = data["roomId"]
             
+            self.setLastRoom(roomId: model.sourceId ?? "")
+            
             try! context.save()
             
             completion(model)
@@ -94,7 +94,24 @@ extension SocketIOManager {
             }
         }
         
-        return messagesForRoom
+        return messagesForRoom.sorted { $0.id < $1.id }
+    }
+    
+    private func setLastRoom(roomId: String) {
+        let context = client.persistentContainer.viewContext
+        let currentAccount = client.getCurrentAccount()
+        var rooms = client.fetchRooms()
+        
+        for room in rooms {
+            if(room.roomId == roomId) {
+                room.id = 0
+            } else {
+                room.id += 1
+            }
+        }
+        
+        rooms = rooms.sorted { $0.id < $1.id }
+        try! context.save()
     }
     
     private func getLastMessageId(roomId: String) -> Int64 {

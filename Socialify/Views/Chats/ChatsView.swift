@@ -170,6 +170,9 @@ struct ChatsView: View {
         .background(Color("BackgroundColor"))
         .onAppear {
             self.chats = client.fetchRooms()
+            print("============")
+            print(chats)
+            print("============")
             self.lastDMs = SocketIOManager.sharedInstance.getLastDMs()
             
             SocketIOManager.sharedInstance.getFindUserResponse { result in
