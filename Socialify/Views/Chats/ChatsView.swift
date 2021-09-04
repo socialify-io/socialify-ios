@@ -81,25 +81,27 @@ struct ChatsView: View {
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 12) {
                                     ForEach(lastDMs, id: \.self) { dm in
-                                        VStack {
-                                            if(dm.avatar != nil) {
-                                                Image(uiImage: UIImage(data: Data(base64Encoded: dm.avatar!)!)!)
-                                                    .resizable()
-                                                    .cornerRadius(360)
-                                                    .frame(width: 45, height: 45)
-                                                    .shadow(color: Color("ShadowColor"), radius: 5)
-                                                    .clipShape(Circle())
-                                            } else {
-                                                Image(systemName: "person.circle.fill")
-                                                    .resizable()
-                                                    .cornerRadius(360)
-                                                    .frame(width: 45, height: 45)
-                                                    .shadow(color: Color("ShadowColor"), radius: 5)
-                                                    .clipShape(Circle())
-                                            }
-                                            
-                                            Text(dm.username ?? "<username couldn't be loaded>")
-                                                .font(.caption)
+                                        NavigationLink(destination: DMView(receiver: client.lastDMtoUser(dm: dm)).navigationBarTitle(dm.username ?? "<username couldn't be loaded>")) {
+                                            VStack {
+                                                if(dm.avatar != nil) {
+                                                    Image(uiImage: UIImage(data: Data(base64Encoded: dm.avatar!)!)!)
+                                                        .resizable()
+                                                        .cornerRadius(360)
+                                                        .frame(width: 45, height: 45)
+                                                        .shadow(color: Color("ShadowColor"), radius: 5)
+                                                        .clipShape(Circle())
+                                                } else {
+                                                    Image(systemName: "person.circle.fill")
+                                                        .resizable()
+                                                        .cornerRadius(360)
+                                                        .frame(width: 45, height: 45)
+                                                        .shadow(color: Color("ShadowColor"), radius: 5)
+                                                        .clipShape(Circle())
+                                                }
+                                                
+                                                Text(dm.username ?? "<username couldn't be loaded>")
+                                                    .font(.caption)
+                                            }.foregroundColor(Color("CustomForegroundColor"))
                                         }
                                     }
                                 }.padding(.vertical)
