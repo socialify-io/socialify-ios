@@ -20,7 +20,12 @@ extension SocialifyClient {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         
-        self.request(request: request, authTokenHeader: "getKey") { value in
+        let timestamp = NSDate().timeIntervalSince1970
+        let authToken = self.generateAuthToken(timestamp: "\(Int(timestamp))", authTokenHeader: "getKey")
+        
+        request.addValue(authToken ?? "", forHTTPHeaderField: "AuthToken")
+        
+        self.request(request: request, timestamp: timestamp) { value in
             switch value {
             case .success(let value):
                 let pubKeyPem = "\(value["data"]["pubKey"])"

@@ -33,7 +33,7 @@ extension SocketIOManager {
                 
                 model.id = user["id"] as! Int64
                 model.username = user["username"] as? String
-                model.avatar = String(data: user["avatar"] as! Data, encoding: .utf8)
+                //model.avatar = String(data: user["avatar"] as! Data, encoding: .utf8)
                 
                 results.append(model)
             }

@@ -130,14 +130,16 @@ struct DMView: View {
         .onAppear {
             self.currentAccount = client.getCurrentAccount()
             self.messages = SocketIOManager.sharedInstance.getDMsFromDB(user: receiver)
+            print(messages)
             
             SocketIOManager.sharedInstance.getDMMessage() { response in
-                DispatchQueue.main.async(execute: { () -> Void in
-                    if(response.receiverId == receiver.id && response.senderId == currentAccount?.userId || response.receiverId == currentAccount?.userId && response.senderId == receiver.id) {
-                        self.messages.append(response)
-                    }
-                })
+                if(response.receiverId == receiver.id && response.senderId == currentAccount?.userId || response.receiverId == currentAccount?.userId && response.senderId == receiver.id) {
+                    self.messages.append(response)
+                }
            }
+        }
+        .onDisappear {
+            SocketIOManager.sharedInstance.stopReceivingMessages()
         }
     }
 }

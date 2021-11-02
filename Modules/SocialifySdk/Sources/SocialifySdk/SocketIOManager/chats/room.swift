@@ -1,5 +1,5 @@
 //
-//  chats.swift
+//  room.swift
 //
 //
 //  Created by Tomasz on 09/08/2021.
@@ -50,7 +50,7 @@ extension SocketIOManager {
         socket.emit("message", ["room": room.roomId, "message": message])
     }
     
-    public func getChatMessage(completion: @escaping (Message) -> Void) {
+    public func getRoomMessage(completion: @escaping (Message) -> Void) {
         socket.on("message") { dataArray, socketAck in
             let context = self.client.persistentContainer.viewContext
 

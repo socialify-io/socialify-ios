@@ -43,7 +43,12 @@ extension SocialifyClient {
                         
                         request.httpBody = jsonPayload
                         
-                        self.request(request: request, authTokenHeader: "register") { value in
+                        let timestamp = NSDate().timeIntervalSince1970
+                        let authToken = self.generateAuthToken(timestamp: "\(Int(timestamp))", authTokenHeader: "register")
+                        
+                        request.addValue(authToken ?? "", forHTTPHeaderField: "AuthToken")
+                        
+                        self.request(request: request, timestamp: timestamp) { value in
                             switch value {
                             case .success(let value):
                                 print(value)

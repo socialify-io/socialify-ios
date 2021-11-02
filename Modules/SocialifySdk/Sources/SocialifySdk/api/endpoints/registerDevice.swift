@@ -53,7 +53,12 @@ extension SocialifyClient {
                     
                     request.httpBody = jsonPayload
                     
-                    self.request(request: request, authTokenHeader: "newDevice") { value in
+                    let timestamp = NSDate().timeIntervalSince1970
+                    let authToken = self.generateAuthToken(timestamp: "\(Int(timestamp))", authTokenHeader: "newDevice")
+                    
+                    request.addValue(authToken ?? "", forHTTPHeaderField: "AuthToken")
+                    
+                    self.request(request: request, timestamp: timestamp) { value in
                         switch value {
                         case .success(let response):
                             let context = self.persistentContainer.viewContext
