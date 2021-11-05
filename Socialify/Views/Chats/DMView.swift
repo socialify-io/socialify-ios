@@ -20,49 +20,94 @@ struct DMView: View {
     let cellBackground: Color = Color(.systemGray6)
     
     @State private var message = ""
-    @State var messages: [DM] = []
+    //@State var messages: [DM] = []
     
     @State private var sameSenderInARow: CGFloat = 0
+    
+    @Environment(\.managedObjectContext) private var managedObjectContext
+    private var fetchRequest: FetchRequest<DM>
+    private var messages: FetchedResults<DM> { fetchRequest.wrappedValue }
+    
+    init(receiver: User) {
+        self.receiver = receiver
+        
+        let predicateForReceivedMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: SocialifyClient.shared.getCurrentAccount().userId))
+        let predicateForSendMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: receiver.id))
+        let predicateForSendMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value: SocialifyClient.shared.getCurrentAccount().userId))
+        let predicateForReceivedMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value: receiver.id))
+        
+        let predicateAndReceived = NSCompoundPredicate(type: .and, subpredicates: [predicateForReceivedMessageSend, predicateForReceivedMessageReceived])
+        let predicateAndSend = NSCompoundPredicate(type: .and, subpredicates: [predicateForSendMessageSend, predicateForSendMessageReceived])
+        
+        let finalPredicate = NSCompoundPredicate(type: .or, subpredicates: [predicateAndSend, predicateAndReceived])
+        
+        self.fetchRequest = FetchRequest(
+            entity: DM.entity(),
+            sortDescriptors: [
+                NSSortDescriptor(
+                    keyPath: \DM.id,
+                    ascending: true)
+            ],
+            predicate: finalPredicate
+        )
+    }
     
     var body: some View {
         VStack {
             ScrollViewReader { value in
                 ScrollView {
                     ForEach(Array(messages.enumerated()), id: \.element) { index, message in
-                        if(message.username != currentAccount?.username) {
-                            VStack {
-                                if(index == 0 || messages[index-1].username != message.username) {
-                                    HStack {
-                                        Spacer()
-                                            .frame(width: 44)
-                                        
-                                        Text(message.username ?? "<username can't be loaded>")
-                                            .font(.caption)
-                                            .foregroundColor(Color("CustomForegroundColor"))
-                                            .frame(maxWidth: .infinity, alignment: .leading)
-                                            .padding(.leading, 18)
-                                    }.padding(.bottom, -2)
-                                    Spacer()
-                                }
-                                
-                                
-                                HStack {
-                                    if(messages.count-1 == index || messages.count-1 > index && messages[index+1].username != message.username) {
-                                        VStack {
-                                            Image(systemName: "person.circle.fill")
-                                                .renderingMode(.template)
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
-                                                .frame(height: 40)
-                                                .foregroundColor(.accentColor)
-                                                .padding(.trailing, 4)
-                                        }
-                                    } else {
-                                        VStack {
+                        if(messages[index].receiverId == receiver.id && messages[index].senderId == currentAccount?.userId || messages[index].receiverId == currentAccount?.userId && messages[index].senderId == receiver.id) {
+                            if(message.username != currentAccount?.username) {
+                                VStack {
+                                    if(index == 0 || messages[index-1].username != message.username) {
+                                        HStack {
                                             Spacer()
                                                 .frame(width: 44)
-                                        }
+                                            
+                                            Text(message.username ?? "<username can't be loaded>")
+                                                .font(.caption)
+                                                .foregroundColor(Color("CustomForegroundColor"))
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .padding(.leading, 18)
+                                        }.padding(.bottom, -2)
+                                        Spacer()
                                     }
+                                    
+                                    
+                                    HStack {
+                                        if(messages.count-1 == index || messages.count-1 > index && messages[index+1].username != message.username) {
+                                            VStack {
+                                                Image(systemName: "person.circle.fill")
+                                                    .renderingMode(.template)
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(height: 40)
+                                                    .foregroundColor(.accentColor)
+                                                    .padding(.trailing, 4)
+                                            }
+                                        } else {
+                                            VStack {
+                                                Spacer()
+                                                    .frame(width: 44)
+                                            }
+                                        }
+                                        
+                                        HStack {
+                                            Text(message.message ?? "<message can't be loaded>")
+                                        }.padding(.vertical, 12)
+                                        .padding(.horizontal)
+                                        .background(Color("CustomAppearanceItemColor"))
+                                        .cornerRadius(20)
+                                        .shadow(color: Color("ShadowColor"), radius: 5)
+                                        
+                                        Spacer()
+                                    }
+                                    Spacer()
+                                }.id(index)
+                            } else {
+                                HStack {
+                                    Spacer()
                                     
                                     HStack {
                                         Text(message.message ?? "<message can't be loaded>")
@@ -71,28 +116,18 @@ struct DMView: View {
                                     .background(Color("CustomAppearanceItemColor"))
                                     .cornerRadius(20)
                                     .shadow(color: Color("ShadowColor"), radius: 5)
-                                    
-                                    Spacer()
-                                }
-                                Spacer()
-                            }.id(index)
-                        } else {
-                            HStack {
-                                Spacer()
-                                
-                                HStack {
-                                    Text(message.message ?? "<message can't be loaded>")
-                                }.padding(.vertical, 12)
-                                .padding(.horizontal)
-                                .background(Color("CustomAppearanceItemColor"))
-                                .cornerRadius(20)
-                                .shadow(color: Color("ShadowColor"), radius: 5)
-                                .padding(.trailing, 5)
-                            }.id(index)
+                                    .padding(.trailing, 5)
+                                }.id(index)
+                            }
                         }
                     }
                 }.onChange(of: messages.count) { _ in
                     value.scrollTo(messages.count - 1)
+                }
+                .onAppear {
+                    DispatchQueue.main.async {
+                        value.scrollTo(messages.count - 1)
+                    }
                 }
             }
             Spacer()
@@ -129,18 +164,14 @@ struct DMView: View {
         }
         .onAppear {
             self.currentAccount = client.getCurrentAccount()
-            self.messages = SocketIOManager.sharedInstance.getDMsFromDB(user: receiver)
-            print(messages)
-            
-            SocketIOManager.sharedInstance.getDMMessage() { response in
-                if(response.receiverId == receiver.id && response.senderId == currentAccount?.userId || response.receiverId == currentAccount?.userId && response.senderId == receiver.id) {
-                    self.messages.append(response)
-                }
-           }
+            print("{{{{{{{{FETCH REQUEST}}}}}}}}}}}")
+            print(fetchRequest)
+            print("{{{{{{{{FETCH REQUEST}}}}}}}}}}}")
+            //self.messages = SocketIOManager.sharedInstance.getDMsFromDB(user: receiver)
         }
-        .onDisappear {
-            SocketIOManager.sharedInstance.stopReceivingMessages()
-        }
+//        .onDisappear {
+//            SocketIOManager.sharedInstance.stopReceivingMessages()
+//        }
     }
 }
 

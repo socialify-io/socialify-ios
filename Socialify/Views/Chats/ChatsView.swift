@@ -10,8 +10,9 @@ import SocialifySdk
 import CoreData
 
 struct ChatsView: View {
-    
+
     @StateObject var client: SocialifyClient = SocialifyClient.shared
+    //@StateObject var messages: [DM] = []
     
     @State private var chats: [Chat] = []
     @State private var searchResults: [User] = []
@@ -205,7 +206,7 @@ struct ChatsView: View {
                             if(chat.type == "Room") {
                                 Text("Roomy nie są obsługiwane")
                             } else {
-                                NavigationLink(destination: DMView(receiver: client.chatToUser(chat: chat)).navigationBarTitle(chat.name ?? "<username id couldn't be loaded>")) {
+                                NavigationLink(destination: DMView(receiver: client.chatToUser(chat: chat)).navigationBarTitle(chat.name ?? "<username id couldn't be loaded>").environment(\.managedObjectContext, CoreDataModel.shared.persistentContainer.viewContext)) {
                                     HStack {
                                         Image("Facebook")
                                             .resizable()

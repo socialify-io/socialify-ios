@@ -38,10 +38,9 @@ extension SocketIOManager {
             DMModel.username = data["username"] as? String
             DMModel.message = data["message"] as? String
             DMModel.date = data["date"] as? String
-            DMModel.id = Int64(self.getDMId(receiver: receiverId as! Int, sender: senderId as! Int) + 1)
+            DMModel.id = Int64(self.getDMId() + 1)
             DMModel.senderId = Int64("\(String(describing: senderId!))")!
             DMModel.receiverId = Int64("\(String(describing: receiverId!))")!
-            print("zapisuje")
             
             /// -----------------------------------------------------
             
@@ -72,6 +71,7 @@ extension SocketIOManager {
             for chat in chats {
                 if(chat.chatId == chatId) {
                     chat.id = 0
+                    break
                 } else {
                     chat.id += 1
                 }
@@ -98,7 +98,7 @@ extension SocketIOManager {
             newChatModel.chatId = chatId
             newChatModel.id = 0 as Int64
             
-            self.socket.emit("get_information_about_account", Int(newChatModel.chatId))
+            self.socket.emit("get_information_about_account", Int(chatId))
 
             self.socket.on("get_information_about_account") { dataArray, socketAck in
                 let data = dataArray[0] as! [String: Any]
@@ -107,6 +107,7 @@ extension SocketIOManager {
                 //print(model.avatar)
                 chats = chats.sorted { $0.id > $1.id }
                 try! context.save()
+                self.socket.off("get_information_about_account")
             }
         }
     }
@@ -164,17 +165,15 @@ extension SocketIOManager {
         return chatsForUser.sorted { $0.id < $1.id }
     }
         
-    func getDMId(receiver: Int, sender: Int) -> Int {
+    func getDMId() -> Int {
         let context = client.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DM")
         let messages = try! context.fetch(fetchRequest) as! [DM]
 
         var messageId: Int = 0
         if(messages != []) {
-            for message in messages {
-                if(message.receiverId == receiver && message.senderId == sender || message.receiverId == sender && message.senderId == receiver) {
-                    messageId+=1
-                }
+            for _ in messages {
+                messageId+=1
             }
         }
         return messageId
@@ -230,10 +229,6 @@ extension SocialifyClient {
         model.avatar = chat.avatar
         model.username = chat.name
         model.id = chat.chatId
-        
-        print("+++++++++++")
-        print(chat)
-        print("+++++++++++")
         
         return model
     }

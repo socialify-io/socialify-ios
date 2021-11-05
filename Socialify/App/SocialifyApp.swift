@@ -23,7 +23,13 @@ struct SocialifyApp: App {
                     NavigationBarView()
                         .onAppear {
                             SocketIOManager.sharedInstance.connect()
+                            
+                            SocketIOManager.sharedInstance.getDMMessage() { response in
+                                //SocketIOManager.messages.append(response)
+                                
+                            }
                         }
+                        .environment(\.managedObjectContext, CoreDataModel.shared.persistentContainer.viewContext)
                 } else {
                     NavigationView {
                         LoginView()

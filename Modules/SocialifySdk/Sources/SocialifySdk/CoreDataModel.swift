@@ -10,7 +10,7 @@ import CoreData
 import os
 
 @available(iOSApplicationExtension 14.0, *)
-public final class CoreDataModel {
+public final class CoreDataModel: ObservableObject {
     public static let shared: CoreDataModel = CoreDataModel()
     private let logger: Logger = Logger(subsystem: "\(Bundle.main.bundleIdentifier!).CoreData", category: "CoreData")
     
@@ -18,6 +18,7 @@ public final class CoreDataModel {
     
     lazy public var persistentContainer: NSPersistentContainer = {
         let groupURL: URL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "io.Socialify.socialify-ios.socialifyGroup")!.appendingPathComponent("socialify.sqlite")
+        print(groupURL)
         let modelURL = Bundle.module.url(forResource: "SocialifyStore", withExtension: "momd")
         let model = NSManagedObjectModel(contentsOf: modelURL!)
         

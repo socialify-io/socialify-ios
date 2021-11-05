@@ -30,7 +30,7 @@ public final class SocialifyClient: ObservableObject {
     let systemVersion = "iOS_\(UIDevice.current.systemVersion)"
     let userAgent = "Socialify-iOS"
     
-    let persistentContainer: NSPersistentContainer = CoreDataModel.shared.persistentContainer
+    public let persistentContainer: NSPersistentContainer = CoreDataModel.shared.persistentContainer
     let ud = UserDefaults.group
     let keychain = Keychain()
 }

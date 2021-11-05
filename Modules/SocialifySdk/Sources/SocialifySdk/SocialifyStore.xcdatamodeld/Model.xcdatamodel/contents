@@ -44,10 +44,10 @@
         <attribute name="username" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Account" positionX="-229.0546875" positionY="-75.15234375" width="106.08203125" height="118"/>
+        <element name="Account" positionX="-229.0546875" positionY="-75.15234375" width="106.08203125" height="104"/>
         <element name="Chat" positionX="-610.19140625" positionY="54.81640625" width="128" height="164"/>
-        <element name="DM" positionX="-101.54296875" positionY="-16.66015625" width="166.34765625" height="133"/>
-        <element name="Message" positionX="-261.921875" positionY="-252.34375" width="128" height="133"/>
+        <element name="DM" positionX="-101.54296875" positionY="-16.66015625" width="166.34765625" height="119"/>
+        <element name="Message" positionX="-261.921875" positionY="-252.34375" width="128" height="119"/>
         <element name="Room" positionX="-403.984375" positionY="-16.7734375" width="128" height="59"/>
         <element name="User" positionX="-447.484375" positionY="-232.59765625" width="128" height="74"/>
     </elements>

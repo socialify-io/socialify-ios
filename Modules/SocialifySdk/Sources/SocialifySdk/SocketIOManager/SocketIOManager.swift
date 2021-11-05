@@ -12,11 +12,13 @@ import Combine
 import KeychainAccess
 import CoreData
 import CryptoKit
+import SwiftUI
 
 @available(iOS 14.0, *)
 public class SocketIOManager: NSObject {
-    var client: SocialifyClient = SocialifyClient.shared
+    public var client: SocialifyClient = SocialifyClient.shared
     static public let sharedInstance = SocketIOManager()
+    //static public var messages: [DM] = []
     
     func getWebsocketHeaders() -> [String: String] {
         let account = client.getCurrentAccount()
@@ -81,6 +83,6 @@ public class SocketIOManager: NSObject {
         socket.connect()
     }
     
-    lazy var manager = SocketManager(socketURL: URL(string: "http://localhost:80")!, config: [.log(true), .compress, .extraHeaders(getWebsocketHeaders())])
+    lazy var manager = SocketManager(socketURL: URL(string: "http://127.0.0.1:80")!, config: [.log(true), .compress, .extraHeaders(getWebsocketHeaders())])
     lazy var socket = manager.defaultSocket
 }
