@@ -33,8 +33,6 @@ extension SocialifyClient {
                     
                     let keys = try SwiftyRSA.generateRSAKeyPair(sizeInBits: 2048)
                     
-                    let fingerprint = try Insecure.SHA1.hash(data: keys.privateKey.pemString().data(using: .utf8)!).hexStr
-                    
                     let payload: [String: Any] = [
                         "username": username,
                         "password": encryptedPassword,
@@ -44,8 +42,10 @@ extension SocialifyClient {
                             "timestamp": "\(Int(NSDate().timeIntervalSince1970))",
                             "appVersion": self.LIBRARY_VERSION,
                             "os": self.systemVersion,
-                            "signPubKey": try keys.publicKey.pemString(),
-                            "fingerprint": fingerprint
+                            "signPubKey": try keys.publicKey.pemString()
+                                .replacingOccurrences(of: "-----BEGIN RSA PUBLIC KEY-----", with: "")
+                                .replacingOccurrences(of: "-----END RSA PUBLIC KEY-----", with: "")
+                                .replacingOccurrences(of: "\n", with: "")
                         ]
                     ]
                     

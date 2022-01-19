@@ -23,10 +23,12 @@ extension SocialifyClient {
         request.addValue(systemVersion, forHTTPHeaderField: "OS")
         request.addValue("\(Int(timestamp))", forHTTPHeaderField: "Timestamp")
         request.addValue(LIBRARY_VERSION, forHTTPHeaderField: "AppVersion")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
         
         print(request.allHTTPHeaderFields)
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
+            print(String(decoding: data!, as: UTF8.self))
             if(error?._code.littleEndian == -1004) {
                 completion(.failure(SdkError.NoInternetConnection))
             } else {

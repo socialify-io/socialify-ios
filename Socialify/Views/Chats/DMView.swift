@@ -164,9 +164,12 @@ struct DMView: View {
         }
         .onAppear {
             self.currentAccount = client.getCurrentAccount()
-            print("{{{{{{{{FETCH REQUEST}}}}}}}}}}}")
-            print(fetchRequest)
-            print("{{{{{{{{FETCH REQUEST}}}}}}}}}}}")
+//            print("{{{{{{{{FETCH REQUEST}}}}}}}}}}}")
+//            print(fetchRequest)
+//            print("{{{{{{{{FETCH REQUEST}}}}}}}}}}}")
+            print("[][][][][][][][][][][][][][][][][][][][][][][][][][]")
+            print(self.messages)
+            print("[][][][][][][][][][][][][][][][][][][][][][][][][][]")
             //self.messages = SocketIOManager.sharedInstance.getDMsFromDB(user: receiver)
         }
 //        .onDisappear {

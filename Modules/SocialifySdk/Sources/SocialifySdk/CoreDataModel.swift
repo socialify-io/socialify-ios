@@ -9,6 +9,7 @@ import Foundation
 import CoreData
 import os
 
+@available(iOS 14.0, *)
 @available(iOSApplicationExtension 14.0, *)
 public final class CoreDataModel: ObservableObject {
     public static let shared: CoreDataModel = CoreDataModel()

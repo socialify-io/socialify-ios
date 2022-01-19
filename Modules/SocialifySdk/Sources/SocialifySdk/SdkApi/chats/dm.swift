@@ -7,7 +7,9 @@
 
 import Foundation
 import CoreData
+import SwiftUI
 
+@available(iOS 14.0, *)
 @available(iOSApplicationExtension 14.0, *)
 extension SocketIOManager {
     
@@ -32,19 +34,45 @@ extension SocketIOManager {
             )
             
             let data = dataArray[0] as! [String: Any]
-            let receiverId = data["receiverId"]
-            let senderId = data["senderId"]
+            let receiverId = data["receiverId"] as! Int
+            let senderId = data["senderId"] as! Int
+            
+            let currentAccount = self.client.getCurrentAccount()
+            
+            let predicateForReceivedMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: receiverId))
+            let predicateForSendMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: senderId))
+            let predicateForSendMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value: senderId))
+            let predicateForReceivedMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value:  receiverId))
+            
+            let predicateAndReceived = NSCompoundPredicate(type: .and, subpredicates: [predicateForReceivedMessageSend, predicateForReceivedMessageReceived])
+            let predicateAndSend = NSCompoundPredicate(type: .and, subpredicates: [predicateForSendMessageSend, predicateForSendMessageReceived])
+            
+            let finalPredicate = NSCompoundPredicate(type: .or, subpredicates: [predicateAndSend, predicateAndReceived])
+            
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DM")
+            fetchRequest.predicate = finalPredicate
+            fetchRequest.sortDescriptors = [NSSortDescriptor(
+                                            keyPath: \DM.id,
+                                            ascending: true)]
+            
+            var messages = try! context.fetch(fetchRequest) as! [DM]
+            print("XDXDXDXDXDXDXDEXDXDXDXDXDXDXDXDXDXDXD")
+            print(messages)
+            print("XDXDXDXDXDXDXDEXDXDXDXDXDXDXDXDXDXDXD")
+            if(messages.count >= 16) {
+                print("U(JRNHJIWAEGHSIOPUJ:QWHJKLBNIWHJBN QWAEGHJKLBN UAQEWJKLHNBAFGEQWIHJKLBN EWGBN AJ")
+                try! context.delete(messages.last!)
+            }
 
             DMModel.username = data["username"] as? String
             DMModel.message = data["message"] as? String
             DMModel.date = data["date"] as? String
             DMModel.id = Int64(self.getDMId() + 1)
-            DMModel.senderId = Int64("\(String(describing: senderId!))")!
-            DMModel.receiverId = Int64("\(String(describing: receiverId!))")!
+            DMModel.senderId = Int64("\(String(describing: senderId))")!
+            DMModel.receiverId = Int64("\(String(describing: receiverId))")!
             
             /// -----------------------------------------------------
             
-            let currentAccount = self.client.getCurrentAccount()
             var chatId: Int64
                     
             if(DMModel.receiverId == currentAccount.userId) { chatId = DMModel.senderId }
@@ -211,6 +239,7 @@ extension SocketIOManager {
     }
 }
 
+@available(iOS 14.0, *)
 @available(iOSApplicationExtension 14.0, *)
 extension SocialifyClient {
     public func chatToUser(chat: Chat) -> User {

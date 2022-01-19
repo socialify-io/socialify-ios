@@ -8,6 +8,7 @@
 import Foundation
 import CryptoKit
 
+@available(iOS 14.0, *)
 @available(iOSApplicationExtension 14.0, *)
 extension SocialifyClient {
     

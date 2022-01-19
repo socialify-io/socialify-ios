@@ -18,7 +18,7 @@ extension SocialifyClient {
         let url = URL(string: "\(self.API_ROUTE)v\(self.API_VERSION)/getKey")!
         
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = "GET"
         
         let timestamp = NSDate().timeIntervalSince1970
         let authToken = self.generateAuthToken(timestamp: "\(Int(timestamp))", authTokenHeader: "getKey")

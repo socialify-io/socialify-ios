@@ -26,21 +26,20 @@ public class SocketIOManager: NSObject {
           
         let timestamp = NSDate().timeIntervalSince1970
         let authToken = client.generateAuthToken(timestamp: "\(Int(timestamp))", authTokenHeader: "connect")
-            
-        let fingerprint = Insecure.SHA1.hash(data: privKeyPEM!.data(using: .utf8)!).hexStr
         
         var headersJson: [String: String] = [
             "Content-Type": "application/json",
+            "Accept": "application/json",
             "User-Agent": client.userAgent,
             "OS": client.systemVersion,
             "Timestamp": "\(Int(timestamp))",
             "AppVersion": client.LIBRARY_VERSION,
             "AuthToken": "\(authToken ?? "")",
-            "Fingerprint": fingerprint,
+            "UserId": "\(account.userId)",
             "DeviceId": "\(account.deviceId)"
         ]
         
-        let headers = "Content-Type=application/json&User-Agent=\(client.userAgent)&OS=\(client.systemVersion)&Timestamp=\(Int(timestamp))&AppVersion=\(client.LIBRARY_VERSION)&AuthToken=\(authToken ?? "")&Fingerprint=\(fingerprint)&DeviceId=\(account.deviceId)&"
+        let headers = "Content-Type=application/json&User-Agent=\(client.userAgent)&OS=\(client.systemVersion)&Timestamp=\(Int(timestamp))&AppVersion=\(client.LIBRARY_VERSION)&AuthToken=\(authToken ?? "")&UserId=\(account.userId)&DeviceId=\(account.deviceId)&"
         
         let signatureCore = "headers=\(headers)&body={}&timestamp=\(Int(timestamp))&authToken=\(authToken ?? "")&endpointUrl=/api/v0.1/connect&"
         
@@ -83,6 +82,6 @@ public class SocketIOManager: NSObject {
         socket.connect()
     }
     
-    lazy var manager = SocketManager(socketURL: URL(string: "http://127.0.0.1:80")!, config: [.log(true), .compress, .extraHeaders(getWebsocketHeaders())])
+    lazy var manager = SocketManager(socketURL: URL(string: "http://192.168.8.199:82")!, config: [.log(true), .compress, .extraHeaders(getWebsocketHeaders())])
     lazy var socket = manager.defaultSocket
 }
