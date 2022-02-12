@@ -8,6 +8,7 @@
 import SwiftUI
 import SocialifySdk
 import CoreData
+import SocketIO
 
 struct ChatsView: View {
 
@@ -20,10 +21,14 @@ struct ChatsView: View {
     @State private var userPickerSelection = ""
     
     @State var searchText = ""
-     
     @State private var isSearchBarEditing = false
+   
+    var calendar = Calendar.current
     
     let views = ["Chats", "Friends"]
+
+    init() {
+    }
     
     private var searchBar: some View {
         HStack {
@@ -213,20 +218,28 @@ struct ChatsView: View {
                                             .cornerRadius(360)
                                             .frame(width: 50, height: 50)
                                             .padding(.trailing, 4)
+                                                    
+                                        if chat.isRead {
+                                            VStack {
+                                                Text(chat.name ?? "<username id couldn't be loaded>")
+                                                    .font(.callout)
+                                                    .foregroundColor(Color("CustomForegroundColor"))
+                                                    .frame(maxWidth: .infinity, alignment: .leading)
 
-                                        VStack {
-                                            Text(chat.name ?? "<username id couldn't be loaded>")
-                                                .font(.callout)
-                                                .foregroundColor(Color("CustomForegroundColor"))
-                                                .frame(maxWidth: .infinity, alignment: .leading)
-
-                                            if(chat.isRead) {
-                                                Text("Od kogo: Ostatnio wysłana wiadomość • 21:15")
+                                                Text("\(chat.lastMessageAuthor ?? ""): \(chat.lastMessage ?? "") • \(calendar.component(.hour, from: chat.date!)):\(calendar.component(.minute, from: chat.date!))")
                                                     .font(.caption)
                                                     .foregroundColor(Color("CustomForegroundColor"))
                                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                            } else {
-                                                Text("Od kogo: Ostatnio wysłana wiadomość • 21:15")
+                                            }
+                                        } else {
+                                            VStack {
+                                                Text(chat.name ?? "<username id couldn't be loaded>")
+                                                    .font(.callout)
+                                                    .bold()
+                                                    .foregroundColor(Color("CustomForegroundColor"))
+                                                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                                                Text("\(chat.lastMessageAuthor ?? ""): \(chat.lastMessage ?? "") • \(calendar.component(.hour, from: chat.date!)):\(calendar.component(.minute, from: chat.date!))")
                                                     .bold()
                                                     .font(.caption)
                                                     .foregroundColor(Color("CustomForegroundColor"))
@@ -292,9 +305,10 @@ struct ChatsView: View {
             }
         }
         .navigationBarTitle("Chats", displayMode: .inline)
-        .background(Color("BackgroundColor"))
+        //.background(Color("BackgroundColor"))
         .onAppear {
             self.chats = client.fetchChats()
+           
             print("============")
             print(chats)
             print("============")
@@ -304,6 +318,9 @@ struct ChatsView: View {
                     self.searchResults = result
                 })
             }
+            
+            SocketIOManager.sharedInstance.getFetchLastUnreadDMsResponse()
+            SocketIOManager.sharedInstance.fetchLastUnreadDMs()
         }
     }
 }

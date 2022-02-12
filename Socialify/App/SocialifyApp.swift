@@ -30,12 +30,13 @@ struct SocialifyApp: App {
                             }
                         }
                         .environment(\.managedObjectContext, CoreDataModel.shared.persistentContainer.viewContext)
+                    
                 } else {
                     NavigationView {
                         LoginView()
                             .navigationBarTitle(Text("Back"))
                             .navigationBarHidden(true)
-                            .background(Color("BackgroundColor").ignoresSafeArea(.all))
+                            //.background(Color("BackgroundColor").ignoresSafeArea(.all))
                     }
                 }
             }

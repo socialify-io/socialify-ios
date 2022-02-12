@@ -30,7 +30,6 @@ extension SocialifyClient {
                     
                     var request = URLRequest(url: url)
                     request.httpMethod = "POST"
-                    
                     let keys = try SwiftyRSA.generateRSAKeyPair(sizeInBits: 2048)
                     
                     let payload: [String: Any] = [
@@ -77,7 +76,6 @@ extension SocialifyClient {
                             model.deviceId = Int64("\(response["data"]["deviceId"])")!
                             model.userId = Int64("\(response["data"]["userId"])")!
                             model.isCurrentAccount = true
-
                             
                             let accounts = self.fetchAccounts()
                             
@@ -102,7 +100,7 @@ extension SocialifyClient {
                             } catch { completion(.failure(SdkError.SavingContextError)) }
                             
                             self.keychain["\(accountId)-privateKey"] = try? keys.privateKey.pemString()
-                            
+                           
                             completion(.success(true))
                             
                         case .failure(let error):

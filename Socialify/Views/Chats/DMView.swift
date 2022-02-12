@@ -9,6 +9,12 @@ import SwiftUI
 import SocialifySdk
 import CoreData
 
+extension UIApplication {
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
 struct DMView: View {
     @StateObject var client: SocialifyClient = SocialifyClient.shared
     
@@ -57,7 +63,6 @@ struct DMView: View {
             ScrollViewReader { value in
                 ScrollView {
                     ForEach(Array(messages.enumerated()), id: \.element) { index, message in
-                        if(messages[index].receiverId == receiver.id && messages[index].senderId == currentAccount?.userId || messages[index].receiverId == currentAccount?.userId && messages[index].senderId == receiver.id) {
                             if(message.username != currentAccount?.username) {
                                 VStack {
                                     if(index == 0 || messages[index-1].username != message.username) {
@@ -76,25 +81,27 @@ struct DMView: View {
                                     
                                     
                                     HStack {
-                                        if(messages.count-1 == index || messages.count-1 > index && messages[index+1].username != message.username) {
+                                        
+                                        if messages.count-1 == index || messages.count-1 > index && messages[index+1].username != message.username {
                                             VStack {
                                                 Image(systemName: "person.circle.fill")
                                                     .renderingMode(.template)
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
-                                                    .frame(height: 40)
+                                                    .frame(height: 32)
                                                     .foregroundColor(.accentColor)
                                                     .padding(.trailing, 4)
                                             }
                                         } else {
                                             VStack {
                                                 Spacer()
-                                                    .frame(width: 44)
+                                                    .frame(width: 36)
                                             }
                                         }
                                         
                                         HStack {
                                             Text(message.message ?? "<message can't be loaded>")
+                                                .font(.callout)
                                         }.padding(.vertical, 12)
                                         .padding(.horizontal)
                                         .background(Color("CustomAppearanceItemColor"))
@@ -111,6 +118,7 @@ struct DMView: View {
                                     
                                     HStack {
                                         Text(message.message ?? "<message can't be loaded>")
+                                            .font(.callout)
                                     }.padding(.vertical, 12)
                                     .padding(.horizontal)
                                     .background(Color("CustomAppearanceItemColor"))
@@ -119,9 +127,9 @@ struct DMView: View {
                                     .padding(.trailing, 5)
                                 }.id(index)
                             }
-                        }
                     }
-                }.onChange(of: messages.count) { _ in
+                }
+                .onChange(of: messages.count) { _ in
                     value.scrollTo(messages.count - 1)
                 }
                 .onAppear {
@@ -139,7 +147,7 @@ struct DMView: View {
                     .frame(height: cellHeight)
                     .background(cellBackground)
                     .cornerRadius(cornerRadius)
-                
+                        
                 Button(action: {
                     if(message != "") {
                         SocketIOManager.sharedInstance.sendDM(message: message, id: receiver.id)
@@ -153,8 +161,9 @@ struct DMView: View {
                 }
                 Spacer()
             }.shadow(color: Color("ShadowColor"), radius: 5)
-        }.padding()
-        .background(Color("BackgroundColor"))
+            
+    }.padding()
+        //.background(Color("BackgroundColor"))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {}) {
@@ -164,12 +173,10 @@ struct DMView: View {
         }
         .onAppear {
             self.currentAccount = client.getCurrentAccount()
+            SocketIOManager.sharedInstance.fetchDMs(chatId: receiver.id)
 //            print("{{{{{{{{FETCH REQUEST}}}}}}}}}}}")
 //            print(fetchRequest)
 //            print("{{{{{{{{FETCH REQUEST}}}}}}}}}}}")
-            print("[][][][][][][][][][][][][][][][][][][][][][][][][][]")
-            print(self.messages)
-            print("[][][][][][][][][][][][][][][][][][][][][][][][][][]")
             //self.messages = SocketIOManager.sharedInstance.getDMsFromDB(user: receiver)
         }
 //        .onDisappear {

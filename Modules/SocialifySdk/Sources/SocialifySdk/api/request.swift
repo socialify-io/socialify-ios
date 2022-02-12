@@ -43,7 +43,7 @@ extension SocialifyClient {
                     let responseBody = try JSON(data: data)
                     print(responseBody)
                     if(responseBody["success"] == false) {
-                        let errorCode: Int = responseBody["errors"][0]["code"].rawValue as! Int
+                        let errorCode: Int = responseBody["error"]["code"].rawValue as! Int
                         completion(.failure(self.parseErrorCode(errorCode: errorCode)))
                     } else if(responseBody["success"] == true) {
                         completion(.success(responseBody))

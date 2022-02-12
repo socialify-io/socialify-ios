@@ -152,7 +152,7 @@ struct RegisterView: View {
                 .padding(.bottom)
             }.padding()
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.vertical)
+        //.background(Color("BackgroundColor")).edgesIgnoringSafeArea(.vertical)
         .sheet(isPresented: $showErrorReportModal, onDismiss: {
             }) {
             NavigationView {

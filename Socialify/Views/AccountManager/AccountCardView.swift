@@ -178,7 +178,7 @@ struct AccountCardView: View {
                 .padding()
                 .padding(.bottom)
             
-        }.background(Color("BackgroundColor"))
+        }//.background(Color("BackgroundColor"))
         .frame(width: .infinity, height: .infinity)
         .alert(isPresented: $isLogOutAlertPresented) {
             Alert(title: Text("Log out"), message: Text("Do you want to log out from \(account.username ?? "<username can't be loaded>") account? All account data will be deleted from this device."), primaryButton: .cancel(), secondaryButton: .destructive(Text("Log out")) { client.deleteAccount(account: account)

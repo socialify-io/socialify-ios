@@ -63,6 +63,7 @@ struct AccountTileView: View {
                 NavigationLink("\(cardImage)", destination: AccountCardView(account: account))
                     .foregroundColor(Color.accentColor)
                     .padding(.trailing, 8)
+                    .padding(.bottom, 8)
 
             }.font(.headline)
             .multilineTextAlignment(.center)

@@ -18,71 +18,164 @@ extension SocketIOManager {
                                 "message": message])
     }
     
+    public func fetchDMs(chatId: Int64) {
+        let context = self.client.persistentContainer.viewContext
+//        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
+//        fetchRequest.predicate = NSPredicate(format: "chatId == %@", NSNumber(value: chatId))
+//        let chat = try! context.fetch(fetchRequest) as! [Chat]
+
+//        let DMFetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DM")
+//        let senderPredicate = NSPredicate(format: "senderId == %@", NSNumber(value: chatId))
+//        let receiverPredicate = NSPredicate(format: "receiverId == %@", NSNumber(value: chatId))
+//        DMFetchRequest.predicate = NSCompoundPredicate(type: .or, subpredicates: [senderPredicate, receiverPredicate])
+        
+        
+        self.socket.emit("fetch_dms", ["sender": chatId])
+        
+        self.socket.on("fetch_dms") { dataArray, socketAck in
+            let data: [[String: Any]] = dataArray[0] as! [[String: Any]]
+            
+            for dm in data {
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DM")
+                fetchRequest.predicate = NSPredicate(format: "id == %@", dm["id"] as! CVarArg)
+                let allDMsWithSameId = try! context.fetch(fetchRequest) as! [DM]
+                
+                if(allDMsWithSameId == []) {
+                    let entityDescription = NSEntityDescription.entity(
+                        forEntityName: "DM",
+                        in: context
+                    )!
+                    
+                    let DMModel = DM(
+                        entity: entityDescription,
+                        insertInto: context
+                    )
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                    let date = dateFormatter.date(from: "\(dm["date"]!)")
+                    
+                    
+                    let receiverId: Int = Int("\(dm["receiver"] ?? "")")!
+                    let senderId: Int = Int("\(dm["sender"] ?? "")")!
+                    
+                    DMModel.username = dm["username"] as? String
+                    DMModel.message = dm["message"] as? String
+                    DMModel.date = date
+                    DMModel.id = dm["id"] as! Int64
+                    DMModel.senderId = Int64("\(String(describing: senderId))")!
+                    DMModel.receiverId = Int64("\(String(describing: receiverId))")!
+                    
+                    let fetchChatRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
+                    fetchChatRequest.predicate = NSPredicate(format: "chatId == %@", NSNumber(value: chatId))
+                    var chat = try! context.fetch(fetchChatRequest) as! [Chat]
+                   
+                    if(chat != []) {
+                        chat[0].lastMessage = DMModel.message
+                        chat[0].lastMessageAuthor = DMModel.username
+                        chat[0].lastMessageId = DMModel.id
+                        chat[0].date = DMModel.date
+                        chat[0].isRead = true
+                    }
+                    
+                    var chatId: Int64
+                    let currentAccount = self.client.getCurrentAccount()
+                    
+                    if(DMModel.receiverId == currentAccount.userId) { chatId = DMModel.senderId }
+                    else { chatId = DMModel.receiverId }
+                    
+                    
+                    try! context.save()
+                }
+                self.socket.emit("delete_dms", ["sender": chatId, "from": dm["id"], "to": dm["id"]])
+            }
+            self.sortChats(chatId: chatId)
+        }
+    }
+    
     public func getDMMessage(completion: @escaping (DM) -> Void) {
         socket.on("send_dm") { dataArray, socketAck in
             print("dostałem wiadomość")
             let context = self.client.persistentContainer.viewContext
 
-            let entityDescription = NSEntityDescription.entity(
-                forEntityName: "DM",
-                in: context
-            )!
-
-            let DMModel = DM(
-                entity: entityDescription,
-                insertInto: context
-            )
-            
             let data = dataArray[0] as! [String: Any]
-            let receiverId = data["receiverId"] as! Int
-            let senderId = data["senderId"] as! Int
-            
-            let currentAccount = self.client.getCurrentAccount()
-            
-            let predicateForReceivedMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: receiverId))
-            let predicateForSendMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: senderId))
-            let predicateForSendMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value: senderId))
-            let predicateForReceivedMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value:  receiverId))
-            
-            let predicateAndReceived = NSCompoundPredicate(type: .and, subpredicates: [predicateForReceivedMessageSend, predicateForReceivedMessageReceived])
-            let predicateAndSend = NSCompoundPredicate(type: .and, subpredicates: [predicateForSendMessageSend, predicateForSendMessageReceived])
-            
-            let finalPredicate = NSCompoundPredicate(type: .or, subpredicates: [predicateAndSend, predicateAndReceived])
-            
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DM")
-            fetchRequest.predicate = finalPredicate
-            fetchRequest.sortDescriptors = [NSSortDescriptor(
-                                            keyPath: \DM.id,
-                                            ascending: true)]
+            fetchRequest.predicate = NSPredicate(format: "id == %@", data["id"] as! CVarArg)
+            let allDMsWithSameId = try! context.fetch(fetchRequest) as! [DM]
             
-            var messages = try! context.fetch(fetchRequest) as! [DM]
-            print("XDXDXDXDXDXDXDEXDXDXDXDXDXDXDXDXDXDXD")
-            print(messages)
-            print("XDXDXDXDXDXDXDEXDXDXDXDXDXDXDXDXDXDXD")
-            if(messages.count >= 16) {
-                print("U(JRNHJIWAEGHSIOPUJ:QWHJKLBNIWHJBN QWAEGHJKLBN UAQEWJKLHNBAFGEQWIHJKLBN EWGBN AJ")
-                try! context.delete(messages.last!)
-            }
-
-            DMModel.username = data["username"] as? String
-            DMModel.message = data["message"] as? String
-            DMModel.date = data["date"] as? String
-            DMModel.id = Int64(self.getDMId() + 1)
-            DMModel.senderId = Int64("\(String(describing: senderId))")!
-            DMModel.receiverId = Int64("\(String(describing: receiverId))")!
-            
-            /// -----------------------------------------------------
+            let receiverId: Int = Int("\(data["receiverId"] ?? "")")!
+            let senderId: Int = Int("\(data["senderId"] ?? "")")!
             
             var chatId: Int64
-                    
-            if(DMModel.receiverId == currentAccount.userId) { chatId = DMModel.senderId }
-            else { chatId = DMModel.receiverId }
+            let currentAccount = self.client.getCurrentAccount()
             
-            self.sortChats(chatId: chatId)
+            if(receiverId == currentAccount.userId) { chatId = Int64(senderId) }
+            else { chatId = Int64(receiverId) }
+            
+            print("+++++")
+            print(allDMsWithSameId)
+            print("+++++")
+        
+            if(allDMsWithSameId == []) {
+                let entityDescription = NSEntityDescription.entity(
+                    forEntityName: "DM",
+                    in: context
+                )!
 
-            completion(DMModel)
-            
-            try! context.save()
+                let DMModel = DM(
+                    entity: entityDescription,
+                    insertInto: context
+                )
+                
+                let predicateForReceivedMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: receiverId))
+                let predicateForSendMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: senderId))
+                let predicateForSendMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value: senderId))
+                let predicateForReceivedMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value:  receiverId))
+                
+                let predicateAndReceived = NSCompoundPredicate(type: .and, subpredicates: [predicateForReceivedMessageSend, predicateForReceivedMessageReceived])
+                let predicateAndSend = NSCompoundPredicate(type: .and, subpredicates: [predicateForSendMessageSend, predicateForSendMessageReceived])
+                
+                let finalPredicate = NSCompoundPredicate(type: .or, subpredicates: [predicateAndSend, predicateAndReceived])
+                
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DM")
+                fetchRequest.predicate = finalPredicate
+                fetchRequest.sortDescriptors = [NSSortDescriptor(
+                                                keyPath: \DM.id,
+                                                ascending: true)]
+                
+                var messages = try! context.fetch(fetchRequest) as! [DM]
+    //            if(messages.count >= 16) {
+    //                try! context.delete(messages.last!)
+    //            }
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                let date = dateFormatter.date(from: "\(data["date"]!)")
+
+                DMModel.username = data["username"] as? String
+                DMModel.message = data["message"] as? String
+                DMModel.date = date
+                DMModel.id = data["id"] as! Int64
+                DMModel.senderId = Int64("\(String(describing: senderId))")!
+                DMModel.receiverId = Int64("\(String(describing: receiverId))")!
+                
+                self.sortChats(chatId: chatId)
+
+                let fetchChatRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
+                fetchChatRequest.predicate = NSPredicate(format: "chatId == %@", NSNumber(value: chatId))
+                var chat = try! context.fetch(fetchChatRequest) as! [Chat]
+                
+                chat[0].lastMessage = DMModel.message
+                chat[0].lastMessageAuthor = DMModel.username
+                chat[0].lastMessageId = DMModel.id
+                chat[0].date = DMModel.date
+                chat[0].isRead = true
+                
+                completion(DMModel)
+                
+                try! context.save()
+            }
+            self.socket.emit("delete_dms", ["sender": chatId, "from": data["id"], "to": data["id"]])
         }
     }
     
@@ -139,6 +232,7 @@ extension SocketIOManager {
             }
         }
     }
+     
     
 //    public func getLastUnreadChats() -> [Chat] {
 //        let context = self.client.persistentContainer.viewContext

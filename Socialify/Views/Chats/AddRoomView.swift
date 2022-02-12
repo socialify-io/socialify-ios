@@ -70,7 +70,7 @@ struct AddRoomView: View {
                 }
             }, title: buttonText)
         }.padding()
-        .background(Color("BackgroundColor"))
+        //.background(Color("BackgroundColor"))
     }
 }
 

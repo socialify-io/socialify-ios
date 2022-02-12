@@ -123,18 +123,18 @@ struct LoginView: View {
                                     SocketIOManager.sharedInstance.connect()
                                 }
                         }
-                        
+
                     case .failure(let error):
                         switch error {
                         case SocialifyClient.ApiError.InvalidUsername:
                             setButton(textOnStart: "Invalid username", textOnEnd: "login.button")
-                            
+
                         case SocialifyClient.ApiError.InvalidPassword:
                             setButton(textOnStart: "Invalid password", textOnEnd: "login.button")
-                            
+
                         case SocialifyClient.SdkError.NoInternetConnection:
                             errorAlertShow = ErrorAlert(name: "errors.no_connection".localized, description: "errors.no_connection_description".localized)
-                            
+
                         default:
                             print(value)
                             errorAlertShow = ErrorAlert(name: "errors.default".localized, description: "errors.default_description".localized)
@@ -150,10 +150,11 @@ struct LoginView: View {
                 ErrorReportView(showErrorReportModal: self.$showErrorReportModal)
                     .navigationBarTitle(Text("Back"))
                     .navigationBarHidden(true)
-                    .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.bottom)
+                    //.background(Color("BackgroundColor")).edgesIgnoringSafeArea(.bottom)
             }
         }
         .alert(item: $errorAlertShow) { error in
+        
             Alert(title: Text(errorAlertShow?.name ?? "errors.default"), message: Text(errorAlertShow?.description ?? "errors.default_description"), primaryButton: .cancel(), secondaryButton: .destructive(Text("errors.button")) { self.showErrorReportModal = true } )
         }
     }

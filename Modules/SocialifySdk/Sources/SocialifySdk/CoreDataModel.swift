@@ -18,21 +18,23 @@ public final class CoreDataModel: ObservableObject {
     private init() {}
     
     lazy public var persistentContainer: NSPersistentContainer = {
-        let groupURL: URL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "io.Socialify.socialify-ios.socialifyGroup")!.appendingPathComponent("socialify.sqlite")
-        print(groupURL)
+//        let groupURL: URL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.io.Socialify.socialifyGroup")!.appendingPathComponent("socialify.sqlite")
+        //
+        //print(groupURL)
         let modelURL = Bundle.module.url(forResource: "SocialifyStore", withExtension: "momd")
+        print(modelURL)
         let model = NSManagedObjectModel(contentsOf: modelURL!)
-        
-        let container = NSPersistentContainer(name: "VulcanStore", managedObjectModel: model!)
 
-        let description: NSPersistentStoreDescription = NSPersistentStoreDescription()
-        description.url = groupURL
-        description.shouldMigrateStoreAutomatically = true
-        description.shouldInferMappingModelAutomatically = true
-        description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
-        description.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
-        
-        container.persistentStoreDescriptions = [description]
+        let container = NSPersistentContainer(name: "SocialifyStore", managedObjectModel: model!)
+
+//        let description: NSPersistentStoreDescription = NSPersistentStoreDescription()
+//        description.url = modelURL?.appendingPathComponent("socialify.sqlite")
+//        description.shouldMigrateStoreAutomatically = true
+//        description.shouldInferMappingModelAutomatically = true
+//        description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+//        description.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
+//
+//        container.persistentStoreDescriptions = [description]
         container.loadPersistentStores { storeDescription, error in
             if let error = error {
                 self.logger.error("Could not load store: \(error.localizedDescription)")
@@ -40,12 +42,21 @@ public final class CoreDataModel: ObservableObject {
                 self.clearDatabase()
                 return
             }
-            
+
             container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             self.logger.info("Store loaded!")
         }
-        
+
         return container
+
+//        let container = NSPersistentContainer(name: "SocialifyStore")
+//        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+//            if let error = error as NSError? {
+//                fatalError("Unresolved error \(error), \(error.userInfo)")
+//            }
+//        })
+//
+//        return container
     }()
     
     /// Saves the CoreData context.

@@ -80,8 +80,17 @@ public class SocketIOManager: NSObject {
     
     public func connect() {
         socket.connect()
+        
+        socket.on("connect") { [self]_,_ in
+            fetchLastUnreadDMs()
+            getFetchLastUnreadDMsResponse()
+        }
     }
     
-    lazy var manager = SocketManager(socketURL: URL(string: "http://192.168.8.199:82")!, config: [.log(true), .compress, .extraHeaders(getWebsocketHeaders())])
+    public func status() -> SocketIOStatus {
+        return socket.status
+    }
+    
+    lazy var manager = SocketManager(socketURL: URL(string: "http://api.socialify.cf:81")!, config: [.log(true), .compress, .extraHeaders(getWebsocketHeaders())])
     lazy var socket = manager.defaultSocket
 }
