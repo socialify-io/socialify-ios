@@ -10,8 +10,119 @@ import SocialifySdk
 import CoreData
 import SocketIO
 
-struct ChatsView: View {
+struct ChatTileView: View {
+    
+    @StateObject var client: SocialifyClient = SocialifyClient.shared
+    var calendar = Calendar.current
+    let chat: Chat
+    
+    var body: some View {
+        if(chat.type == "Room") {
+            NavigationLink(destination: RoomView(roomId: Int(chat.chatId)).navigationBarTitle(chat.name ?? "<chat name couldn't be loaded>").environment(\.managedObjectContext, CoreDataModel.shared.persistentContainer.viewContext)) {
+                HStack {
+                    Image("Facebook")
+                        .resizable()
+                        .cornerRadius(360)
+                        .frame(width: 50, height: 50)
+                        .padding(.trailing, 4)
+                    
+                    if chat.isRead {
+                        VStack {
+                            Text(chat.name ?? "<chat name couldn't be loaded>")
+                                .font(.callout)
+                                .foregroundColor(Color("CustomForegroundColor"))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            if chat.lastMessageAuthor == nil {
+                                Text("\(chat.lastMessageAuthor ?? "") \(chat.lastMessage ?? "") • \(calendar.component(.hour, from: chat.date!)):\(calendar.component(.minute, from: chat.date!))")
+                                    .font(.caption)
+                                    .foregroundColor(Color("CustomForegroundColor"))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            } else {
+                                Text("\(chat.lastMessageAuthor ?? ""): \(chat.lastMessage ?? "") • \(calendar.component(.hour, from: chat.date!)):\(calendar.component(.minute, from: chat.date!))")
+                                    .font(.caption)
+                                    .foregroundColor(Color("CustomForegroundColor"))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                        }
+                    } else {
+                        VStack {
+                            Text(chat.name ?? "<chat name couldn't be loaded>")
+                                .font(.callout)
+                                .bold()
+                                .foregroundColor(Color("CustomForegroundColor"))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Text("\(chat.lastMessageAuthor ?? ""): \(chat.lastMessage ?? "") • \(calendar.component(.hour, from: chat.date!)):\(calendar.component(.minute, from: chat.date!))")
+                                .bold()
+                                .font(.caption)
+                                .foregroundColor(Color("CustomForegroundColor"))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                }.font(.headline)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal)
+                    .padding(.vertical, 16)
+                    .background(Color("CustomAppearanceItemColor"))
+                    .cornerRadius(20)
+                    .shadow(color: Color("ShadowColor"), radius: 5)
+            }.padding(.vertical, 4)
+                .padding(.horizontal, 12)
+        } else {
+            NavigationLink(destination: DMView(receiver: client.chatToUser(chat: chat)).navigationBarTitle(chat.name ?? "<username id couldn't be loaded>").environment(\.managedObjectContext, CoreDataModel.shared.persistentContainer.viewContext)) {
+                HStack {
+                    Image("Facebook")
+                        .resizable()
+                        .cornerRadius(360)
+                        .frame(width: 50, height: 50)
+                        .padding(.trailing, 4)
+                    
+                    if chat.isRead {
+                        VStack {
+                            Text(chat.name ?? "<username id couldn't be loaded>")
+                                .font(.callout)
+                                .foregroundColor(Color("CustomForegroundColor"))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Text("\(chat.lastMessageAuthor ?? ""): \(chat.lastMessage ?? "") • \(calendar.component(.hour, from: chat.date!)):\(calendar.component(.minute, from: chat.date!))")
+                                .font(.caption)
+                                .foregroundColor(Color("CustomForegroundColor"))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    } else {
+                        VStack {
+                            Text(chat.name ?? "<username id couldn't be loaded>")
+                                .font(.callout)
+                                .bold()
+                                .foregroundColor(Color("CustomForegroundColor"))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Text("\(chat.lastMessageAuthor ?? ""): \(chat.lastMessage ?? "") • \(calendar.component(.hour, from: chat.date!)):\(calendar.component(.minute, from: chat.date!))")
+                                .bold()
+                                .font(.caption)
+                                .foregroundColor(Color("CustomForegroundColor"))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                    }
+                }.font(.headline)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal)
+                    .padding(.vertical, 16)
+                    .background(Color("CustomAppearanceItemColor"))
+                    .cornerRadius(20)
+                    .shadow(color: Color("ShadowColor"), radius: 5)
+            }.padding(.vertical, 4)
+                .padding(.horizontal, 12)
+        }
+    }
+}
 
+
+struct ChatsView: View {
+    
     @StateObject var client: SocialifyClient = SocialifyClient.shared
     //@StateObject var messages: [DM] = []
     
@@ -22,11 +133,11 @@ struct ChatsView: View {
     
     @State var searchText = ""
     @State private var isSearchBarEditing = false
-   
+    
     var calendar = Calendar.current
     
     let views = ["Chats", "Friends"]
-
+    
     init() {
     }
     
@@ -53,7 +164,7 @@ struct ChatsView: View {
                             .foregroundColor(.gray)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                             .padding(.leading, 8)
-                 
+                        
                         if isSearchBarEditing {
                             Button(action: {
                                 self.searchText = ""
@@ -65,12 +176,12 @@ struct ChatsView: View {
                         }
                     }
                 )
- 
+            
             if isSearchBarEditing {
                 Button(action: {
                     self.isSearchBarEditing = false
                     self.searchText = ""
- 
+                    
                 }) {
                     Text("Cancel")
                 }
@@ -85,185 +196,59 @@ struct ChatsView: View {
     
     private var searchView: some View {
         ForEach(searchResults, id: \.self) { user in
-             HStack {
-                 HStack {
-                     NavigationLink(destination: DMView(receiver: user).navigationBarTitle(user.username ?? "<username couldn't be loaded>")) {
-//                        Image(uiImage: UIImage(data: Data(base64Encoded: user.avatar!)!)!)
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(height: 40)
-//                            .clipShape(Circle())
+            HStack {
+                HStack {
+                    NavigationLink(destination: DMView(receiver: user).navigationBarTitle(user.username ?? "<username couldn't be loaded>")) {
+                        //                        Image(uiImage: UIImage(data: Data(base64Encoded: user.avatar!)!)!)
+                        //                            .resizable()
+                        //                            .aspectRatio(contentMode: .fit)
+                        //                            .frame(height: 40)
+                        //                            .clipShape(Circle())
                         
                         Text(user.username ?? "<username can't be loaded>")
                         
                         Spacer()
-                     }
-                        
-                     let cardImage = Image(uiImage: UIImage(systemName: "person.fill.badge.plus")!)
-                         .renderingMode(.template)
-                     
-                     Button("\(cardImage)") {
-                         client.sendFriendRequest(id: user.id)
-                     }.padding(.trailing, 5)
-                 }.font(.headline)
-                     .multilineTextAlignment(.center)
-                     .frame(maxWidth: .infinity)
-                     .padding(.horizontal)
-                     .padding(.vertical, 10)
-                     .background(Color("CustomAppearanceItemColor"))
-                     .cornerRadius(20)
-                     .shadow(color: Color("ShadowColor"), radius: 5)
+                    }
+                    
+                    let cardImage = Image(uiImage: UIImage(systemName: "person.fill.badge.plus")!)
+                        .renderingMode(.template)
+                    
+                    Button("\(cardImage)") {
+                        client.sendFriendRequest(id: user.id)
+                    }.padding(.trailing, 5)
+                }.font(.headline)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal)
+                    .padding(.vertical, 10)
+                    .background(Color("CustomAppearanceItemColor"))
+                    .cornerRadius(20)
+                    .shadow(color: Color("ShadowColor"), radius: 5)
             }.padding(.horizontal)
-            .foregroundColor(Color("CustomForegroundColor"))
+                .foregroundColor(Color("CustomForegroundColor"))
         }
     }
+    
+    
     
     private var chatsView: some View {
         VStack {
             searchBar
-
+            
             ScrollView {
                 if isSearchBarEditing {
                     searchView
                 } else {
-//                    ScrollView {
-//                        ForEach(chats, id: \.self) { chat in
-//                            if(chat.type == "Room") {
-//                                NavigationLink(destination: RoomView(room: chat.chatID).navigationBarTitle(chat.name ?? "<room id couldn't be loaded>")) {
-//                                    HStack {
-//                                        Image("Facebook")
-//                                            .resizable()
-//                                            .cornerRadius(360)
-//                                            .frame(width: 50, height: 50)
-//                                            .padding(.trailing, 4)
-//
-//                                        VStack {
-//                                            Text(chat.name ?? "<room id couldn't be loaded>")
-//                                                .font(.callout)
-//                                                .foregroundColor(Color("CustomForegroundColor"))
-//                                                .frame(maxWidth: .infinity, alignment: .leading)
-//
-//                                            if(chat.isRead) {
-//                                                Text("Od kogo: Ostatnio wysłana wiadomość • 21:15")
-//                                                    .font(.caption)
-//                                                    .foregroundColor(Color("CustomForegroundColor"))
-//                                                    .frame(maxWidth: .infinity, alignment: .leading)
-//                                            } else {
-//                                                Text("Od kogo: Ostatnio wysłana wiadomość • 21:15")
-//                                                    .bold()
-//                                                    .font(.caption)
-//                                                    .foregroundColor(Color("CustomForegroundColor"))
-//                                                    .frame(maxWidth: .infinity, alignment: .leading)
-//                                            }
-//                                        }
-//                                    }.font(.headline)
-//                                    .multilineTextAlignment(.center)
-//                                    .frame(maxWidth: .infinity)
-//                                    .padding(.horizontal)
-//                                    .padding(.vertical, 16)
-//                                    .background(Color("CustomAppearanceItemColor"))
-//                                    .cornerRadius(20)
-//                                    .shadow(color: Color("ShadowColor"), radius: 5)
-//                                }.padding(.vertical, 4)
-//                            } else {
-//                                NavigationLink(destination: DMView(dm: chat.chatID).navigationBarTitle(chat.name ?? "<username id couldn't be loaded>")) {
-//                                    HStack {
-//                                        Image("Facebook")
-//                                            .resizable()
-//                                            .cornerRadius(360)
-//                                            .frame(width: 50, height: 50)
-//                                            .padding(.trailing, 4)
-//
-//                                        VStack {
-//                                            Text(chat.name ?? "<username id couldn't be loaded>")
-//                                                .font(.callout)
-//                                                .foregroundColor(Color("CustomForegroundColor"))
-//                                                .frame(maxWidth: .infinity, alignment: .leading)
-//
-//                                            if(chat.isRead) {
-//                                                Text("Od kogo: Ostatnio wysłana wiadomość • 21:15")
-//                                                    .font(.caption)
-//                                                    .foregroundColor(Color("CustomForegroundColor"))
-//                                                    .frame(maxWidth: .infinity, alignment: .leading)
-//                                            } else {
-//                                                Text("Od kogo: Ostatnio wysłana wiadomość • 21:15")
-//                                                    .bold()
-//                                                    .font(.caption)
-//                                                    .foregroundColor(Color("CustomForegroundColor"))
-//                                                    .frame(maxWidth: .infinity, alignment: .leading)
-//                                            }
-//                                        }
-//                                    }.font(.headline)
-//                                    .multilineTextAlignment(.center)
-//                                    .frame(maxWidth: .infinity)
-//                                    .padding(.horizontal)
-//                                    .padding(.vertical, 16)
-//                                    .background(Color("CustomAppearanceItemColor"))
-//                                    .cornerRadius(20)
-//                                    .shadow(color: Color("ShadowColor"), radius: 5)
-//                                }.padding(.vertical, 4)
-//                            }
-//                        }
-//                    }
-//                }
                     ScrollView {
                         ForEach(chats, id: \.self) { chat in
-                            if(chat.type == "Room") {
-                                Text("Roomy nie są obsługiwane")
-                            } else {
-                                NavigationLink(destination: DMView(receiver: client.chatToUser(chat: chat)).navigationBarTitle(chat.name ?? "<username id couldn't be loaded>").environment(\.managedObjectContext, CoreDataModel.shared.persistentContainer.viewContext)) {
-                                    HStack {
-                                        Image("Facebook")
-                                            .resizable()
-                                            .cornerRadius(360)
-                                            .frame(width: 50, height: 50)
-                                            .padding(.trailing, 4)
-                                                    
-                                        if chat.isRead {
-                                            VStack {
-                                                Text(chat.name ?? "<username id couldn't be loaded>")
-                                                    .font(.callout)
-                                                    .foregroundColor(Color("CustomForegroundColor"))
-                                                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                                                Text("\(chat.lastMessageAuthor ?? ""): \(chat.lastMessage ?? "") • \(calendar.component(.hour, from: chat.date!)):\(calendar.component(.minute, from: chat.date!))")
-                                                    .font(.caption)
-                                                    .foregroundColor(Color("CustomForegroundColor"))
-                                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                            }
-                                        } else {
-                                            VStack {
-                                                Text(chat.name ?? "<username id couldn't be loaded>")
-                                                    .font(.callout)
-                                                    .bold()
-                                                    .foregroundColor(Color("CustomForegroundColor"))
-                                                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                                                Text("\(chat.lastMessageAuthor ?? ""): \(chat.lastMessage ?? "") • \(calendar.component(.hour, from: chat.date!)):\(calendar.component(.minute, from: chat.date!))")
-                                                    .bold()
-                                                    .font(.caption)
-                                                    .foregroundColor(Color("CustomForegroundColor"))
-                                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                            }
-                                        }
-                                    }.font(.headline)
-                                    .multilineTextAlignment(.center)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.horizontal)
-                                    .padding(.vertical, 16)
-                                    .background(Color("CustomAppearanceItemColor"))
-                                    .cornerRadius(20)
-                                    .shadow(color: Color("ShadowColor"), radius: 5)
-                                }.padding(.vertical, 4)
-                                .padding(.horizontal, 12)
-                            }
+                            ChatTileView(chat: chat)
                         }
                     }
                 }
             }
         }
+        
     }
-    
     private var friendsView: some View {
         VStack {
             searchBar
@@ -308,7 +293,7 @@ struct ChatsView: View {
         //.background(Color("BackgroundColor"))
         .onAppear {
             self.chats = client.fetchChats()
-           
+            
             print("============")
             print(chats)
             print("============")

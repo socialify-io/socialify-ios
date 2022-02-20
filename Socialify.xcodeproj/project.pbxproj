@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C03BA6C27C19A4E0087F852 /* JoinToRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C03BA6B27C19A4E0087F852 /* JoinToRoomView.swift */; };
+		5C03BA6E27C19A640087F852 /* CreateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C03BA6D27C19A640087F852 /* CreateRoomView.swift */; };
 		5C0465102687E868006D3126 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C04650F2687E868006D3126 /* NavigationBarView.swift */; };
 		5C2A2EDE26B9F46D006CC3D6 /* models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A2EDD26B9F46D006CC3D6 /* models.swift */; };
 		5C33AB8D2689D16600640F1C /* FacebookItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C33AB8C2689D16600640F1C /* FacebookItemView.swift */; };
@@ -55,6 +57,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5C03BA6B27C19A4E0087F852 /* JoinToRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinToRoomView.swift; sourceTree = "<group>"; };
+		5C03BA6D27C19A640087F852 /* CreateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomView.swift; sourceTree = "<group>"; };
 		5C04650F2687E868006D3126 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
 		5C2A2EDD26B9F46D006CC3D6 /* models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = models.swift; sourceTree = "<group>"; };
 		5C33AB8C2689D16600640F1C /* FacebookItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookItemView.swift; sourceTree = "<group>"; };
@@ -119,6 +123,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C03BA6A27C19A350087F852 /* Rooms */ = {
+			isa = PBXGroup;
+			children = (
+				5C58B52626C14720008AE2B0 /* AddRoomView.swift */,
+				5C03BA6B27C19A4E0087F852 /* JoinToRoomView.swift */,
+				5C03BA6D27C19A640087F852 /* CreateRoomView.swift */,
+				5C47E84326C32079005F4D0E /* RoomView.swift */,
+			);
+			path = Rooms;
+			sourceTree = "<group>";
+		};
 		5C04650E2687E829006D3126 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,9 +186,8 @@
 		5C58B52526C146F5008AE2B0 /* Chats */ = {
 			isa = PBXGroup;
 			children = (
+				5C03BA6A27C19A350087F852 /* Rooms */,
 				5C73EA9C26112822008F7315 /* ChatsView.swift */,
-				5C58B52626C14720008AE2B0 /* AddRoomView.swift */,
-				5C47E84326C32079005F4D0E /* RoomView.swift */,
 				5C47E84526C32662005F4D0E /* ChatView.swift */,
 				5C89D9C426D2F08C0099564E /* DMView.swift */,
 			);
@@ -443,6 +457,7 @@
 				5C3DD2242613B78F00B8E532 /* CustomButtonView.swift in Sources */,
 				5C3AD26026BC5A5600D04367 /* AccountTileView.swift in Sources */,
 				5C33AB8D2689D16600640F1C /* FacebookItemView.swift in Sources */,
+				5C03BA6E27C19A640087F852 /* CreateRoomView.swift in Sources */,
 				5C4AC87826AF760E005E7027 /* RegisterView.swift in Sources */,
 				5C47E84626C32662005F4D0E /* ChatView.swift in Sources */,
 				5C3DD22A2613C81700B8E532 /* MediaItemView.swift in Sources */,
@@ -450,6 +465,7 @@
 				5C3AD26226BC5C3B00D04367 /* AccountCardView.swift in Sources */,
 				5C58B52726C14720008AE2B0 /* AddRoomView.swift in Sources */,
 				5C495BC7261A72100004D538 /* LoginView.swift in Sources */,
+				5C03BA6C27C19A4E0087F852 /* JoinToRoomView.swift in Sources */,
 				5C7D56122642010100B518C9 /* LoginWithOptionView.swift in Sources */,
 				5C73EAD0261129E1008F7315 /* OnboardingView.swift in Sources */,
 				5C44F355268921E7003A5768 /* TabBarIcon.swift in Sources */,
@@ -651,6 +667,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.Socialify.socialify-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -680,6 +697,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "io.Socialify.socialify-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
