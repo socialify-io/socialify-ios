@@ -18,7 +18,7 @@ struct ChatTileView: View {
     
     var body: some View {
         if(chat.type == "Room") {
-            NavigationLink(destination: RoomView(roomId: Int(chat.chatId)).navigationBarTitle(chat.name ?? "<chat name couldn't be loaded>").environment(\.managedObjectContext, CoreDataModel.shared.persistentContainer.viewContext)) {
+            NavigationLink(destination: RoomView(room: client.getRoomById(roomId: Int(chat.chatId))).navigationBarTitle(chat.name ?? "<chat name couldn't be loaded>").environment(\.managedObjectContext, CoreDataModel.shared.persistentContainer.viewContext)) {
                 HStack {
                     Image("Facebook")
                         .resizable()

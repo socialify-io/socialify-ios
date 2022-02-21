@@ -12,6 +12,21 @@ import SwiftyRSA
 import CoreData
 import CommonCrypto
 import BCryptSwift
+import SwiftUI
+
+@available(iOS 14.0, *)
+@available(iOSApplicationExtension 14.0, *)
+extension SocialifyClient {
+    public func getRoomById(roomId: Int) -> Room {
+        let context = self.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Room")
+        fetchRequest.predicate = NSPredicate(format: "roomId == %@", NSNumber(value: roomId))
+        var room = try! context.fetch(fetchRequest) as! [Room]
+        
+        return room[0]
+    }
+}
 
 @available(iOS 14.0, *)
 @available(iOSApplicationExtension 14.0, *)
@@ -30,6 +45,55 @@ extension SocketIOManager {
                 completion(.success(true))
             } else {
                 completion(.failure(SocialifyClient.SdkError.UnexpectedError))
+            }
+        }
+    }
+    
+    public func sendMessage(roomId: Int, message: String) {
+        socket.emit("send_message", ["roomId": roomId, "message": message])
+    }
+    
+    public func connectRoom(roomId: Int) {
+        socket.emit("connect_room", ["roomId": roomId])
+        socket.on("send_message") { dataArray, socketAck in
+            let context = self.client.persistentContainer.viewContext
+            
+            let data = dataArray[0] as! [String: Any]
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
+            fetchRequest.predicate = NSPredicate(format: "id == %@", data["id"] as! CVarArg)
+            let allMessagesWithSameId = try! context.fetch(fetchRequest) as! [Message]
+            
+            if (allMessagesWithSameId == []) {
+                let entityDescription = NSEntityDescription.entity(
+                    forEntityName: "Message",
+                    in: context
+                )!
+
+                let MessageModel = Message(
+                    entity: entityDescription,
+                    insertInto: context
+                )
+                
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
+                fetchRequest.predicate = NSPredicate(format: "room == %@", NSDecimalNumber(value: roomId))
+                fetchRequest.sortDescriptors = [NSSortDescriptor(
+                                                keyPath: \Message.id,
+                                                ascending: true)]
+                
+                var messages = try! context.fetch(fetchRequest) as! [Message]
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                let date = dateFormatter.date(from: "\(data["date"]!)")
+
+                MessageModel.username = data["username"] as? String
+                MessageModel.message = data["message"] as? String
+                MessageModel.date = date
+                MessageModel.id = NSDecimalNumber(value: data["id"] as! Int)
+                MessageModel.room = NSDecimalNumber(value: roomId)
+                MessageModel.sender = NSDecimalNumber(value: data["sender"] as! Int)
+                
+                try! context.save()
             }
         }
     }
