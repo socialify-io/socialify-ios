@@ -37,6 +37,7 @@
 		5CADDB9C2611E72200F690D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C73EA9E26112823008F7315 /* Assets.xcassets */; };
 		5CADDBB92611F5A100F690D0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5CADDBBB2611F5A100F690D0 /* Localizable.strings */; };
 		5CC47C6126B0A2E90001BB7D /* SocialifySdk in Frameworks */ = {isa = PBXBuildFile; productRef = 5CC47C6026B0A2E90001BB7D /* SocialifySdk */; };
+		5CFFD58F27E265880038C108 /* RoomDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFFD58E27E265880038C108 /* RoomDetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,7 @@
 		5CADDBBA2611F5A100F690D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5CADDBBF2611F5DB00F690D0 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5CC2CFF027B5C446001CFB40 /* Socialify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Socialify.entitlements; sourceTree = "<group>"; };
+		5CFFD58E27E265880038C108 /* RoomDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				5C03BA6B27C19A4E0087F852 /* JoinToRoomView.swift */,
 				5C03BA6D27C19A640087F852 /* CreateRoomView.swift */,
 				5C47E84326C32079005F4D0E /* RoomView.swift */,
+				5CFFD58E27E265880038C108 /* RoomDetailsView.swift */,
 			);
 			path = Rooms;
 			sourceTree = "<group>";
@@ -459,6 +462,7 @@
 				5C33AB8D2689D16600640F1C /* FacebookItemView.swift in Sources */,
 				5C03BA6E27C19A640087F852 /* CreateRoomView.swift in Sources */,
 				5C4AC87826AF760E005E7027 /* RegisterView.swift in Sources */,
+				5CFFD58F27E265880038C108 /* RoomDetailsView.swift in Sources */,
 				5C47E84626C32662005F4D0E /* ChatView.swift in Sources */,
 				5C3DD22A2613C81700B8E532 /* MediaItemView.swift in Sources */,
 				5C73EA9D26112822008F7315 /* ChatsView.swift in Sources */,

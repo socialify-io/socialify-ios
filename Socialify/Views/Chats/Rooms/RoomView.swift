@@ -40,77 +40,113 @@ struct RoomView: View {
             predicate: NSPredicate(format: "room == %@", room.roomId as! CVarArg)
         )
     }
+   
+    private var messageField: some View {
+        HStack {
+            TextField("Text here...", text: $message)
+                .autocapitalization(.none)
+                .font(Font.body.weight(Font.Weight.medium))
+                .padding(.horizontal)
+                .frame(height: cellHeight)
+                .background(cellBackground)
+                .cornerRadius(cornerRadius)
+                    
+            Button(action: {
+                if(message != "") {
+                    SocketIOManager.sharedInstance.sendMessage(roomId: room.roomId as! Int, message: message)
+                    message = ""
+                }
+            }) {
+                Image(systemName: "paperplane.fill")
+                    .resizable()
+                    .frame(width: 26, height: 26)
+                    .padding(.leading, 8)
+            }
+            Spacer()
+        }.shadow(color: Color("ShadowColor"), radius: 5)
+    }
+    
+    private var messagesView: some View {
+        ForEach(Array(messages.enumerated()), id: \.element) { index, message in
+            if(message.isSystemNotification) {
+                Text(message.message ?? "<message couldn't be loaded>")
+                    .foregroundColor(.secondary)
+                    //.alignmentGuide(HorizontalAlignment.center)
+                    .padding()
+            } else {
+                if(message.username != currentAccount?.username) {
+                    VStack {
+                        if(index == 0 || messages[index-1].username != message.username) {
+                            HStack {
+                                Spacer()
+                                    .frame(width: 44)
+                                
+                                Text(message.username ?? "<username can't be loaded>")
+                                    .font(.caption)
+                                    .foregroundColor(Color("CustomForegroundColor"))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.leading, 18)
+                            }.padding(.bottom, -2)
+                            Spacer()
+                        }
+                        
+                        
+                        HStack {
+                            
+                            if messages.count-1 == index || messages.count-1 > index && messages[index+1].username != message.username {
+                                VStack {
+                                    Image(systemName: "person.circle.fill")
+                                        .renderingMode(.template)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: 32)
+                                        .foregroundColor(.accentColor)
+                                        .padding(.trailing, 4)
+                                }
+                            } else {
+                                VStack {
+                                    Spacer()
+                                        .frame(width: 36)
+                                }
+                            }
+                            
+                            HStack {
+                                Text(message.message ?? "<message can't be loaded>")
+                                    .font(.callout)
+                            }.padding(.vertical, 12)
+                            .padding(.horizontal)
+                            .background(Color("CustomAppearanceItemColor"))
+                            .cornerRadius(20)
+                            .shadow(color: Color("ShadowColor"), radius: 5)
+                            
+                            Spacer()
+                        }
+                        Spacer()
+                    }.id(index)
+                } else {
+                    HStack {
+                        Spacer()
+                        
+                        HStack {
+                            Text(message.message ?? "<message can't be loaded>")
+                                .font(.callout)
+                        }.padding(.vertical, 12)
+                        .padding(.horizontal)
+                        .background(Color("CustomAppearanceItemColor"))
+                        .cornerRadius(20)
+                        .shadow(color: Color("ShadowColor"), radius: 5)
+                        .padding(.trailing, 5)
+                    }.id(index)
+                }
+            }
+        }
+    }
     
     var body: some View {
         VStack {
             ScrollViewReader { value in
                 ScrollView {
-                    ForEach(Array(messages.enumerated()), id: \.element) { index, message in
-                            if(message.username != currentAccount?.username) {
-                                VStack {
-                                    if(index == 0 || messages[index-1].username != message.username) {
-                                        HStack {
-                                            Spacer()
-                                                .frame(width: 44)
-                                            
-                                            Text(message.username ?? "<username can't be loaded>")
-                                                .font(.caption)
-                                                .foregroundColor(Color("CustomForegroundColor"))
-                                                .frame(maxWidth: .infinity, alignment: .leading)
-                                                .padding(.leading, 18)
-                                        }.padding(.bottom, -2)
-                                        Spacer()
-                                    }
-                                    
-                                    
-                                    HStack {
-                                        
-                                        if messages.count-1 == index || messages.count-1 > index && messages[index+1].username != message.username {
-                                            VStack {
-                                                Image(systemName: "person.circle.fill")
-                                                    .renderingMode(.template)
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                                    .frame(height: 32)
-                                                    .foregroundColor(.accentColor)
-                                                    .padding(.trailing, 4)
-                                            }
-                                        } else {
-                                            VStack {
-                                                Spacer()
-                                                    .frame(width: 36)
-                                            }
-                                        }
-                                        
-                                        HStack {
-                                            Text(message.message ?? "<message can't be loaded>")
-                                                .font(.callout)
-                                        }.padding(.vertical, 12)
-                                        .padding(.horizontal)
-                                        .background(Color("CustomAppearanceItemColor"))
-                                        .cornerRadius(20)
-                                        .shadow(color: Color("ShadowColor"), radius: 5)
-                                        
-                                        Spacer()
-                                    }
-                                    Spacer()
-                                }.id(index)
-                            } else {
-                                HStack {
-                                    Spacer()
-                                    
-                                    HStack {
-                                        Text(message.message ?? "<message can't be loaded>")
-                                            .font(.callout)
-                                    }.padding(.vertical, 12)
-                                    .padding(.horizontal)
-                                    .background(Color("CustomAppearanceItemColor"))
-                                    .cornerRadius(20)
-                                    .shadow(color: Color("ShadowColor"), radius: 5)
-                                    .padding(.trailing, 5)
-                                }.id(index)
-                            }
-                    }
+                    messagesView
                 }
                 .onChange(of: messages.count) { _ in
                     value.scrollTo(messages.count - 1)
@@ -122,34 +158,14 @@ struct RoomView: View {
                 }
             }
             Spacer()
-            HStack {
-                TextField("Text here...", text: $message)
-                    .autocapitalization(.none)
-                    .font(Font.body.weight(Font.Weight.medium))
-                    .padding(.horizontal)
-                    .frame(height: cellHeight)
-                    .background(cellBackground)
-                    .cornerRadius(cornerRadius)
-                        
-                Button(action: {
-                    if(message != "") {
-                        SocketIOManager.sharedInstance.sendMessage(roomId: room.roomId as! Int, message: message)
-                        message = ""
-                    }
-                }) {
-                    Image(systemName: "paperplane.fill")
-                        .resizable()
-                        .frame(width: 26, height: 26)
-                        .padding(.leading, 8)
-                }
-                Spacer()
-            }.shadow(color: Color("ShadowColor"), radius: 5)
+            
+            messageField
             
     }.padding()
         //.background(Color("BackgroundColor"))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {}) {
+                NavigationLink(destination: RoomDetailsView(room: room)) {
                     Image(systemName: "gear")
                 }
             }
