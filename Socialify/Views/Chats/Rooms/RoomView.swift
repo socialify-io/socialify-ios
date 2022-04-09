@@ -177,6 +177,10 @@ struct RoomView: View {
         .onAppear {
             self.currentAccount = client.getCurrentAccount()
             SocketIOManager.sharedInstance.connectRoom(roomId: room.roomId as! Int)
+            
+            for message in messages {
+                message.isRead = true
+            }
         }
     }
 }

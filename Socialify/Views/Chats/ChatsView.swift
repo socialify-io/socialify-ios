@@ -78,7 +78,6 @@ struct ChatTileView: View {
                                 if messages[0].isSystemNotification {
                                     Text("\(messages[0].message ?? "") • \(calendar.component(.hour, from: messages[0].date!)):\(calendar.component(.minute, from: messages[0].date!))")
                                         .font(.caption)
-                                        .italic()
                                         .foregroundColor(Color("CustomForegroundColor"))
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 } else {

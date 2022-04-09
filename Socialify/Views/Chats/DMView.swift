@@ -174,6 +174,10 @@ struct DMView: View {
         .onAppear {
             self.currentAccount = client.getCurrentAccount()
             SocketIOManager.sharedInstance.fetchDMs(chatId: receiver.id)
+            
+            for message in messages {
+                message.isRead = true
+            }
 //            print("{{{{{{{{FETCH REQUEST}}}}}}}}}}}")
 //            print(fetchRequest)
 //            print("{{{{{{{{FETCH REQUEST}}}}}}}}}}}")
