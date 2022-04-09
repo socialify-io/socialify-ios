@@ -660,6 +660,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Socialify/Preview Content\"";
 				DEVELOPMENT_TEAM = AAPC4WPC5Y;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Socialify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -690,6 +691,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Socialify/Preview Content\"";
 				DEVELOPMENT_TEAM = AAPC4WPC5Y;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Socialify/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;

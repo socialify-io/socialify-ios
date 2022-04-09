@@ -16,6 +16,47 @@ struct ChatTileView: View {
     var calendar = Calendar.current
     let chat: Chat
     
+    @Environment(\.managedObjectContext) private var managedObjectContext
+    private var messagesFetchRequest: FetchRequest<Message>
+    private var dmsFetchRequest: FetchRequest<DM>
+    
+    private var messages: FetchedResults<Message> { messagesFetchRequest.wrappedValue }
+    private var dms: FetchedResults<DM> { dmsFetchRequest.wrappedValue }
+   
+    init(chat: Chat) {
+        self.chat = chat
+        
+        self.messagesFetchRequest = FetchRequest(
+            entity: Message.entity(),
+            sortDescriptors: [
+                NSSortDescriptor(
+                    keyPath: \Message.id,
+                    ascending: false)
+            ],
+            predicate: NSPredicate(format: "room == %@", NSNumber(value: chat.chatId))
+        )
+        
+        let predicateForReceivedMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: SocialifyClient.shared.getCurrentAccount().userId))
+        let predicateForSendMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: chat.chatId))
+        let predicateForSendMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value: SocialifyClient.shared.getCurrentAccount().userId))
+        let predicateForReceivedMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value: chat.chatId))
+        
+        let predicateAndReceived = NSCompoundPredicate(type: .and, subpredicates: [predicateForReceivedMessageSend, predicateForReceivedMessageReceived])
+        let predicateAndSend = NSCompoundPredicate(type: .and, subpredicates: [predicateForSendMessageSend, predicateForSendMessageReceived])
+        
+        let finalPredicate = NSCompoundPredicate(type: .or, subpredicates: [predicateAndSend, predicateAndReceived])
+        
+        self.dmsFetchRequest = FetchRequest(
+            entity: DM.entity(),
+            sortDescriptors: [
+                NSSortDescriptor(
+                    keyPath: \DM.id,
+                    ascending: false)
+            ],
+            predicate: finalPredicate
+        )
+    }
+    
     var body: some View {
         if(chat.type == "Room") {
             NavigationLink(destination: RoomView(room: client.getRoomById(roomId: Int(chat.chatId))).navigationBarTitle(chat.name ?? "<chat name couldn't be loaded>").environment(\.managedObjectContext, CoreDataModel.shared.persistentContainer.viewContext)) {
@@ -25,39 +66,50 @@ struct ChatTileView: View {
                         .cornerRadius(360)
                         .frame(width: 50, height: 50)
                         .padding(.trailing, 4)
-                    
-                    if chat.isRead {
-                        VStack {
-                            Text(chat.name ?? "<chat name couldn't be loaded>")
-                                .font(.callout)
-                                .foregroundColor(Color("CustomForegroundColor"))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            if chat.lastMessageAuthor == nil {
-                                Text("\(chat.lastMessageAuthor ?? "") \(chat.lastMessage ?? "") • \(calendar.component(.hour, from: chat.date!)):\(calendar.component(.minute, from: chat.date!))")
-                                    .font(.caption)
+
+                    if messages.count != 0 {
+                        if messages[0].isRead {
+                            VStack {
+                                Text(chat.name ?? "<chat name couldn't be loaded>")
+                                    .font(.callout)
                                     .foregroundColor(Color("CustomForegroundColor"))
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                            } else {
-                                Text("\(chat.lastMessageAuthor ?? ""): \(chat.lastMessage ?? "") • \(calendar.component(.hour, from: chat.date!)):\(calendar.component(.minute, from: chat.date!))")
-                                    .font(.caption)
-                                    .foregroundColor(Color("CustomForegroundColor"))
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                                if messages[0].isSystemNotification {
+                                    Text("\(messages[0].message ?? "") • \(calendar.component(.hour, from: messages[0].date!)):\(calendar.component(.minute, from: messages[0].date!))")
+                                        .font(.caption)
+                                        .italic()
+                                        .foregroundColor(Color("CustomForegroundColor"))
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                } else {
+                                   Text("\(messages[0].username ?? "") \(messages[0].message ?? "") • \(calendar.component(.hour, from: messages[0].date!)):\(calendar.component(.minute, from: messages[0].date!))")
+                                        .font(.caption)
+                                        .foregroundColor(Color("CustomForegroundColor"))
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
                             }
-                        }
-                    } else {
-                        VStack {
-                            Text(chat.name ?? "<chat name couldn't be loaded>")
-                                .font(.callout)
-                                .bold()
-                                .foregroundColor(Color("CustomForegroundColor"))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            Text("\(chat.lastMessageAuthor ?? ""): \(chat.lastMessage ?? "") • \(calendar.component(.hour, from: chat.date!)):\(calendar.component(.minute, from: chat.date!))")
-                                .bold()
-                                .font(.caption)
-                                .foregroundColor(Color("CustomForegroundColor"))
-                                .frame(maxWidth: .infinity, alignment: .leading)
+                        } else {
+                            VStack {
+                                Text(chat.name ?? "<chat name couldn't be loaded>")
+                                    .font(.callout)
+                                    .bold()
+                                    .foregroundColor(Color("CustomForegroundColor"))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                               
+                                if messages[0].isSystemNotification {
+                                    Text("\(messages[0].message ?? "") • \(calendar.component(.hour, from: messages[0].date!)):\(calendar.component(.minute, from: messages[0].date!))")
+                                        .bold()
+                                        .font(.caption)
+                                        .foregroundColor(Color("CustomForegroundColor"))
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                } else{
+                                    Text("\(messages[0].username ?? ""): \(messages[0].message ?? "") • \(calendar.component(.hour, from: messages[0].date!)):\(calendar.component(.minute, from: messages[0].date!))")
+                                        .bold()
+                                        .font(.caption)
+                                        .foregroundColor(Color("CustomForegroundColor"))
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
+                            }
                         }
                     }
                 }.font(.headline)
@@ -78,15 +130,15 @@ struct ChatTileView: View {
                         .cornerRadius(360)
                         .frame(width: 50, height: 50)
                         .padding(.trailing, 4)
-                    
-                    if chat.isRead {
+                   
+                    if dms[0].isRead {
                         VStack {
                             Text(chat.name ?? "<username id couldn't be loaded>")
                                 .font(.callout)
                                 .foregroundColor(Color("CustomForegroundColor"))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             
-                            Text("\(chat.lastMessageAuthor ?? ""): \(chat.lastMessage ?? "") • \(calendar.component(.hour, from: chat.date!)):\(calendar.component(.minute, from: chat.date!))")
+                            Text("\(dms[0].username ?? ""): \(dms[0].message ?? "") • \(calendar.component(.hour, from: dms[0].date!)):\(calendar.component(.minute, from: dms[0].date!))")
                                 .font(.caption)
                                 .foregroundColor(Color("CustomForegroundColor"))
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -99,7 +151,7 @@ struct ChatTileView: View {
                                 .foregroundColor(Color("CustomForegroundColor"))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             
-                            Text("\(chat.lastMessageAuthor ?? ""): \(chat.lastMessage ?? "") • \(calendar.component(.hour, from: chat.date!)):\(calendar.component(.minute, from: chat.date!))")
+                            Text("\(dms[0].username ?? ""): \(dms[0].message ?? "") • \(calendar.component(.hour, from: dms[0].date!)):\(calendar.component(.minute, from: dms[0].date!))")
                                 .bold()
                                 .font(.caption)
                                 .foregroundColor(Color("CustomForegroundColor"))
@@ -125,8 +177,9 @@ struct ChatsView: View {
     
     @StateObject var client: SocialifyClient = SocialifyClient.shared
     //@StateObject var messages: [DM] = []
-    
-    @State private var chats: [Chat] = []
+   
+    private var fetchRequest: FetchRequest<Chat>
+    private var chats: FetchedResults<Chat> { fetchRequest.wrappedValue }
     @State private var searchResults: [User] = []
     @State private var selectedView = "Chats"
     @State private var userPickerSelection = ""
@@ -139,6 +192,34 @@ struct ChatsView: View {
     let views = ["Chats", "Friends"]
     
     init() {
+        let userId = SocialifyClient.shared.getCurrentAccount()
+        
+//        let request: FetchRequest<Chat> = Chat.fetchRequest()
+//        request.sortDescriptors = [
+//            NSSortDescriptor(
+//                keyPath: \Chat.id,
+//                ascending: true)
+//        ]
+//        request.predicate = NSPredicate(format: "userId == %@", userId as! CVarArg)
+//
+//        fetchRequest = FetchRequest<Chat>(fetchRequest: request)
+
+        self.fetchRequest = FetchRequest(
+            entity: Chat.entity(),
+            sortDescriptors: [
+                NSSortDescriptor(
+                    keyPath: \Chat.id,
+                    ascending: true)
+            ]//,
+            //predicate: NSPredicate(format: "userId == %@", userId as CVarArg)
+        )
+        
+        print("=====================================")
+        for chat in chats {
+            print("dupa")
+            print(chat)
+        }
+        print("=====================================")
     }
     
     private var searchBar: some View {
@@ -240,8 +321,15 @@ struct ChatsView: View {
                     searchView
                 } else {
                     ScrollView {
-                        ForEach(chats, id: \.self) { chat in
+                        ForEach(Array(chats.enumerated()), id: \.element) { index, chat in
                             ChatTileView(chat: chat)
+                            //Text("\(chat)")
+                            //Text(String("\(client.fetchLastLiveMessageForRoom(roomId: Int(chat.chatId)).count==0)"))
+                            //Text(String("\(client.fetchLastLiveMessageForRoom(roomId: Int(chat.chatId)))"))
+                        }.onAppear {
+                            print("======================")
+                            print(chats)
+                            print("======================")
                         }
                     }
                 }
@@ -292,11 +380,6 @@ struct ChatsView: View {
         .navigationBarTitle("Chats", displayMode: .inline)
         //.background(Color("BackgroundColor"))
         .onAppear {
-            self.chats = client.fetchChats()
-            
-            print("============")
-            print(chats)
-            print("============")
             
             SocketIOManager.sharedInstance.getFindUserResponse { result in
                 DispatchQueue.main.async(execute: { () -> Void in
@@ -304,7 +387,7 @@ struct ChatsView: View {
                 })
             }
             
-            SocketIOManager.sharedInstance.getFetchLastUnreadDMsResponse()
+            //SocketIOManager.sharedInstance.getFetchLastUnreadDMsResponse()
             SocketIOManager.sharedInstance.fetchLastUnreadDMs()
         }
     }

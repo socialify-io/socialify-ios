@@ -177,10 +177,6 @@ extension SocketIOManager {
       
         let datenow = Date()
 
-        chatModel.lastMessage = "Created \(roomName) room"
-        chatModel.lastMessageId = -1
-        chatModel.date = datenow
-        chatModel.isRead = true
         chatModel.type = "Room"
         chatModel.chatId = Int64(roomId)
         chatModel.name = roomName

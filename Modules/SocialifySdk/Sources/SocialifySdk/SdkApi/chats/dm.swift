@@ -66,23 +66,23 @@ extension SocketIOManager {
                     DMModel.senderId = Int64("\(String(describing: senderId))")!
                     DMModel.receiverId = Int64("\(String(describing: receiverId))")!
                     
-                    let fetchChatRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
-                    fetchChatRequest.predicate = NSPredicate(format: "chatId == %@", NSNumber(value: chatId))
-                    var chat = try! context.fetch(fetchChatRequest) as! [Chat]
-                   
-                    if(chat != []) {
-                        chat[0].lastMessage = DMModel.message
-                        chat[0].lastMessageAuthor = DMModel.username
-                        chat[0].lastMessageId = DMModel.id
-                        chat[0].date = DMModel.date
-                        chat[0].isRead = true
-                    }
-                    
-                    var chatId: Int64
-                    let currentAccount = self.client.getCurrentAccount()
-                    
-                    if(DMModel.receiverId == currentAccount.userId) { chatId = DMModel.senderId }
-                    else { chatId = DMModel.receiverId }
+//                    let fetchChatRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
+//                    fetchChatRequest.predicate = NSPredicate(format: "chatId == %@", NSNumber(value: chatId))
+//                    var chat = try! context.fetch(fetchChatRequest) as! [Chat]
+//
+//                    if(chat != []) {
+//                        chat[0].lastMessage = DMModel.message
+//                        chat[0].lastMessageAuthor = DMModel.username
+//                        chat[0].lastMessageId = DMModel.id
+//                        chat[0].date = DMModel.date
+//                        chat[0].isRead = true
+//                    }
+//
+//                    var chatId: Int64
+//                    let currentAccount = self.client.getCurrentAccount()
+//
+//                    if(DMModel.receiverId == currentAccount.userId) { chatId = DMModel.senderId }
+//                    else { chatId = DMModel.receiverId }
                     
                     
                     try! context.save()
@@ -161,18 +161,6 @@ extension SocketIOManager {
                 
                 self.sortChats(chatId: chatId)
 
-                let fetchChatRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
-                fetchChatRequest.predicate = NSPredicate(format: "chatId == %@", NSNumber(value: chatId))
-                var chat = try! context.fetch(fetchChatRequest) as! [Chat]
-                
-                chat[0].lastMessage = DMModel.message
-                chat[0].lastMessageAuthor = DMModel.username
-                chat[0].lastMessageId = DMModel.id
-                chat[0].date = DMModel.date
-                chat[0].isRead = true
-                
-                completion(DMModel)
-                
                 try! context.save()
             }
             self.socket.emit("delete_dms", ["sender": chatId, "from": data["id"], "to": data["id"]])

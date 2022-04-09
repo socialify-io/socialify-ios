@@ -83,7 +83,7 @@ public class SocketIOManager: NSObject {
         
         socket.on("connect") { [self]_,_ in
             fetchLastUnreadDMs()
-            getFetchLastUnreadDMsResponse()
+            //getFetchLastUnreadDMsResponse()
         }
     }
     

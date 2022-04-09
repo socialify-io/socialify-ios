@@ -20,7 +20,7 @@ extension SocialifyClient {
     
     public func getCurrentAccount() -> Account {
         var currentAccount: Account?
-        print(fetchChats())
+        //print(fetchChats())
         for account in fetchAccounts() {
             if(account.isCurrentAccount) {
                 currentAccount = account

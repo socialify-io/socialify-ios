@@ -37,8 +37,12 @@ struct RoomView: View {
                     keyPath: \Message.id,
                     ascending: true)
             ],
-            predicate: NSPredicate(format: "room == %@", room.roomId as! CVarArg)
+            predicate: NSPredicate(format: "room == %@", room.roomId!)
         )
+        
+        print("11111111111111111111111111111")
+        print(messages)
+        print("11111111111111111111111111111")
     }
    
     private var messageField: some View {
@@ -166,7 +170,7 @@ struct RoomView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink(destination: RoomDetailsView(room: room)) {
-                    Image(systemName: "gear")
+                    Image(systemName: "person.circle.fill")
                 }
             }
         }
