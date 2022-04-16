@@ -28,9 +28,12 @@ struct SocialifyApp: App {
                                 //SocketIOManager.messages.append(response)
                                 
                             }
+                            
+                            SocketIOManager.sharedInstance.listenForMessages() { response in
+                                
+                            }
                         }
                         .environment(\.managedObjectContext, CoreDataModel.shared.persistentContainer.viewContext)
-                    
                 } else {
                     NavigationView {
                         LoginView()
