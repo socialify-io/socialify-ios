@@ -14,7 +14,7 @@ struct JoinToRoomView: View {
     
     let cellHeight: CGFloat = 55
     let cornerRadius: CGFloat = 12
-    let cellBackground: Color = Color(UIColor.systemGray5).opacity(0.5)
+    let cellBackground: Color = Color("CustomAppearanceItemColor")
     let borderColor: Color = Color(UIColor.systemGray).opacity(0)
    
     @State private var showAlert = false
@@ -109,6 +109,7 @@ struct JoinToRoomView: View {
                 return Alert(title: Text(errorAlertShow?.name ?? "errors.default"), message: Text(errorAlertShow?.description ?? "errors.default_description"), primaryButton: .cancel(), secondaryButton: .destructive(Text("errors.button")) { self.showErrorReportModal = true } )
             }
         }
+        .background(Color("BackgroundColor"))
     }
 }
 

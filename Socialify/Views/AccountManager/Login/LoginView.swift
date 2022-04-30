@@ -18,7 +18,7 @@ struct LoginView: View {
     
     let cellHeight: CGFloat = 55
     let cornerRadius: CGFloat = 12
-    let cellBackground: Color = Color(UIColor.systemGray5).opacity(0.5)
+    let cellBackground: Color = Color("CustomAppearanceItemColor")
     let borderColor: Color = Color(UIColor.systemGray).opacity(0)
     
     @State private var clicked: Bool = false
@@ -144,6 +144,7 @@ struct LoginView: View {
             }, title: buttonText)
             .padding(.bottom)
         }.padding()
+        .background(Color("BackgroundColor"))
         .sheet(isPresented: $showErrorReportModal, onDismiss: {
             }) {
             NavigationView {

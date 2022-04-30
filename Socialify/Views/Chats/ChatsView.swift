@@ -118,7 +118,6 @@ struct ChatTileView: View {
                     .padding(.vertical, 16)
                     .background(Color("CustomAppearanceItemColor"))
                     .cornerRadius(20)
-                    .shadow(color: Color("ShadowColor"), radius: 5)
             }.padding(.vertical, 4)
                 .padding(.horizontal, 12)
         } else {
@@ -164,7 +163,6 @@ struct ChatTileView: View {
                     .padding(.vertical, 16)
                     .background(Color("CustomAppearanceItemColor"))
                     .cornerRadius(20)
-                    .shadow(color: Color("ShadowColor"), radius: 5)
             }.padding(.vertical, 4)
                 .padding(.horizontal, 12)
         }
@@ -231,10 +229,9 @@ struct ChatsView: View {
                 }
                 .padding(7)
                 .padding(.horizontal, 25)
-                .background(Color(.systemGray6))
+                .background(Color("CustomAppearanceItemColor"))
                 .cornerRadius(14)
                 .padding(.vertical, 8)
-                .shadow(color: Color("ShadowColor"), radius: 5)
                 .onTapGesture {
                     self.isSearchBarEditing = true
                 }
@@ -389,6 +386,7 @@ struct ChatsView: View {
             //SocketIOManager.sharedInstance.getFetchLastUnreadDMsResponse()
             SocketIOManager.sharedInstance.fetchLastUnreadDMs()
         }
+        .background(Color("BackgroundColor"))
     }
 }
 

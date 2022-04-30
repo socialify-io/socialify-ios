@@ -18,7 +18,7 @@ struct RoomDetailsView: View {
     let room: Room
     
     var body: some View {
-        VStack {
+        ScrollView {
             VStack {
                 ZStack {
                     Image(systemName: "person.circle.fill")
@@ -29,7 +29,7 @@ struct RoomDetailsView: View {
                         .foregroundColor(.accentColor)
                         .padding(.bottom, 150)
                         .zIndex(2)
-                        .shadow(color: Color("ShadowColor"), radius: 20)
+                        //.shadow(color: Color("ShadowColor"), radius: 20)
                     
                     VStack {
                         Text(room.name ?? "<name can't be loaded>")
@@ -54,7 +54,7 @@ struct RoomDetailsView: View {
                     .zIndex(1)
                     .cornerRadius(12)
                     .padding(.top, 50)
-                    .shadow(color: Color("ShadowColor"), radius: 5)
+                    //.shadow(color: Color("ShadowColor"), radius: 5)
                     
                 }.padding(.horizontal)
                 .padding(.top, 20)
@@ -78,7 +78,7 @@ struct RoomDetailsView: View {
                     .cornerRadius(12)
                     .padding(.vertical)
                     .padding(.horizontal, 4)
-                    .shadow(color: Color("ShadowColor"), radius: 5)
+                    //.shadow(color: Color("ShadowColor"), radius: 5)
                     
                     VStack(alignment: HorizontalAlignment.center) {
                         Image(systemName: "video.fill")
@@ -98,7 +98,7 @@ struct RoomDetailsView: View {
                     .cornerRadius(12)
                     .padding(.vertical)
                     .padding(.horizontal, 4)
-                    .shadow(color: Color("ShadowColor"), radius: 5)
+                    //.shadow(color: Color("ShadowColor"), radius: 5)
                     
                     VStack(alignment: HorizontalAlignment.center) {
                         Image(systemName: "bell.slash.fill")
@@ -118,46 +118,158 @@ struct RoomDetailsView: View {
                     .cornerRadius(12)
                     .padding(.vertical)
                     .padding(.horizontal, 4)
-                    .shadow(color: Color("ShadowColor"), radius: 5)
-                }
+                    //.shadow(color: Color("ShadowColor"), radius: 5)
+                }.padding(.bottom, -10)
+                    .zIndex(2)
+                
+//                VStack {
+//                    HStack {
+//                        Image(systemName: "wallet.pass.fill")
+//                         .renderingMode(.template)
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(height: 22)
+//                            .padding(.leading, 24)
+//
+//                        Text("Room ID")
+//                            .padding(.leading, 10)
+//
+//                        Spacer()
+//
+//                        Text("\(room.roomId!)")
+//                            .bold()
+//                            .padding(.trailing, 20)
+//                            .foregroundColor(.secondary)
+//                    }.padding(.vertical)
+//
+//                    NavigationLink(destination: RoomMembersView()) {
+//                        Image(systemName: "person.2.fill")
+//                         .renderingMode(.template)
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(height: 22)
+//                            .padding(.leading, 24)
+//
+//                        Text("Room members")
+//                            .padding(.leading, 10)
+//
+//                        Spacer()
+//
+//                        Image(systemName: "chevron.right")
+//                        .renderingMode(.template)
+//                            .padding(.trailing, 20)
+//                            .foregroundColor(.secondary)
+//
+//                    }.padding(.vertical)
+//                }.background(Color("CustomAppearanceItemColor"))
+//                .cornerRadius(12)
+//                .padding(.horizontal)
+//                .shadow(color: Color("ShadowColor"), radius: 5)
+               
+//                Form {
+//                    Section {
+//                        HStack {
+////                            Image(systemName: "wallet.pass.fill")
+////                             .renderingMode(.template)
+////                                .resizable()
+////                                .aspectRatio(contentMode: .fit)
+////                                .frame(height: 22)
+////                                .padding(.leading, 24)
+////
+////                            Text("Room ID")
+////                                .padding(.leading, 10)
+//
+//                            Label("Room ID", systemImage: "wallet.pass.fill")
+//                                .accessibility(label: Text("Room ID"))
+//
+//                            Spacer()
+//
+//                            Text("\(room.roomId!)")
+//                                .bold()
+//                                .foregroundColor(.secondary)
+//                        }.padding(.vertical)
+//
+//                        NavigationLink(destination: RoomMembersView(details: details)) {
+//                            Label("Room members", systemImage: "person.2.fill")
+//                                .accessibility(label: Text("Room members"))
+//                        }.padding(.vertical)
+//
+//                    }
+//                }.padding(.top, -20)
+//                    .zIndex(1)
                 
                 VStack {
+                HStack {
+                    Text("Settings")
+                        .font(.system(size: 26))
+                        .fontWeight(.semibold)
+                        .multilineTextAlignment(.leading)
+                    
+                    Spacer()
+                }.padding()
+                    
+                Button(action: {}) {
                     HStack {
                         Image(systemName: "wallet.pass.fill")
-                         .renderingMode(.template)
+                            .renderingMode(.template)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(height: 22)
                             .padding(.leading, 24)
                         
                         Text("Room ID")
-                            .padding(.leading, 10)
+                            .padding(.leading, 12)
                         
                         Spacer()
                         
                         Text("\(room.roomId!)")
-                            .bold()
                             .padding(.trailing, 20)
                             .foregroundColor(.secondary)
-                    }.padding(.vertical)
-                }.background(Color("CustomAppearanceItemColor"))
-                .cornerRadius(12)
-                .padding(.horizontal)
-                .shadow(color: Color("ShadowColor"), radius: 5)
+                    }
+                }.foregroundColor(Color("CustomForegroundColor"))
                 
-                Spacer()
+                Divider()
+                    .padding(8)
+                
+                NavigationLink(destination: RoomMembersView(details: details)) {
+                    HStack {
+                        Image(systemName: "person.2.fill")
+                            .renderingMode(.template)
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(height: 18)
+                            .padding(.leading, 19)
+                        
+                        Text("Room members")
+                            .padding(.leading, 7)
+                        
+                        Spacer()
+                        
+                        Image(systemName: "chevron.right")
+                            .padding(.trailing, 20)
+                            .foregroundColor(.accentColor)
+                    }
+                }.foregroundColor(Color("CustomForegroundColor"))
+                .padding(.bottom, 20)
+            }.background(Color("CustomAppearanceItemColor"))
+                .cornerRadius(12)
+                .padding()
             }
         }.onAppear {
             SocketIOManager.sharedInstance.getInfoAboutRoom(roomId: room.roomId as! Int) { response in
                 switch(response) {
                 case .success(let response):
                     self.details = response
+                    print("DETAILSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS111111111111111111111111111")
+                    print(details)
+                    print("DETAILSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS111111111111111111111111111111")
                     
                 case .failure(let error):
                     print("ERROR ŁEEEE")
                 }
             }
         }
+        .background(Color("BackgroundColor"))
     }
 }
 

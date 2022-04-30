@@ -146,11 +146,15 @@ extension SocketIOManager {
         socket.on("get_informations_about_room") { dataArray, socketAck in
             let data = dataArray[0] as! [String: Any]
             
+            print("ąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąą")
+            print(data["roomMembers"])
+            print("ąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąą")
+            
             let roomInfoModel = SocialifyClient.InfoAboutRoom(
                 roomId: data["roomId"] as! Int,
                 isPublic: (data["isPublic"] != nil),
                 roomName: data["roomName"] as! String,
-                roomMembers: data["roomMembers"] as! [String : String]
+                roomMembers: data["roomMembers"] as! [[String : Any]]
             )
             
             completion(.success(roomInfoModel))

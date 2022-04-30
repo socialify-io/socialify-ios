@@ -24,7 +24,7 @@ public final class SocialifyClient: ObservableObject {
     
     // MARK: - Class variables
     let API_VERSION = "0.1"
-    let API_ROUTE = "http://192.168.8.199/api/"
+    let API_ROUTE = "http://socialify.me/api/"
     
     let deviceModel = UIDevice.modelName
     let systemVersion = "iOS_\(UIDevice.current.systemVersion)"

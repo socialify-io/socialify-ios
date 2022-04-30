@@ -71,6 +71,7 @@ struct AccountManagerView: View {
         }.navigationBarTitle("Accounts")
         .padding()
         //.background(Color("BackgroundColor"))
+        .background(Color("BackgroundColor"))
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button(action: { showLoginModal = true }) {

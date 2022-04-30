@@ -17,7 +17,7 @@ struct RoomView: View {
     let room: Room
     let cellHeight: CGFloat = 42
     let cornerRadius: CGFloat = 12
-    let cellBackground: Color = Color(.systemGray6)
+    let cellBackground: Color = Color("CustomAppearanceItemColor")
    
     @State private var message = ""
     
@@ -67,7 +67,7 @@ struct RoomView: View {
                     .padding(.leading, 8)
             }
             Spacer()
-        }.shadow(color: Color("ShadowColor"), radius: 5)
+        }//.shadow(color: Color("ShadowColor"), radius: 5)
     }
     
     private var messagesView: some View {
@@ -121,7 +121,7 @@ struct RoomView: View {
                             .padding(.horizontal)
                             .background(Color("CustomAppearanceItemColor"))
                             .cornerRadius(20)
-                            .shadow(color: Color("ShadowColor"), radius: 5)
+                            //.shadow(color: Color("ShadowColor"), radius: 5)
                             
                             Spacer()
                         }
@@ -138,7 +138,7 @@ struct RoomView: View {
                         .padding(.horizontal)
                         .background(Color("CustomAppearanceItemColor"))
                         .cornerRadius(20)
-                        .shadow(color: Color("ShadowColor"), radius: 5)
+                        //.shadow(color: Color("ShadowColor"), radius: 5)
                         .padding(.trailing, 5)
                     }.id(index)
                 }
@@ -174,6 +174,7 @@ struct RoomView: View {
                 }
             }
         }
+        .background(Color("BackgroundColor"))
         .onAppear {
             self.currentAccount = client.getCurrentAccount()
             SocketIOManager.sharedInstance.connectRoom(roomId: room.roomId as! Int)
@@ -181,6 +182,9 @@ struct RoomView: View {
             for message in messages {
                 message.isRead = true
             }
+            
+            let context = self.client.persistentContainer.viewContext
+            try! context.save()
         }
     }
 }

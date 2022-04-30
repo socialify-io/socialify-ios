@@ -23,7 +23,7 @@ struct DMView: View {
     let receiver: User
     let cellHeight: CGFloat = 42
     let cornerRadius: CGFloat = 12
-    let cellBackground: Color = Color(.systemGray6)
+    let cellBackground: Color = Color("CustomAppearanceItemColor")
     
     @State private var message = ""
     //@State var messages: [DM] = []
@@ -106,7 +106,7 @@ struct DMView: View {
                                         .padding(.horizontal)
                                         .background(Color("CustomAppearanceItemColor"))
                                         .cornerRadius(20)
-                                        .shadow(color: Color("ShadowColor"), radius: 5)
+                                        //.shadow(color: Color("ShadowColor"), radius: 5)
                                         
                                         Spacer()
                                     }
@@ -123,7 +123,7 @@ struct DMView: View {
                                     .padding(.horizontal)
                                     .background(Color("CustomAppearanceItemColor"))
                                     .cornerRadius(20)
-                                    .shadow(color: Color("ShadowColor"), radius: 5)
+                                    //.shadow(color: Color("ShadowColor"), radius: 5)
                                     .padding(.trailing, 5)
                                 }.id(index)
                             }
@@ -160,7 +160,7 @@ struct DMView: View {
                         .padding(.leading, 8)
                 }
                 Spacer()
-            }.shadow(color: Color("ShadowColor"), radius: 5)
+            }//.shadow(color: Color("ShadowColor"), radius: 5)
             
     }.padding()
         //.background(Color("BackgroundColor"))
@@ -171,6 +171,7 @@ struct DMView: View {
                 }
             }
         }
+        .background(Color("BackgroundColor"))
         .onAppear {
             self.currentAccount = client.getCurrentAccount()
             SocketIOManager.sharedInstance.fetchDMs(chatId: receiver.id)
@@ -178,6 +179,10 @@ struct DMView: View {
             for message in messages {
                 message.isRead = true
             }
+            
+            
+            let context = self.client.persistentContainer.viewContext
+            try! context.save()
 //            print("{{{{{{{{FETCH REQUEST}}}}}}}}}}}")
 //            print(fetchRequest)
 //            print("{{{{{{{{FETCH REQUEST}}}}}}}}}}}")

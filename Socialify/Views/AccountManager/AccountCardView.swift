@@ -28,7 +28,6 @@ struct AccountCardView: View {
                     .foregroundColor(.accentColor)
                     .padding(.bottom, 150)
                     .zIndex(2)
-                    .shadow(color: Color("ShadowColor"), radius: 20)
                 
                 VStack {
                     Text(account.username ?? "<username can't be loaded>")
@@ -53,7 +52,6 @@ struct AccountCardView: View {
                 .zIndex(1)
                 .cornerRadius(12)
                 .padding(.top, 50)
-                .shadow(color: Color("ShadowColor"), radius: 5)
                 
             }.padding(.horizontal)
             .padding(.top, 20)
@@ -164,7 +162,6 @@ struct AccountCardView: View {
             }.background(Color("CustomAppearanceItemColor"))
                 .cornerRadius(12)
                 .padding()
-                .shadow(color: Color("ShadowColor"), radius: 5)
             
             Button(LocalizedStringKey("Log out")) { isLogOutAlertPresented = true }
                 .font(.headline)
@@ -178,7 +175,7 @@ struct AccountCardView: View {
                 .padding()
                 .padding(.bottom)
             
-        }//.background(Color("BackgroundColor"))
+        }.background(Color("BackgroundColor"))
         .frame(width: .infinity, height: .infinity)
         .alert(isPresented: $isLogOutAlertPresented) {
             Alert(title: Text("Log out"), message: Text("Do you want to log out from \(account.username ?? "<username can't be loaded>") account? All account data will be deleted from this device."), primaryButton: .cancel(), secondaryButton: .destructive(Text("Log out")) { client.deleteAccount(account: account)

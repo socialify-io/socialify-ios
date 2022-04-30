@@ -33,6 +33,7 @@ extension SocketIOManager {
         self.socket.emit("fetch_dms", ["sender": chatId])
         
         self.socket.on("fetch_dms") { dataArray, socketAck in
+            
             let data: [[String: Any]] = dataArray[0] as! [[String: Any]]
             
             for dm in data {
@@ -89,7 +90,7 @@ extension SocketIOManager {
                 }
                 self.socket.emit("delete_dms", ["sender": chatId, "from": dm["id"], "to": dm["id"]])
             }
-            self.sortChats(chatId: chatId)
+            //self.sortChats(chatId: chatId)
         }
     }
     

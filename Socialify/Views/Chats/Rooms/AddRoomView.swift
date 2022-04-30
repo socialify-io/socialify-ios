@@ -59,6 +59,7 @@ struct AddRoomView: View {
             
             Spacer()
         }.padding()
+        .background(Color("BackgroundColor"))
     }
 }
 

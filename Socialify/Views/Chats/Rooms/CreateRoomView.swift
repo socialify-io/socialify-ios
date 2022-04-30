@@ -14,7 +14,7 @@ struct CreateRoomView: View {
     
     let cellHeight: CGFloat = 55
     let cornerRadius: CGFloat = 12
-    let cellBackground: Color = Color(UIColor.systemGray5).opacity(0.5)
+    let cellBackground: Color = Color("CustomAppearanceItemColor")
     let borderColor: Color = Color(UIColor.systemGray).opacity(0)
    
     @State private var showAlert = false
@@ -97,6 +97,7 @@ struct CreateRoomView: View {
                     //.background(Color("BackgroundColor")).edgesIgnoringSafeArea(.bottom)
             }
         }
+        .background(Color("BackgroundColor"))
         .alert(isPresented: $showAlert) {
             switch activeAlert {
             case .success:

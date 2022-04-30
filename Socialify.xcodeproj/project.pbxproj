@@ -24,6 +24,7 @@
 		5C4AC87826AF760E005E7027 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AC87726AF760E005E7027 /* RegisterView.swift */; };
 		5C58B52726C14720008AE2B0 /* AddRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C58B52626C14720008AE2B0 /* AddRoomView.swift */; };
 		5C66589B26B5A72F00614E9C /* ErrorReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C66589A26B5A72F00614E9C /* ErrorReportView.swift */; };
+		5C709F1E280D7E9300099E83 /* RoomMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C709F1D280D7E9300099E83 /* RoomMembersView.swift */; };
 		5C73EA9B26112822008F7315 /* SocialifyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EA9A26112822008F7315 /* SocialifyApp.swift */; };
 		5C73EA9D26112822008F7315 /* ChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EA9C26112822008F7315 /* ChatsView.swift */; };
 		5C73EAA226112823008F7315 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C73EAA126112823008F7315 /* Preview Assets.xcassets */; };
@@ -76,6 +77,7 @@
 		5C4AC88126AF8EFB005E7027 /* SocialifySdk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SocialifySdk; path = Modules/SocialifySdk; sourceTree = SOURCE_ROOT; };
 		5C58B52626C14720008AE2B0 /* AddRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRoomView.swift; sourceTree = "<group>"; };
 		5C66589A26B5A72F00614E9C /* ErrorReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReportView.swift; sourceTree = "<group>"; };
+		5C709F1D280D7E9300099E83 /* RoomMembersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMembersView.swift; sourceTree = "<group>"; };
 		5C73EA9726112822008F7315 /* Socialify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Socialify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C73EA9A26112822008F7315 /* SocialifyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialifyApp.swift; sourceTree = "<group>"; };
 		5C73EA9C26112822008F7315 /* ChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsView.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				5C03BA6D27C19A640087F852 /* CreateRoomView.swift */,
 				5C47E84326C32079005F4D0E /* RoomView.swift */,
 				5CFFD58E27E265880038C108 /* RoomDetailsView.swift */,
+				5C709F1D280D7E9300099E83 /* RoomMembersView.swift */,
 			);
 			path = Rooms;
 			sourceTree = "<group>";
@@ -457,6 +460,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C709F1E280D7E9300099E83 /* RoomMembersView.swift in Sources */,
 				5C3DD2242613B78F00B8E532 /* CustomButtonView.swift in Sources */,
 				5C3AD26026BC5A5600D04367 /* AccountTileView.swift in Sources */,
 				5C33AB8D2689D16600640F1C /* FacebookItemView.swift in Sources */,
