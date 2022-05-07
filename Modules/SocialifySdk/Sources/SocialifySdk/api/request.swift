@@ -58,7 +58,7 @@ extension SocialifyClient {
         }.resume()
     }
     
-    func generateAuthToken(timestamp: String, authTokenHeader: String) -> String? {
+    public func generateAuthToken(timestamp: String, authTokenHeader: String) -> String? {
         let salt = BCryptSwift.generateSalt()
         return BCryptSwift.hashPassword("$begin-\(authTokenHeader)$.\(LIBRARY_VERSION)+\(systemVersion)+\(userAgent)#\(timestamp)#.$end-\(authTokenHeader)$", withSalt: salt)
     }

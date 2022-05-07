@@ -9,13 +9,41 @@ import Foundation
 import CoreData
 import SwiftUI
 
+extension UIImage {
+    var base64: String? {
+        self.jpegData(compressionQuality: 0.1)!.base64EncodedString()
+    }
+}
+
 @available(iOS 14.0, *)
 @available(iOSApplicationExtension 14.0, *)
 extension SocketIOManager {
     
-    public func sendDM(message: String, id: Int64) {
-        socket.emit("send_dm", ["receiverId": id,
-                                "message": message])
+    public func sendDM(message: String, id: Int64, image: UIImage?) {
+        if(image != nil) {
+            let base64image = image?.base64
+            
+            print("B(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64ASE64")
+            print(base64image)
+            print("B(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64ASE64")
+            
+            let payload = ["receiverId": id,
+                           "message": message,
+                           "media": [[
+                                "type": 1,
+                                "media": base64image
+                           ]]] as [String : Any]
+            
+            print("PAYLOADPAYLOADPAYLOADPAYLOADPAYLOAD")
+            print(payload)
+            print("PAYLOADPAYLOADPAYLOADPAYLOADPAYLOAD")
+            
+            socket.emit("send_dm", payload)
+        } else {
+            socket.emit("send_dm", ["receiverId": id,
+                                    "message": message,
+                                    "media": []])
+        }
     }
     
     public func fetchDMs(chatId: Int64) {
@@ -159,6 +187,25 @@ extension SocketIOManager {
                 DMModel.id = data["id"] as! Int64
                 DMModel.senderId = Int64("\(String(describing: senderId))")!
                 DMModel.receiverId = Int64("\(String(describing: receiverId))")!
+                
+                let media = data["media"] as! [[String: Any]]
+                
+                for mediaElement in media {
+                    let entityDescription = NSEntityDescription.entity(
+                        forEntityName: "Media",
+                        in: context
+                    )!
+
+                    let MediaModel = Media(
+                        entity: entityDescription,
+                        insertInto: context
+                    )
+                    
+                    MediaModel.chatId = NSDecimalNumber(value: chatId)
+                    MediaModel.type = mediaElement["type"] as! Int16
+                    MediaModel.messageId = NSDecimalNumber(value: DMModel.id)
+                    MediaModel.url = mediaElement["mediaURL"] as! String
+                }
                 
                 self.sortChats(chatId: chatId)
 

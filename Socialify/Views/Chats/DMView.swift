@@ -18,9 +18,14 @@ extension UIApplication {
 struct DMView: View {
     @StateObject var client: SocialifyClient = SocialifyClient.shared
     
+    @State var isShowPicker: Bool = false
+    @State var isImagePicked: Bool = false
+    @State var image: UIImage? = nil
+    
     @State private var currentAccount: Account?
     
     let receiver: User
+    
     let cellHeight: CGFloat = 42
     let cornerRadius: CGFloat = 12
     let cellBackground: Color = Color("CustomAppearanceItemColor")
@@ -33,6 +38,9 @@ struct DMView: View {
     @Environment(\.managedObjectContext) private var managedObjectContext
     private var fetchRequest: FetchRequest<DM>
     private var messages: FetchedResults<DM> { fetchRequest.wrappedValue }
+    
+    private var mediaFetchRequest: FetchRequest<Media>
+    private var media: FetchedResults<Media> { mediaFetchRequest.wrappedValue }
     
     init(receiver: User) {
         self.receiver = receiver
@@ -55,6 +63,12 @@ struct DMView: View {
                     ascending: true)
             ],
             predicate: finalPredicate
+        )
+        
+        self.mediaFetchRequest = FetchRequest(
+            entity: Media.entity(),
+            sortDescriptors: [],
+            predicate: NSPredicate(format: "chatId == %@", NSNumber(value: receiver.id))
         )
     }
     
@@ -84,6 +98,7 @@ struct DMView: View {
                                         
                                         if messages.count-1 == index || messages.count-1 > index && messages[index+1].username != message.username {
                                             VStack {
+                                                Spacer()
                                                 Image(systemName: "person.circle.fill")
                                                     .renderingMode(.template)
                                                     .resizable()
@@ -98,33 +113,14 @@ struct DMView: View {
                                                     .frame(width: 36)
                                             }
                                         }
-                                        
-                                        HStack {
-                                            Text(message.message ?? "<message can't be loaded>")
-                                                .font(.callout)
-                                        }.padding(.vertical, 12)
-                                        .padding(.horizontal)
-                                        .background(Color("CustomAppearanceItemColor"))
-                                        .cornerRadius(20)
-                                        //.shadow(color: Color("ShadowColor"), radius: 5)
-                                        
-                                        Spacer()
+                                       
+                                        LeftDMBubble(message: message, media: media)
                                     }
                                     Spacer()
                                 }.id(index)
                             } else {
                                 HStack {
-                                    Spacer()
-                                    
-                                    HStack {
-                                        Text(message.message ?? "<message can't be loaded>")
-                                            .font(.callout)
-                                    }.padding(.vertical, 12)
-                                    .padding(.horizontal)
-                                    .background(Color("CustomAppearanceItemColor"))
-                                    .cornerRadius(20)
-                                    //.shadow(color: Color("ShadowColor"), radius: 5)
-                                    .padding(.trailing, 5)
+                                    RightDMBubble(message: message, media: media)
                                 }.id(index)
                             }
                     }
@@ -140,6 +136,17 @@ struct DMView: View {
             }
             Spacer()
             HStack {
+                Button(action: {
+                    withAnimation {
+                        self.isShowPicker.toggle()
+                    }
+                }) {
+                    Image(systemName: "paperclip")
+                        .resizable()
+                        .frame(width: 26, height: 26)
+                        .padding(.leading, 8)
+                }
+                
                 TextField("Text here...", text: $message)
                     .autocapitalization(.none)
                     .font(Font.body.weight(Font.Weight.medium))
@@ -150,7 +157,7 @@ struct DMView: View {
                         
                 Button(action: {
                     if(message != "") {
-                        SocketIOManager.sharedInstance.sendDM(message: message, id: receiver.id)
+                        SocketIOManager.sharedInstance.sendDM(message: message, id: receiver.id, image: nil)
                         message = ""
                     }
                 }) {
@@ -172,6 +179,12 @@ struct DMView: View {
             }
         }
         .background(Color("BackgroundColor"))
+        .sheet(isPresented: $isShowPicker) {
+            ImagePicker(image: self.$image, isImagePicked: self.$isImagePicked)
+        }
+        .sheet(isPresented: $isImagePicked) {
+            SendImageView(chatId: receiver.id, message: $message, image: $image, isImagePicked: $isImagePicked)
+        }
         .onAppear {
             self.currentAccount = client.getCurrentAccount()
             SocketIOManager.sharedInstance.fetchDMs(chatId: receiver.id)

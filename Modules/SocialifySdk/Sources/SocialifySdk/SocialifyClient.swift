@@ -23,14 +23,14 @@ public final class SocialifyClient: ObservableObject {
     public let LIBRARY_VERSION = "0.1"
     
     // MARK: - Class variables
-    let API_VERSION = "0.1"
-    let API_ROUTE = "http://socialify.me/api/"
+    public let API_VERSION = "0.1"
+    public let API_ROUTE = "http://api.socialify.me/api/"
     
-    let deviceModel = UIDevice.modelName
-    let systemVersion = "iOS_\(UIDevice.current.systemVersion)"
-    let userAgent = "Socialify-iOS"
+    public let deviceModel = UIDevice.modelName
+    public let systemVersion = "iOS_\(UIDevice.current.systemVersion)"
+    public let userAgent = "Socialify-iOS"
     
     public let persistentContainer: NSPersistentContainer = CoreDataModel.shared.persistentContainer
     let ud = UserDefaults.group
-    let keychain = Keychain()
+    public let keychain = Keychain()
 }
