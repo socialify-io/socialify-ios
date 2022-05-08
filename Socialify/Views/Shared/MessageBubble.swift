@@ -30,7 +30,7 @@ struct LeftDMBubble: View {
                                                                            placeholder: { Image(systemName: "circle.dashed") },
                                                                            image: { Image(uiImage: $0).resizable() })
                                 
-                                NavigationLink(destination: ChatImageView(image: image)) {
+                                NavigationLink(destination: ChatImageView(syncedImage: image)) {
                                     HStack {
                                         image
                                             .scaledToFit()
@@ -89,7 +89,7 @@ struct RightDMBubble: View {
                                                                            placeholder: { Image(systemName: "circle.dashed") },
                                                                image: { Image(uiImage: $0).resizable() })
                                 
-                                NavigationLink(destination: ChatImageView(image: image)) {
+                                NavigationLink(destination: ChatImageView(syncedImage: image)) {
                                     Spacer()
                                     HStack {
                                         Spacer()

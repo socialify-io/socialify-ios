@@ -7,15 +7,76 @@
 
 import SwiftUI
 import UIKit
- 
+import Combine
+
 struct ChatImageView: View {
-    let image: AsyncImage<Image>
+    let syncedImage: AsyncImage<Image>
+    
+    @State var url: URL?
+    @State var isLoading = false
+    @State var cache: ImageCache? = Environment(\.imageCache).wrappedValue
+    @State var cancellable: AnyCancellable?
+    @State var image: UIImage?
+    
+    init(syncedImage: AsyncImage<Image>) {
+        self.syncedImage = syncedImage
+    }
+    
+    func cancel() {
+        cancellable?.cancel()
+    }
+    
+    private func onStart() {
+        isLoading = true
+    }
+    
+    private func onFinish() {
+        isLoading = false
+    }
+    
+    private func cache(_ image: UIImage?) {
+        image.map { cache?[url!] = $0 }
+    }
     
     var body: some View {
         VStack {
-            image
+            Spacer()
+            
+            syncedImage
+                .onAppear {
+                    self.url = syncedImage.url
+                }
                 .scaledToFit()
                 .pinchToZoom()
+            
+            Spacer()
+            
+            HStack {
+                Button(action: {
+                    let imageProcessingQueue = DispatchQueue(label: "image-processing")
+                                    
+                    cancellable = URLSession.shared.dataTaskPublisher(for: url!)
+                        .map { UIImage(data: $0.data) }
+                        .replaceError(with: nil)
+                        .handleEvents(receiveSubscription: { _ in self.onStart() },
+                                      receiveOutput: { self.cache($0) },
+                                      receiveCompletion: {_ in
+                                        self.onFinish()
+                                        },
+                                      receiveCancel: { self.onFinish() })
+                        .subscribe(on: imageProcessingQueue)
+                        .receive(on: DispatchQueue.main)
+                        .sink { image = $0
+                            UIImageWriteToSavedPhotosAlbum(image!, self, nil, nil)
+                        }
+                    
+                    
+                    
+                    
+                }) {
+                    Image(systemName: "arrow.down")
+                }
+            }
         }
     }
 }
@@ -42,11 +103,6 @@ class PinchZoomView: UIView {
         }
     }
 
-//    @Binding var scale: CGFloat
-//    @Binding var anchor: UnitPoint
-//    @Binding var offset: CGSize
-    
-
     private(set) var isPinching: Bool = false {
         didSet {
             delegate?.pinchZoomView(self, didChangePinching: isPinching)
@@ -61,11 +117,6 @@ class PinchZoomView: UIView {
 
     init(scale: CGFloat, anchor: UnitPoint, offset: CGSize) {
         super.init(frame: .zero)
-//        self.scale = scale
-//        self.anchor = anchor
-//        self.offset = offset
-        
-        
 
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinch(gesture:)))
         pinchGesture.cancelsTouchesInView = false
@@ -117,6 +168,7 @@ class PinchZoomView: UIView {
         case .ended, .cancelled, .failed:
             isPinching = false
             startScale = scale
+            
             if(scale < 1.0) {
                 scale = 1.0
                 anchor = .center
@@ -129,7 +181,6 @@ class PinchZoomView: UIView {
             break
         }
     }
-
 }
 
 protocol PinchZoomViewDelgate: AnyObject {
@@ -201,5 +252,21 @@ struct PinchToZoom: ViewModifier {
 extension View {
     func pinchToZoom() -> some View {
         self.modifier(PinchToZoom())
+    }
+}
+
+func documentDirectoryPath() -> URL? {
+    let path = FileManager.default.urls(for: .documentDirectory,
+                                        in: .userDomainMask)
+    return path.first
+}
+
+func saveJpg(_ image: UIImage, name: String) {
+    print(image)
+    if let jpgData = image.jpegData(compressionQuality: 0.5),
+        let path = documentDirectoryPath()?.appendingPathComponent("\(name).jpg") {
+        try? jpgData.write(to: path)
+    } else {
+        print("NIE DZIALAAAAAAAAAAAAAAAAAAaaa")
     }
 }
