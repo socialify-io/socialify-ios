@@ -60,9 +60,7 @@ struct ChatImageView: View {
                         .replaceError(with: nil)
                         .handleEvents(receiveSubscription: { _ in self.onStart() },
                                       receiveOutput: { self.cache($0) },
-                                      receiveCompletion: {_ in
-                                        self.onFinish()
-                                        },
+                                      receiveCompletion: {_ in self.onFinish() },
                                       receiveCancel: { self.onFinish() })
                         .subscribe(on: imageProcessingQueue)
                         .receive(on: DispatchQueue.main)

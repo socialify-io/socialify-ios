@@ -23,20 +23,12 @@ extension SocketIOManager {
         if(image != nil) {
             let base64image = image?.base64
             
-            print("B(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64ASE64")
-            print(base64image)
-            print("B(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64(BASE64ASE64")
-            
             let payload = ["receiverId": id,
                            "message": message,
                            "media": [[
                                 "type": 1,
                                 "media": base64image
                            ]]] as [String : Any]
-            
-            print("PAYLOADPAYLOADPAYLOADPAYLOADPAYLOAD")
-            print(payload)
-            print("PAYLOADPAYLOADPAYLOADPAYLOADPAYLOAD")
             
             socket.emit("send_dm", payload)
         } else {
@@ -113,6 +105,25 @@ extension SocketIOManager {
 //                    if(DMModel.receiverId == currentAccount.userId) { chatId = DMModel.senderId }
 //                    else { chatId = DMModel.receiverId }
                     
+                    let media = dm["media"] as! [[String: Any]]
+                
+                    for mediaElement in media {
+                        let entityDescription = NSEntityDescription.entity(
+                            forEntityName: "Media",
+                            in: context
+                        )!
+
+                        let MediaModel = Media(
+                            entity: entityDescription,
+                            insertInto: context
+                        )
+                        
+                        MediaModel.chatId = NSDecimalNumber(value: chatId)
+                        MediaModel.type = mediaElement["type"] as! Int16
+                        MediaModel.messageId = NSDecimalNumber(value: DMModel.id)
+                        MediaModel.url = mediaElement["mediaURL"] as! String
+                    }
+                        
                     
                     try! context.save()
                 }
@@ -156,23 +167,23 @@ extension SocketIOManager {
                     insertInto: context
                 )
                 
-                let predicateForReceivedMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: receiverId))
-                let predicateForSendMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: senderId))
-                let predicateForSendMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value: senderId))
-                let predicateForReceivedMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value:  receiverId))
-                
-                let predicateAndReceived = NSCompoundPredicate(type: .and, subpredicates: [predicateForReceivedMessageSend, predicateForReceivedMessageReceived])
-                let predicateAndSend = NSCompoundPredicate(type: .and, subpredicates: [predicateForSendMessageSend, predicateForSendMessageReceived])
-                
-                let finalPredicate = NSCompoundPredicate(type: .or, subpredicates: [predicateAndSend, predicateAndReceived])
-                
-                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DM")
-                fetchRequest.predicate = finalPredicate
-                fetchRequest.sortDescriptors = [NSSortDescriptor(
-                                                keyPath: \DM.id,
-                                                ascending: true)]
-                
-                var messages = try! context.fetch(fetchRequest) as! [DM]
+//                let predicateForReceivedMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: receiverId))
+//                let predicateForSendMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: senderId))
+//                let predicateForSendMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value: senderId))
+//                let predicateForReceivedMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value:  receiverId))
+//
+//                let predicateAndReceived = NSCompoundPredicate(type: .and, subpredicates: [predicateForReceivedMessageSend, predicateForReceivedMessageReceived])
+//                let predicateAndSend = NSCompoundPredicate(type: .and, subpredicates: [predicateForSendMessageSend, predicateForSendMessageReceived])
+//
+//                let finalPredicate = NSCompoundPredicate(type: .or, subpredicates: [predicateAndSend, predicateAndReceived])
+//
+//                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DM")
+//                fetchRequest.predicate = finalPredicate
+//                fetchRequest.sortDescriptors = [NSSortDescriptor(
+//                                                keyPath: \DM.id,
+//                                                ascending: true)]
+//
+//                var messages = try! context.fetch(fetchRequest) as! [DM]
     //            if(messages.count >= 16) {
     //                try! context.delete(messages.last!)
     //            }
