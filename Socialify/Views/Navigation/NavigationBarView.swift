@@ -45,29 +45,34 @@ struct NavigationBarView: View {
         TabView() {
             NavigationView {
                 ChatsView()
-                    .toolbar {
-                        ToolbarItem(placement: .navigationBarLeading) {
-                            NavigationLink(destination: AccountManagerView()) {
-                                Image(systemName: "person.circle")
-                            }
-                        }
-                        
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            NavigationLink(destination: AddRoomView()) {
-                                Image(systemName: "plus")
-                            }
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        NavigationLink(destination: AccountManagerView()) {
+                            Image(systemName: "person.circle")
                         }
                     }
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink(destination: AddRoomView()) {
+                            Image(systemName: "plus")
                         }
-                .tabItem {
+                    }
+                }
+            }
+            .tabItem {
                 Label("Chats", systemImage: "message.fill")
                     .accessibility(label: Text("Chats"))
-            } 
+            }
             
-            ChatsView()
-            .tabItem {
-                Label("More", systemImage: "ellipsis.circle.fill")
-                    .accessibility(label: Text("More"))
+            NavigationView {
+                MoreView()
+                    .toolbar {
+                        
+                    }
+                }
+                .tabItem {
+                    Label("Settings", systemImage: "gear")
+                        .accessibility(label: Text("Settings"))
             }
         }
     }

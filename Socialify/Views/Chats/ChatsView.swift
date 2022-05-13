@@ -81,7 +81,7 @@ struct ChatTileView: View {
                                         .foregroundColor(Color("CustomForegroundColor"))
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 } else {
-                                   Text("\(messages[0].username ?? "") \(messages[0].message ?? "") • \(calendar.component(.hour, from: messages[0].date!)):\(calendar.component(.minute, from: messages[0].date!))")
+                                   Text("\(messages[0].username ?? "") \(messages[0].message ?? "Sended image") • \(calendar.component(.hour, from: messages[0].date!)):\(calendar.component(.minute, from: messages[0].date!))")
                                         .font(.caption)
                                         .foregroundColor(Color("CustomForegroundColor"))
                                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -102,7 +102,7 @@ struct ChatTileView: View {
                                         .foregroundColor(Color("CustomForegroundColor"))
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                 } else{
-                                    Text("\(messages[0].username ?? ""): \(messages[0].message ?? "") • \(calendar.component(.hour, from: messages[0].date!)):\(calendar.component(.minute, from: messages[0].date!))")
+                                    Text("\(messages[0].username ?? ""): \(messages[0].message ?? "Sended image") • \(calendar.component(.hour, from: messages[0].date!)):\(calendar.component(.minute, from: messages[0].date!))")
                                         .bold()
                                         .font(.caption)
                                         .foregroundColor(Color("CustomForegroundColor"))
@@ -136,7 +136,7 @@ struct ChatTileView: View {
                                 .foregroundColor(Color("CustomForegroundColor"))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             
-                            Text("\(dms[0].username ?? ""): \(dms[0].message ?? "") • \(calendar.component(.hour, from: dms[0].date!)):\(calendar.component(.minute, from: dms[0].date!))")
+                            Text("\(dms[0].username ?? ""): \(dms[0].message ?? "Sended image") • \(calendar.component(.hour, from: dms[0].date!)):\(calendar.component(.minute, from: dms[0].date!))")
                                 .font(.caption)
                                 .foregroundColor(Color("CustomForegroundColor"))
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -149,7 +149,7 @@ struct ChatTileView: View {
                                 .foregroundColor(Color("CustomForegroundColor"))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             
-                            Text("\(dms[0].username ?? ""): \(dms[0].message ?? "") • \(calendar.component(.hour, from: dms[0].date!)):\(calendar.component(.minute, from: dms[0].date!))")
+                            Text("\(dms[0].username ?? ""): \(dms[0].message ?? "Sended image") • \(calendar.component(.hour, from: dms[0].date!)):\(calendar.component(.minute, from: dms[0].date!))")
                                 .bold()
                                 .font(.caption)
                                 .foregroundColor(Color("CustomForegroundColor"))

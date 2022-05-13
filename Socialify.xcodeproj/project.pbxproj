@@ -13,6 +13,10 @@
 		5C2A2EDE26B9F46D006CC3D6 /* models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A2EDD26B9F46D006CC3D6 /* models.swift */; };
 		5C2F3878281EE58400F5142F /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F3877281EE58400F5142F /* ImagePicker.swift */; };
 		5C2F387A281EED2300F5142F /* SendImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F3879281EED2300F5142F /* SendImageView.swift */; };
+		5C2F4803282BD42C000EA08A /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F4802282BD42C000EA08A /* MoreView.swift */; };
+		5C2F4805282C0A3B000EA08A /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F4804282C0A3B000EA08A /* PrivacyView.swift */; };
+		5C2F4807282C125B000EA08A /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F4806282C125A000EA08A /* DataView.swift */; };
+		5C2F4809282D6C3C000EA08A /* LicenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F4808282D6C3C000EA08A /* LicenceView.swift */; };
 		5C33AB8D2689D16600640F1C /* FacebookItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C33AB8C2689D16600640F1C /* FacebookItemView.swift */; };
 		5C3AD26026BC5A5600D04367 /* AccountTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3AD25F26BC5A5600D04367 /* AccountTileView.swift */; };
 		5C3AD26226BC5C3B00D04367 /* AccountCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3AD26126BC5C3B00D04367 /* AccountCardView.swift */; };
@@ -24,6 +28,7 @@
 		5C47E84626C32662005F4D0E /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C47E84526C32662005F4D0E /* ChatView.swift */; };
 		5C495BC7261A72100004D538 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C495BC6261A72100004D538 /* LoginView.swift */; };
 		5C4AC87826AF760E005E7027 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AC87726AF760E005E7027 /* RegisterView.swift */; };
+		5C4EA433282F03B400F92714 /* ContributorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4EA432282F03B400F92714 /* ContributorsView.swift */; };
 		5C51429728241AB700921F51 /* getImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C51429628241AB700921F51 /* getImage.swift */; };
 		5C51429928241C3600921F51 /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C51429828241C3600921F51 /* MessageBubble.swift */; };
 		5C58B52726C14720008AE2B0 /* AddRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C58B52626C14720008AE2B0 /* AddRoomView.swift */; };
@@ -70,6 +75,10 @@
 		5C2A2EDD26B9F46D006CC3D6 /* models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = models.swift; sourceTree = "<group>"; };
 		5C2F3877281EE58400F5142F /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		5C2F3879281EED2300F5142F /* SendImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendImageView.swift; sourceTree = "<group>"; };
+		5C2F4802282BD42C000EA08A /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
+		5C2F4804282C0A3B000EA08A /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
+		5C2F4806282C125A000EA08A /* DataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataView.swift; sourceTree = "<group>"; };
+		5C2F4808282D6C3C000EA08A /* LicenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenceView.swift; sourceTree = "<group>"; };
 		5C33AB8C2689D16600640F1C /* FacebookItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookItemView.swift; sourceTree = "<group>"; };
 		5C3AD25F26BC5A5600D04367 /* AccountTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTileView.swift; sourceTree = "<group>"; };
 		5C3AD26126BC5C3B00D04367 /* AccountCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCardView.swift; sourceTree = "<group>"; };
@@ -82,6 +91,7 @@
 		5C495BC6261A72100004D538 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		5C4AC87726AF760E005E7027 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		5C4AC88126AF8EFB005E7027 /* SocialifySdk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SocialifySdk; path = Modules/SocialifySdk; sourceTree = SOURCE_ROOT; };
+		5C4EA432282F03B400F92714 /* ContributorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorsView.swift; sourceTree = "<group>"; };
 		5C51429628241AB700921F51 /* getImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getImage.swift; sourceTree = "<group>"; };
 		5C51429828241C3600921F51 /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
 		5C58B52626C14720008AE2B0 /* AddRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRoomView.swift; sourceTree = "<group>"; };
@@ -157,6 +167,18 @@
 				5C44F354268921E7003A5768 /* TabBarIcon.swift */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		5C2F4801282BD419000EA08A /* More */ = {
+			isa = PBXGroup;
+			children = (
+				5C2F4802282BD42C000EA08A /* MoreView.swift */,
+				5C2F4804282C0A3B000EA08A /* PrivacyView.swift */,
+				5C2F4806282C125A000EA08A /* DataView.swift */,
+				5C2F4808282D6C3C000EA08A /* LicenceView.swift */,
+				5C4EA432282F03B400F92714 /* ContributorsView.swift */,
+			);
+			path = More;
 			sourceTree = "<group>";
 		};
 		5C3DD2192613B33600B8E532 /* Login */ = {
@@ -305,6 +327,7 @@
 		5C73EACA261129B0008F7315 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5C2F4801282BD419000EA08A /* More */,
 				5C58B52526C146F5008AE2B0 /* Chats */,
 				5C66589926B5A71C00614E9C /* ErrorReport */,
 				5C44F3562689422F003A5768 /* AccountManager */,
@@ -475,11 +498,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C2F4805282C0A3B000EA08A /* PrivacyView.swift in Sources */,
 				5C709F1E280D7E9300099E83 /* RoomMembersView.swift in Sources */,
 				5C3DD2242613B78F00B8E532 /* CustomButtonView.swift in Sources */,
 				5C2F387A281EED2300F5142F /* SendImageView.swift in Sources */,
 				5C3AD26026BC5A5600D04367 /* AccountTileView.swift in Sources */,
 				5C2F3878281EE58400F5142F /* ImagePicker.swift in Sources */,
+				5C2F4807282C125B000EA08A /* DataView.swift in Sources */,
 				5C33AB8D2689D16600640F1C /* FacebookItemView.swift in Sources */,
 				5C03BA6E27C19A640087F852 /* CreateRoomView.swift in Sources */,
 				5C51429928241C3600921F51 /* MessageBubble.swift in Sources */,
@@ -492,15 +517,18 @@
 				5C3AD26226BC5C3B00D04367 /* AccountCardView.swift in Sources */,
 				5C58B52726C14720008AE2B0 /* AddRoomView.swift in Sources */,
 				5C495BC7261A72100004D538 /* LoginView.swift in Sources */,
+				5C2F4809282D6C3C000EA08A /* LicenceView.swift in Sources */,
 				5C03BA6C27C19A4E0087F852 /* JoinToRoomView.swift in Sources */,
 				5C7D56122642010100B518C9 /* LoginWithOptionView.swift in Sources */,
 				5C73EAD0261129E1008F7315 /* OnboardingView.swift in Sources */,
 				5C44F355268921E7003A5768 /* TabBarIcon.swift in Sources */,
 				5C88D8CE26B8B0F900BAC9A7 /* setColor.swift in Sources */,
 				5C73EA9B26112822008F7315 /* SocialifyApp.swift in Sources */,
+				5C2F4803282BD42C000EA08A /* MoreView.swift in Sources */,
 				5C66589B26B5A72F00614E9C /* ErrorReportView.swift in Sources */,
 				5C44F35A26894265003A5768 /* AccountManagerView.swift in Sources */,
 				5C89D9C526D2F08C0099564E /* DMView.swift in Sources */,
+				5C4EA433282F03B400F92714 /* ContributorsView.swift in Sources */,
 				5C88D8D726B8CA0600BAC9A7 /* string.swift in Sources */,
 				5C47E84426C32079005F4D0E /* RoomView.swift in Sources */,
 				5C0465102687E868006D3126 /* NavigationBarView.swift in Sources */,

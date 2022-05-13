@@ -63,6 +63,7 @@ struct LeftDMBubble: View {
             }
         }.padding(.leading, 4)
             .padding(.vertical, -5)
+            .padding(.trailing, 25)
     }
 }
 
@@ -118,7 +119,9 @@ struct RightDMBubble: View {
                     }
                 }
             }
-        }.onAppear {
+        }
+        .padding(.leading, 25)
+        .onAppear {
             print("MEDIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
             print(media)
             print("MEDIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
