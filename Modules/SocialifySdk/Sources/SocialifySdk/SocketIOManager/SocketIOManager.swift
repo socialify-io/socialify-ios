@@ -43,31 +43,36 @@ public class SocketIOManager: NSObject {
         
         let signatureCore = "headers=\(headers)&body={}&timestamp=\(Int(timestamp))&authToken=\(authToken ?? "")&endpointUrl=/api/v0.1/connect&"
         
-        privKeyPEM = privKeyPEM!
-            .replacingOccurrences(of: "-----BEGIN RSA PRIVATE KEY-----", with: "")
-            .replacingOccurrences(of: "-----END RSA PRIVATE KEY-----", with: "")
-            .replacingOccurrences(of: "\n", with: "")
+//        privKeyPEM = privKeyPEM!
+//            .replacingOccurrences(of: "-----BEGIN RSA PRIVATE KEY-----", with: "")
+//            .replacingOccurrences(of: "-----END RSA PRIVATE KEY-----", with: "")
+//            .replacingOccurrences(of: "\n", with: "")
+//
+//        let keyData = Data(base64Encoded: privKeyPEM!, options: [.ignoreUnknownCharacters])
+//
+//        let attributesRSAPriv: [String: Any] = [
+//            kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
+//            kSecAttrKeyClass as String: kSecAttrKeyClassPrivate,
+//            kSecAttrKeySizeInBits as String: 2048,
+//            kSecAttrIsPermanent as String: false
+//        ]
+//
+//        var error: Unmanaged<CFError>?
+//
+//        let secKey = SecKeyCreateWithData(keyData! as CFData, attributesRSAPriv as CFDictionary, &error)
+//
+//        let algorithm: SecKeyAlgorithm = .rsaSignatureDigestPKCS1v15SHA1
+//
+//        let data = try! Data(signatureCore.utf8)
+//        let digest = Insecure.SHA1.hash(data: data)
+//        let signature = SecKeyCreateSignature(secKey!, algorithm, digest.data as CFData, &error)! as NSData as Data
         
-        let keyData = Data(base64Encoded: privKeyPEM!, options: [.ignoreUnknownCharacters])
+        let signKey = try! P256.Signing.PrivateKey(pemRepresentation: privKeyPEM!)
+        let signatureCoreData = signatureCore.data(using: .utf8)!
         
-        let attributesRSAPriv: [String: Any] = [
-            kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
-            kSecAttrKeyClass as String: kSecAttrKeyClassPrivate,
-            kSecAttrKeySizeInBits as String: 2048,
-            kSecAttrIsPermanent as String: false
-        ]
+        let signature = try! signKey.signature(for: signatureCoreData)
         
-        var error: Unmanaged<CFError>?
-        
-        let secKey = SecKeyCreateWithData(keyData! as CFData, attributesRSAPriv as CFDictionary, &error)
-        
-        let algorithm: SecKeyAlgorithm = .rsaSignatureDigestPKCS1v15SHA1
-        
-        let data = try! Data(signatureCore.utf8)
-        let digest = Insecure.SHA1.hash(data: data)
-        let signature = SecKeyCreateSignature(secKey!, algorithm, digest.data as CFData, &error)! as NSData as Data
-        
-        let base64Signature = signature.base64EncodedString()
+        let base64Signature = signature.derRepresentation.base64EncodedString()
             
         headersJson.updateValue(base64Signature, forKey: "Signature")
         

@@ -34,8 +34,6 @@ extension SocialifyClient {
 //                keyDict[kSecAttrKeyClass] = kSecAttrKeyClassPublic
 //                keyDict[kSecAttrKeySizeInBits] = NSNumber(value: 256)
 //                keyDict[kSecReturnPersistentRef] = true as NSObject
-               
-                
                 
                 let pubKeyPem = "\(value["data"]["pubKey"])"
                 let pubKeyData = pubKeyPem.data(using: String.Encoding.ascii)

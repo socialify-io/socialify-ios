@@ -22,31 +22,11 @@ extension SocialifyClient {
             switch value {
             case .success(let value):
                 do {
-                    
                     let serverPublicKey = value.0
                     let privateKey = generatePrivateKey()
                     let symmetricKey = try! deriveSymmetricKey(privateKey: privateKey, publicKey: serverPublicKey)
                     
-                    //let passwordData = password.data(using: .utf8)
                     let encrypted = try! encrypt(text: password, symmetricKey: symmetricKey)
-                    //print(encryptedv2[0])
-                    
-                    //let encryptedPassword: AES.GCM.SealedBox = encrypted
-                    //let nonce: AES.GCM.Nonce = encrypted[1] as! AES.GCM.Nonce
-                    //let stringNonce = nonce.makeIterator()
-                    //var nonceArray = Array<Any>()
-                    
-                    //for element in stringNonce {
-                    //    nonceArray.append(element)
-                    //}
-                        
-                    
-//                    let algorithm: SecKeyAlgorithm = .eciesEncryptionStandardX963SHA1AESGCM
-//                    var error: Unmanaged<CFError>?
-//                    let encryptedPassword = SecKeyCreateEncryptedData(value.0,
-//                                                                algorithm,
-//                                                                password.data(using: .utf8) as! CFData,
-//                                                                &error)
                     
                     let url = URL(string: "\(self.API_ROUTE)v\(self.API_VERSION)/newDevice")!
                     
@@ -60,16 +40,21 @@ extension SocialifyClient {
                                                          count: nonceData.count)
                         return Array<Int8>(buffer)
                     }
-                                    
-                    print("nonce")
-                    print(nonce)
-                    print("nonce")
                     
                     let encryptedPassword = try! encrypted.combined!
                     
                     var request = URLRequest(url: url)
                     request.httpMethod = "POST"
+                    
+                    
+                    
+                    
+                    
                     let keys = try SwiftyRSA.generateRSAKeyPair(sizeInBits: 2048)
+                    let signKey = P256.Signing.PrivateKey()
+                    let pubKey = signKey.publicKey
+                    
+                    print(signKey.pemRepresentation)
                     
                     let payload: [String: Any] = [
                         "username": username,
@@ -82,10 +67,7 @@ extension SocialifyClient {
                             "timestamp": "\(Int(NSDate().timeIntervalSince1970))",
                             "appVersion": self.LIBRARY_VERSION,
                             "os": self.systemVersion,
-                            "signPubKey": try keys.publicKey.pemString()
-                                .replacingOccurrences(of: "-----BEGIN RSA PUBLIC KEY-----", with: "")
-                                .replacingOccurrences(of: "-----END RSA PUBLIC KEY-----", with: "")
-                                .replacingOccurrences(of: "\n", with: "")
+                            "signPubKey": pubKey.pemRepresentation
                         ]
                     ]
                     
@@ -140,7 +122,7 @@ extension SocialifyClient {
                                 try context.save()
                             } catch { completion(.failure(SdkError.SavingContextError)) }
                             
-                            self.keychain["\(accountId)-privateKey"] = try? keys.privateKey.pemString()
+                            self.keychain["\(accountId)-privateKey"] = signKey.pemRepresentation
                            
                             completion(.success(true))
                             
