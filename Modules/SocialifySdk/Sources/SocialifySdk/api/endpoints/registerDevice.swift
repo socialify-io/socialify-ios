@@ -22,11 +22,50 @@ extension SocialifyClient {
             switch value {
             case .success(let value):
                 do {
-                    let passwordClear = try ClearMessage(string: password, using: .utf8)
                     
-                    let encryptedPassword = try passwordClear.encrypted(with: value.0, padding: .OAEP).data.base64EncodedString() // 0 means model of public key
+                    let serverPublicKey = value.0
+                    let privateKey = generatePrivateKey()
+                    let symmetricKey = try! deriveSymmetricKey(privateKey: privateKey, publicKey: serverPublicKey)
+                    
+                    //let passwordData = password.data(using: .utf8)
+                    let encrypted = try! encrypt(text: password, symmetricKey: symmetricKey)
+                    //print(encryptedv2[0])
+                    
+                    //let encryptedPassword: AES.GCM.SealedBox = encrypted
+                    //let nonce: AES.GCM.Nonce = encrypted[1] as! AES.GCM.Nonce
+                    //let stringNonce = nonce.makeIterator()
+                    //var nonceArray = Array<Any>()
+                    
+                    //for element in stringNonce {
+                    //    nonceArray.append(element)
+                    //}
+                        
+                    
+//                    let algorithm: SecKeyAlgorithm = .eciesEncryptionStandardX963SHA1AESGCM
+//                    var error: Unmanaged<CFError>?
+//                    let encryptedPassword = SecKeyCreateEncryptedData(value.0,
+//                                                                algorithm,
+//                                                                password.data(using: .utf8) as! CFData,
+//                                                                &error)
                     
                     let url = URL(string: "\(self.API_ROUTE)v\(self.API_VERSION)/newDevice")!
+                    
+                    let encryptedCiphertext = encrypted.ciphertext.base64EncodedString()
+                    let encryptedTag = encrypted.tag.base64EncodedString()
+                    let nonceBytes = encrypted.nonce.withUnsafeBytes { Data(Array($0)) }
+                    let nonceData = Data(bytes: nonceBytes)
+                    let nonce = nonceData.withUnsafeBytes {
+                                        (pointer: UnsafePointer<Int8>) -> [Int8] in
+                        let buffer = UnsafeBufferPointer(start: pointer,
+                                                         count: nonceData.count)
+                        return Array<Int8>(buffer)
+                    }
+                                    
+                    print("nonce")
+                    print(nonce)
+                    print("nonce")
+                    
+                    let encryptedPassword = try! encrypted.combined!
                     
                     var request = URLRequest(url: url)
                     request.httpMethod = "POST"
@@ -34,8 +73,10 @@ extension SocialifyClient {
                     
                     let payload: [String: Any] = [
                         "username": username,
-                        "password": encryptedPassword,
+                        "password": encryptedPassword.base64EncodedString().dropFirst(16),
                         "pubKey": value.1, // 1 means public key as string
+                        "clientPubKey": privateKey.publicKey.pemRepresentation,
+                        "nonce": nonce,
                         "device": [
                             "deviceName": "\(self.deviceModel) - \(self.systemVersion)",
                             "timestamp": "\(Int(NSDate().timeIntervalSince1970))",

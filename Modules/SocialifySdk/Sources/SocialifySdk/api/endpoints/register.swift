@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftyRSA
+import CryptoKit
 
 @available(iOS 14.0, *)
 extension SocialifyClient {
@@ -21,23 +22,50 @@ extension SocialifyClient {
                 switch value {
                 case .success(let value):
                     do {
-                        let passwordClear = try ClearMessage(string: password, using: .utf8)
-                        let repeatedPasswordClear = try ClearMessage(string: repeatedPassword, using: .utf8)
+//                        let passwordClear = try ClearMessage(string: password, using: .utf8)
+//                        let repeatedPasswordClear = try ClearMessage(string: repeatedPassword, using: .utf8)
+//
+//                        let encryptedPassword = try passwordClear.encrypted(with: value.0, padding: .OAEP).data.base64EncodedString() // 0 means model of public key
+//                        let encryptedRepeatedPassword = try repeatedPasswordClear.encrypted(with: value.0, padding: .OAEP).data.base64EncodedString()
+//
+//                        let algorithm: SecKeyAlgorithm = .eciesEncryptionStandardX963SHA1AESGCM
+//                        var error: Unmanaged<CFError>?
                         
-                        let encryptedPassword = try passwordClear.encrypted(with: value.0, padding: .OAEP).data.base64EncodedString() // 0 means model of public key
-                        let encryptedRepeatedPassword = try repeatedPasswordClear.encrypted(with: value.0, padding: .OAEP).data.base64EncodedString()
+                        
+                        
+                        let serverPublicKey = value.0
+                        let privateKey = generatePrivateKey()
+                        let symmetricKey = try! deriveSymmetricKey(privateKey: privateKey, publicKey: serverPublicKey)
+                        
+                       
+                        let encrypted = try! encrypt(text: password, symmetricKey: symmetricKey)
+
                         
                         let url = URL(string: "\(self.API_ROUTE)v\(self.API_VERSION)/register")!
                         
                         var request = URLRequest(url: url)
                         request.httpMethod = "POST"
                         
+                        let encryptedCiphertext = encrypted.ciphertext.base64EncodedString()
+                        let encryptedTag = encrypted.tag.base64EncodedString()
+                        let nonceBytes = encrypted.nonce.withUnsafeBytes { Data(Array($0)) }
+                        let nonceData = Data(bytes: nonceBytes)
+                        let nonce = nonceData.withUnsafeBytes {
+                                            (pointer: UnsafePointer<Int8>) -> [Int8] in
+                            let buffer = UnsafeBufferPointer(start: pointer,
+                                                             count: nonceData.count)
+                            return Array<Int8>(buffer)
+                        }
+                                        
+                        let encryptedPassword = try! encrypted.combined!
+                            
                         let payload = [
                             "username": username,
-                            "password": encryptedPassword,
-                            "repeat_password": encryptedRepeatedPassword,
-                            "pubKey": value.1 // 1 means public key as string
-                        ]
+                            "password": encryptedPassword.base64EncodedString().dropFirst(16),
+                            "pubKey": value.1,
+                            "clientPubKey": privateKey.publicKey.pemRepresentation,
+                            "nonce": nonce
+                        ] as [String : Any]
                         
                         let jsonPayload = try? JSONSerialization.data(withJSONObject: payload)
                         

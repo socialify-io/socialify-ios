@@ -11,12 +11,10 @@ import Foundation
 func genKeysPair() -> Result<[String: String], Error> {
     let publicKeyAttr: [NSObject: NSObject] = [
                 kSecAttrIsPermanent:true as NSObject,
-                kSecAttrApplicationTag:"com.xeoscript.app.RsaFromScrach.public".data(using: String.Encoding.utf8)! as NSObject,
                 kSecClass: kSecClassKey, // added this value
                 kSecReturnData: kCFBooleanTrue] // added this value
     let privateKeyAttr: [NSObject: NSObject] = [
                 kSecAttrIsPermanent:true as NSObject,
-                kSecAttrApplicationTag:"com.xeoscript.app.RsaFromScrach.private".data(using: String.Encoding.utf8)! as NSObject,
                 kSecClass: kSecClassKey, // added this value
                 kSecReturnData: kCFBooleanTrue] // added this value
     var keyPairAttr = [NSObject: NSObject]()
