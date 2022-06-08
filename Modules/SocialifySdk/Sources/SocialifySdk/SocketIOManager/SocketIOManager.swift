@@ -35,11 +35,11 @@ public class SocketIOManager: NSObject {
             "Timestamp": "\(Int(timestamp))",
             "AppVersion": client.LIBRARY_VERSION,
             "AuthToken": "\(authToken ?? "")",
-            "UserId": "\(account.userId)",
-            "DeviceId": "\(account.deviceId)"
+            "UserId": "\(account.userId!)",
+            "DeviceId": "\(account.deviceId!)"
         ]
         
-        let headers = "Content-Type=application/json&User-Agent=\(client.userAgent)&OS=\(client.systemVersion)&Timestamp=\(Int(timestamp))&AppVersion=\(client.LIBRARY_VERSION)&AuthToken=\(authToken ?? "")&UserId=\(account.userId)&DeviceId=\(account.deviceId)&"
+        let headers = "Content-Type=application/json&User-Agent=\(client.userAgent)&OS=\(client.systemVersion)&Timestamp=\(Int(timestamp))&AppVersion=\(client.LIBRARY_VERSION)&AuthToken=\(authToken ?? "")&UserId=\(account.userId!)&DeviceId=\(account.deviceId!)&"
         
         let signatureCore = "headers=\(headers)&body={}&timestamp=\(Int(timestamp))&authToken=\(authToken ?? "")&endpointUrl=/api/v0.1/connect&"
         

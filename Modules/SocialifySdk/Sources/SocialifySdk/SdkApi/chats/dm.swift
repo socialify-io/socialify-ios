@@ -19,7 +19,7 @@ extension UIImage {
 @available(iOSApplicationExtension 14.0, *)
 extension SocketIOManager {
     
-    public func sendDM(message: String, id: Int64, image: UIImage?) {
+    public func sendDM(message: String, id: String, image: UIImage?) {
         if(image != nil) {
             let base64image = image?.base64
             
@@ -38,7 +38,7 @@ extension SocketIOManager {
         }
     }
     
-    public func fetchDMs(chatId: Int64) {
+    public func fetchDMs(chatId: String) {
         let context = self.client.persistentContainer.viewContext
 //        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
 //        fetchRequest.predicate = NSPredicate(format: "chatId == %@", NSNumber(value: chatId))
@@ -83,9 +83,9 @@ extension SocketIOManager {
                     DMModel.username = dm["username"] as? String
                     DMModel.message = dm["message"] as? String
                     DMModel.date = date
-                    DMModel.id = dm["id"] as! Int64
-                    DMModel.senderId = Int64("\(String(describing: senderId))")!
-                    DMModel.receiverId = Int64("\(String(describing: receiverId))")!
+                    DMModel.id = dm["id"] as! String
+                    DMModel.senderId = "\(String(describing: senderId))" as! String
+                    DMModel.receiverId = "\(String(describing: receiverId))" as! String
                     
 //                    let fetchChatRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
 //                    fetchChatRequest.predicate = NSPredicate(format: "chatId == %@", NSNumber(value: chatId))
@@ -118,9 +118,9 @@ extension SocketIOManager {
                             insertInto: context
                         )
                         
-                        MediaModel.chatId = NSDecimalNumber(value: chatId)
+                        MediaModel.chatId = chatId as! String
                         MediaModel.type = mediaElement["type"] as! Int16
-                        MediaModel.messageId = NSDecimalNumber(value: DMModel.id)
+                        MediaModel.messageId = DMModel.id as! String
                         MediaModel.url = mediaElement["mediaURL"] as! String
                     }
                         
@@ -143,14 +143,14 @@ extension SocketIOManager {
             fetchRequest.predicate = NSPredicate(format: "id == %@", data["id"] as! CVarArg)
             let allDMsWithSameId = try! context.fetch(fetchRequest) as! [DM]
             
-            let receiverId: Int = Int("\(data["receiverId"] ?? "")")!
-            let senderId: Int = Int("\(data["senderId"] ?? "")")!
+            let receiverId: String = "\(data["receiverId"] ?? "")"
+            let senderId: String = "\(data["senderId"] ?? "")"
             
-            var chatId: Int64
+            var chatId: String
             let currentAccount = self.client.getCurrentAccount()
             
-            if(receiverId == currentAccount.userId) { chatId = Int64(senderId) }
-            else { chatId = Int64(receiverId) }
+            if(receiverId == currentAccount.userId) { chatId = senderId }
+            else { chatId = receiverId }
             
             print("+++++")
             print(allDMsWithSameId)
@@ -195,9 +195,9 @@ extension SocketIOManager {
                 DMModel.username = data["username"] as? String
                 DMModel.message = data["message"] as? String
                 DMModel.date = date
-                DMModel.id = data["id"] as! Int64
-                DMModel.senderId = Int64("\(String(describing: senderId))")!
-                DMModel.receiverId = Int64("\(String(describing: receiverId))")!
+                DMModel.id = data["id"] as! String
+                DMModel.senderId = "\(String(describing: senderId))" as! String
+                DMModel.receiverId = "\(String(describing: receiverId))" as! String
                 
                 let media = data["media"] as! [[String: Any]]
                 
@@ -212,9 +212,9 @@ extension SocketIOManager {
                         insertInto: context
                     )
                     
-                    MediaModel.chatId = NSDecimalNumber(value: chatId)
+                    MediaModel.chatId = chatId as! String
                     MediaModel.type = mediaElement["type"] as! Int16
-                    MediaModel.messageId = NSDecimalNumber(value: DMModel.id)
+                    MediaModel.messageId = DMModel.id as! String
                     MediaModel.url = mediaElement["mediaURL"] as! String
                 }
                 
@@ -230,7 +230,7 @@ extension SocketIOManager {
         socket.off("send_dm")
     }
     
-    private func sortChats(chatId: Int64) {
+    private func sortChats(chatId: String) {
         let context = self.client.persistentContainer.viewContext
         let currentAccount = self.client.getCurrentAccount()
         var chats = self.getChats()
@@ -263,13 +263,14 @@ extension SocketIOManager {
             }
 
             newChatModel.userId = currentAccount.id
-            newChatModel.chatId = chatId
+            newChatModel.chatId = chatId as! String
             newChatModel.id = 0 as Int64
             
-            self.socket.emit("get_information_about_account", Int(chatId))
+            self.socket.emit("get_information_about_account", chatId)
 
             self.socket.on("get_information_about_account") { dataArray, socketAck in
                 let data = dataArray[0] as! [String: Any]
+                print(data)
                 newChatModel.name = data["username"] as? String
                 //model.avatar = data["avatar"] as? String
                 //print(model.avatar)
@@ -348,7 +349,7 @@ extension SocketIOManager {
         return messageId
     }
         
-    func isChatInDB(chatId: Int64) -> Bool {
+    func isChatInDB(chatId: String) -> Bool {
         let chats = getChats()
 
         for chat in chats {

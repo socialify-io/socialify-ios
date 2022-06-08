@@ -45,10 +45,10 @@ struct DMView: View {
     init(receiver: User) {
         self.receiver = receiver
         
-        let predicateForReceivedMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: SocialifyClient.shared.getCurrentAccount().userId))
-        let predicateForSendMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: receiver.id))
-        let predicateForSendMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value: SocialifyClient.shared.getCurrentAccount().userId))
-        let predicateForReceivedMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value: receiver.id))
+        let predicateForReceivedMessageReceived = NSPredicate(format: "receiverId == %@", NSString(string: SocialifyClient.shared.getCurrentAccount().userId!))
+        let predicateForSendMessageReceived = NSPredicate(format: "receiverId == %@", NSString(string: receiver.id!))
+        let predicateForSendMessageSend = NSPredicate(format: "senderId == %@", NSString(string: SocialifyClient.shared.getCurrentAccount().userId!))
+        let predicateForReceivedMessageSend = NSPredicate(format: "senderId == %@", NSString(string: receiver.id!))
         
         let predicateAndReceived = NSCompoundPredicate(type: .and, subpredicates: [predicateForReceivedMessageSend, predicateForReceivedMessageReceived])
         let predicateAndSend = NSCompoundPredicate(type: .and, subpredicates: [predicateForSendMessageSend, predicateForSendMessageReceived])
@@ -68,7 +68,7 @@ struct DMView: View {
         self.mediaFetchRequest = FetchRequest(
             entity: Media.entity(),
             sortDescriptors: [],
-            predicate: NSPredicate(format: "chatId == %@", NSNumber(value: receiver.id))
+            predicate: NSPredicate(format: "chatId == %@", NSString(string: receiver.id!))
         )
     }
     
@@ -157,7 +157,7 @@ struct DMView: View {
                         
                 Button(action: {
                     if(message != "") {
-                        SocketIOManager.sharedInstance.sendDM(message: message, id: receiver.id, image: nil)
+                        SocketIOManager.sharedInstance.sendDM(message: message, id: receiver.id!, image: nil)
                         message = ""
                     }
                 }) {
@@ -183,11 +183,11 @@ struct DMView: View {
             ImagePicker(image: self.$image, isImagePicked: self.$isImagePicked)
         }
         .sheet(isPresented: $isImagePicked) {
-            SendImageView(chatId: receiver.id, message: $message, image: $image, isImagePicked: $isImagePicked)
+            SendImageView(chatId: receiver.id!, message: $message, image: $image, isImagePicked: $isImagePicked)
         }
         .onAppear {
             self.currentAccount = client.getCurrentAccount()
-            SocketIOManager.sharedInstance.fetchDMs(chatId: receiver.id)
+            SocketIOManager.sharedInstance.fetchDMs(chatId: receiver.id!)
             
             for message in messages {
                 message.isRead = true

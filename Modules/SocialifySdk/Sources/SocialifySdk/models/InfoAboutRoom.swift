@@ -11,7 +11,7 @@ import Foundation
 extension SocialifyClient {
     
     public struct InfoAboutRoom {
-        public init(roomId: Int,
+        public init(roomId: String,
                     isPublic: Bool,
                     roomName: String,
                     roomMembers: [[String: Any]]
@@ -23,7 +23,7 @@ extension SocialifyClient {
             
             for member in roomMembers {
                 self.roomMembers.append(
-                    RoomMember(id: member["id"] as! Int,
+                    RoomMember(id: member["id"] as! String,
                                username: member["username"] as! String,
                                role: member["role"] as! Int
                               )
@@ -31,14 +31,14 @@ extension SocialifyClient {
             }
         }
         
-        public var roomId: Int
+        public var roomId: String
         public var isPublic: Bool
         public var roomName: String
         public var roomMembers: [RoomMember]
     }
     
     public struct RoomMember: Identifiable {
-        public init(id: Int,
+        public init(id: String,
                     username: String,
                     role: Int
         ) {
@@ -47,10 +47,10 @@ extension SocialifyClient {
             self.role = parseRoomRole(roleId: role)
         }
         
-        public var id: Int {
+        public var id: String {
             self.userId
         }
-        public var userId: Int
+        public var userId: String
         public var username: String
         public var role: RoomRole
     }

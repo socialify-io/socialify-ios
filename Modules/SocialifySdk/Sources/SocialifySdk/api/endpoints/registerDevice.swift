@@ -96,8 +96,8 @@ extension SocialifyClient {
                             )
                             
                             model.username = username
-                            model.deviceId = Int64("\(response["data"]["deviceId"])")!
-                            model.userId = Int64("\(response["data"]["userId"])")!
+                            model.deviceId = "\(response["data"]["deviceId"])"
+                            model.userId = "\(response["data"]["userId"])"
                             model.isCurrentAccount = true
                             
                             let accounts = self.fetchAccounts()

@@ -12,7 +12,7 @@ import CoreData
 struct SendImageView: View {
     @StateObject var client: SocialifyClient = SocialifyClient.shared
     
-    let chatId: Int64
+    let chatId: String
     
     @Binding var message: String
     @Binding var image: UIImage?

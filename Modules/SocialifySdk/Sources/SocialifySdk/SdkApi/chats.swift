@@ -64,7 +64,7 @@ extension SocialifyClient {
         
         for chat in chats {
             if(chat.type != "Room") {
-                dms.append(self.fetchLastLiveDM(receiver: Int(chat.chatId)))
+                dms.append(self.fetchLastLiveDM(receiver: chat.chatId!))
             }
         }
         
@@ -82,7 +82,7 @@ extension SocialifyClient {
         return messages
     }
     
-    public func fetchLastLiveDM(receiver: Int) -> FetchedResults<DM> {
+    public func fetchLastLiveDM(receiver: String) -> FetchedResults<DM> {
         let request: NSFetchRequest<DM> = DM.fetchRequest()
         request.fetchLimit = 1
         request.sortDescriptors = [
@@ -91,10 +91,10 @@ extension SocialifyClient {
                 ascending: false)
         ]
         
-        let predicateForReceivedMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: self.getCurrentAccount().userId))
-        let predicateForSendMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: receiver))
-        let predicateForSendMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value: self.getCurrentAccount().userId))
-        let predicateForReceivedMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value: receiver))
+        let predicateForReceivedMessageReceived = NSPredicate(format: "receiverId == %@", NSString(string: self.getCurrentAccount().userId!))
+        let predicateForSendMessageReceived = NSPredicate(format: "receiverId == %@", NSString(string: receiver))
+        let predicateForSendMessageSend = NSPredicate(format: "senderId == %@", NSString(string: self.getCurrentAccount().userId!))
+        let predicateForReceivedMessageSend = NSPredicate(format: "senderId == %@", NSString(string: receiver))
         
         let predicateAndReceived = NSCompoundPredicate(type: .and, subpredicates: [predicateForReceivedMessageSend, predicateForReceivedMessageReceived])
         let predicateAndSend = NSCompoundPredicate(type: .and, subpredicates: [predicateForSendMessageSend, predicateForSendMessageReceived])

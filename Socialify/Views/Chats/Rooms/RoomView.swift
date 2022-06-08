@@ -57,7 +57,7 @@ struct RoomView: View {
                     
             Button(action: {
                 if(message != "") {
-                    SocketIOManager.sharedInstance.sendMessage(roomId: room.roomId as! Int, message: message)
+                    SocketIOManager.sharedInstance.sendMessage(roomId: room.roomId!, message: message)
                     message = ""
                 }
             }) {
@@ -177,7 +177,7 @@ struct RoomView: View {
         .background(Color("BackgroundColor"))
         .onAppear {
             self.currentAccount = client.getCurrentAccount()
-            SocketIOManager.sharedInstance.connectRoom(roomId: room.roomId as! Int)
+            SocketIOManager.sharedInstance.connectRoom(roomId: room.roomId!)
             
             for message in messages {
                 message.isRead = true

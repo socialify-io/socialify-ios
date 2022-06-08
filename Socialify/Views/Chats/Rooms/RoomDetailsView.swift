@@ -256,7 +256,7 @@ struct RoomDetailsView: View {
                 .padding()
             }
         }.onAppear {
-            SocketIOManager.sharedInstance.getInfoAboutRoom(roomId: room.roomId as! Int) { response in
+            SocketIOManager.sharedInstance.getInfoAboutRoom(roomId: room.roomId!) { response in
                 switch(response) {
                 case .success(let response):
                     self.details = response

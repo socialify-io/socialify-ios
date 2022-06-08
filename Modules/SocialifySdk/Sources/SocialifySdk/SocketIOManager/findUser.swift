@@ -32,7 +32,7 @@ extension SocketIOManager {
                     insertInto: context
                 )
                 
-                model.id = user["id"] as! Int64
+                model.id = user["id"] as! String
                 model.username = user["username"] as? String
                 //model.avatar = String(data: user["avatar"] as! Data, encoding: .utf8)
                 

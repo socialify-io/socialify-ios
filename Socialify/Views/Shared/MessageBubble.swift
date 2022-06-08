@@ -22,7 +22,7 @@ struct LeftDMBubble: View {
             VStack {
                 HStack {
                     ForEach(media) { mediaElement in
-                        if mediaElement.messageId as! Int64 == message.id {
+                        if mediaElement.messageId as! String == message.id as! String {
                             let mediaurl: String = mediaElement.url!
                             HStack {
                                 
@@ -81,7 +81,7 @@ struct RightDMBubble: View {
                                     
             VStack {
                 ForEach(media) { mediaElement in
-                    if mediaElement.messageId as! Int64 == message.id {
+                    if mediaElement.messageId as! String == message.id as! String {
                         let mediaurl: String = mediaElement.url!
                         HStack {
                             Spacer()

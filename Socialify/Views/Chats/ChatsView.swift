@@ -32,18 +32,18 @@ struct ChatTileView: View {
                 NSSortDescriptor(
                     keyPath: \Message.id,
                     ascending: false)
-            ],
-            predicate: NSPredicate(format: "room == %@", NSNumber(value: chat.chatId))
+            ]//,
+            //predicate: NSPredicate(format: "room == %@", NSString(string: chat.chatId!))
         )
         
-        let predicateForReceivedMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: SocialifyClient.shared.getCurrentAccount().userId))
-        let predicateForSendMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: chat.chatId))
-        let predicateForSendMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value: SocialifyClient.shared.getCurrentAccount().userId))
-        let predicateForReceivedMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value: chat.chatId))
-        
+        let predicateForReceivedMessageReceived = NSPredicate(format: "receiverId == %@", NSString(string: SocialifyClient.shared.getCurrentAccount().userId!))
+        let predicateForSendMessageReceived = NSPredicate(format: "receiverId == %@", NSString(string: chat.chatId!))
+        let predicateForSendMessageSend = NSPredicate(format: "senderId == %@", NSString(string: SocialifyClient.shared.getCurrentAccount().userId!))
+        let predicateForReceivedMessageSend = NSPredicate(format: "senderId == %@", NSString(string: chat.chatId!))
+
         let predicateAndReceived = NSCompoundPredicate(type: .and, subpredicates: [predicateForReceivedMessageSend, predicateForReceivedMessageReceived])
         let predicateAndSend = NSCompoundPredicate(type: .and, subpredicates: [predicateForSendMessageSend, predicateForSendMessageReceived])
-        
+
         let finalPredicate = NSCompoundPredicate(type: .or, subpredicates: [predicateAndSend, predicateAndReceived])
         
         self.dmsFetchRequest = FetchRequest(
@@ -59,7 +59,7 @@ struct ChatTileView: View {
     
     var body: some View {
         if(chat.type == "Room") {
-            NavigationLink(destination: RoomView(room: client.getRoomById(roomId: Int(chat.chatId))).navigationBarTitle(chat.name ?? "<chat name couldn't be loaded>").environment(\.managedObjectContext, CoreDataModel.shared.persistentContainer.viewContext)) {
+            NavigationLink(destination: RoomView(room: client.getRoomById(roomId: chat.chatId!)).navigationBarTitle(chat.name ?? "<chat name couldn't be loaded>").environment(\.managedObjectContext, CoreDataModel.shared.persistentContainer.viewContext)) {
                 HStack {
                     Image("Facebook")
                         .resizable()
@@ -291,7 +291,7 @@ struct ChatsView: View {
                         .renderingMode(.template)
                     
                     Button("\(cardImage)") {
-                        client.sendFriendRequest(id: user.id)
+                        //client.sendFriendRequest(id: user.id)
                     }.padding(.trailing, 5)
                 }.font(.headline)
                     .multilineTextAlignment(.center)

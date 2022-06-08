@@ -17,11 +17,11 @@ import SwiftUI
 @available(iOS 14.0, *)
 @available(iOSApplicationExtension 14.0, *)
 extension SocialifyClient {
-    public func getRoomById(roomId: Int) -> Room {
+    public func getRoomById(roomId: String) -> Room {
         let context = self.persistentContainer.viewContext
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Room")
-        fetchRequest.predicate = NSPredicate(format: "roomId == %@", NSNumber(value: roomId))
+        fetchRequest.predicate = NSPredicate(format: "roomId == %@", NSString(string: roomId))
         var room = try! context.fetch(fetchRequest) as! [Room]
         
         return room[0]
@@ -60,10 +60,10 @@ extension SocketIOManager {
 //                print(Int(data["roomId"]!))
 //                print("dupadupadupadupadupaduapduapduapduapda")
 //
-                let roomId: Int = data["roomId"] as! Int //Int((data["roomId"] as! NSString).floatValue)
+                let roomId: String = data["roomId"] as! String //Int((data["roomId"] as! NSString).floatValue)
                 
                 let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
-                fetchRequest.predicate = NSPredicate(format: "room == %@", NSDecimalNumber(value: roomId))
+                fetchRequest.predicate = NSPredicate(format: "room == %@", roomId as! CVarArg)
                 fetchRequest.sortDescriptors = [NSSortDescriptor(
                                                 keyPath: \Message.id,
                                                 ascending: true)]
@@ -80,14 +80,14 @@ extension SocketIOManager {
                 MessageModel.username = data["username"] as? String
                 MessageModel.message = data["message"] as? String
                 MessageModel.date = date
-                MessageModel.id = NSDecimalNumber(value: data["id"] as! Int)
-                MessageModel.room = NSDecimalNumber(value: roomId)
+                MessageModel.id = data["id"] as! String
+                MessageModel.room = roomId as! String
                 MessageModel.isSystemNotification = isSystemNotification
                 
                 if(isSystemNotification) {
                     MessageModel.sender = nil
                 } else {
-                    MessageModel.sender = NSDecimalNumber(value: data["sender"] as! Int)
+                    MessageModel.sender = data["sender"] as! String
                 }
                 
                 try! context.save()
@@ -101,7 +101,7 @@ extension SocketIOManager {
             let resp: [String: Any] = dataArray[0] as! [String: Any]
             
             if((resp["success"] != nil) == true) {
-                let data = resp["data"] as! [String: Int]
+                let data = resp["data"] as! [String: String]
                 let roomId = data["roomId"]!
 
                 self.addRoomToDB(roomId: roomId, roomName: roomName)
@@ -131,9 +131,9 @@ extension SocketIOManager {
             if((resp["success"] != nil) == true) {
                 let data = resp["data"] as! [String: String]
 
-                self.addRoomToDB(roomId: Int(roomId)!, roomName: data["roomName"] ?? "<Room name couldn't be loaded>")
+                self.addRoomToDB(roomId: roomId, roomName: data["roomName"] ?? "<Room name couldn't be loaded>")
                 
-                self.connectRoom(roomId: Int(roomId)!)
+                self.connectRoom(roomId: roomId)
                 completion(.success(true))
             } else {
                 completion(.failure(SocialifyClient.SdkError.UnexpectedError))
@@ -141,7 +141,7 @@ extension SocketIOManager {
         }
     }
     
-    public func getInfoAboutRoom(roomId: Int, completion: @escaping (Result<SocialifyClient.InfoAboutRoom, Error>) -> Void) {
+    public func getInfoAboutRoom(roomId: String, completion: @escaping (Result<SocialifyClient.InfoAboutRoom, Error>) -> Void) {
         socket.emit("get_informations_about_room", ["roomId": roomId])
         socket.on("get_informations_about_room") { dataArray, socketAck in
             let data = dataArray[0] as! [String: Any]
@@ -151,7 +151,7 @@ extension SocketIOManager {
             print("ąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąąą")
             
             let roomInfoModel = SocialifyClient.InfoAboutRoom(
-                roomId: data["roomId"] as! Int,
+                roomId: data["roomId"] as! String,
                 isPublic: (data["isPublic"] != nil),
                 roomName: data["roomName"] as! String,
                 roomMembers: data["roomMembers"] as! [[String : Any]]
@@ -161,11 +161,11 @@ extension SocketIOManager {
         }
     }
     
-    public func sendMessage(roomId: Int, message: String) {
+    public func sendMessage(roomId: String, message: String) {
         socket.emit("send_message", ["roomId": roomId, "message": message])
     }
     
-    public func connectRoom(roomId: Int) {
+    public func connectRoom(roomId: String) {
         socket.emit("connect_room", ["roomId": roomId])
 //        socket.on("send_message") { dataArray, socketAck in
 //            let context = self.client.persistentContainer.viewContext
@@ -221,7 +221,7 @@ extension SocketIOManager {
 //        }
     }
     
-    private func addRoomToDB(roomId: Int, roomName: String) {
+    private func addRoomToDB(roomId: String, roomName: String) {
         let context = self.client.persistentContainer.viewContext
         
         let roomEntityDescription = NSEntityDescription.entity(
@@ -245,18 +245,14 @@ extension SocketIOManager {
             insertInto: context
         )
         
-        roomModel.roomId = NSDecimalNumber(value: roomId)
+        roomModel.roomId = roomId as! String
         roomModel.name = roomName
       
         let datenow = Date()
 
         chatModel.type = "Room"
-        chatModel.chatId = Int64(roomId)
+        chatModel.chatId = "\(roomId)" as! String
         chatModel.name = roomName
-        
-        print("chatModelchatModelchatModelchatModelchatModelchatModelchatModelchatModelchatModelchatModelchatModelchatModel")
-        print(chatModel)
-        print("chatModelchatModelchatModelchatModelchatModelchatModelchatModelchatModelchatModelchatModelchatModelchatModel")
         
         try! context.save()
     }
