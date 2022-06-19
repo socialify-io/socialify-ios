@@ -24,6 +24,11 @@
         <attribute name="senderId" optional="YES" attributeType="String"/>
         <attribute name="username" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="E2EKey" representedClassName="E2EKey" syncable="YES" codeGenerationType="class">
+        <attribute name="deviceId" optional="YES" attributeType="String"/>
+        <attribute name="key" optional="YES" attributeType="String"/>
+        <attribute name="userId" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="Media" representedClassName="Media" syncable="YES" codeGenerationType="class">
         <attribute name="chatId" optional="YES" attributeType="String"/>
         <attribute name="messageId" optional="YES" attributeType="String"/>
@@ -40,6 +45,11 @@
         <attribute name="sender" optional="YES" attributeType="String"/>
         <attribute name="username" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="PendingDM" representedClassName="PendingDM" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="message" optional="YES" attributeType="String"/>
+        <attribute name="receiverId" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="Room" representedClassName="Room" syncable="YES" codeGenerationType="class">
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="roomId" optional="YES" attributeType="String"/>
@@ -53,9 +63,11 @@
         <element name="Account" positionX="-229.0546875" positionY="-75.15234375" width="106.08203125" height="104"/>
         <element name="Chat" positionX="-610.19140625" positionY="54.81640625" width="128" height="119"/>
         <element name="DM" positionX="-101.54296875" positionY="-16.66015625" width="166.34765625" height="134"/>
-        <element name="Media" positionX="-414" positionY="-99" width="128" height="89"/>
+        <element name="E2EKey" positionX="-649.5546875" positionY="-133.7734375" width="128" height="88"/>
+        <element name="Media" positionX="-451.7421875" positionY="-123.21875" width="128" height="89"/>
         <element name="Message" positionX="-261.921875" positionY="-252.34375" width="128" height="149"/>
         <element name="Room" positionX="-403.984375" positionY="-16.7734375" width="128" height="59"/>
         <element name="User" positionX="-447.484375" positionY="-232.59765625" width="128" height="74"/>
+        <element name="PendingDM" positionX="-450" positionY="-99" width="128" height="74"/>
     </elements>
 </model>

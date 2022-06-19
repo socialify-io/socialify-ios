@@ -46,15 +46,12 @@ extension SocialifyClient {
                     var request = URLRequest(url: url)
                     request.httpMethod = "POST"
                     
-                    
-                    
-                    
-                    
                     let keys = try SwiftyRSA.generateRSAKeyPair(sizeInBits: 2048)
                     let signKey = P256.Signing.PrivateKey()
                     let pubKey = signKey.publicKey
                     
-                    print(signKey.pemRepresentation)
+                    let e2ePrivateKey = generatePrivateKey()
+                    let e2ePublicKeyPem = e2ePrivateKey.publicKey.pemRepresentation
                     
                     let payload: [String: Any] = [
                         "username": username,
@@ -67,7 +64,8 @@ extension SocialifyClient {
                             "timestamp": "\(Int(NSDate().timeIntervalSince1970))",
                             "appVersion": self.LIBRARY_VERSION,
                             "os": self.systemVersion,
-                            "signPubKey": pubKey.pemRepresentation
+                            "signPubKey": pubKey.pemRepresentation,
+                            "publicE2EKey": e2ePublicKeyPem
                         ]
                     ]
                     
@@ -123,6 +121,7 @@ extension SocialifyClient {
                             } catch { completion(.failure(SdkError.SavingContextError)) }
                             
                             self.keychain["\(accountId)-privateKey"] = signKey.pemRepresentation
+                            self.keychain["\(accountId)-e2ePublicKey"] = e2ePrivateKey.pemRepresentation
                            
                             completion(.success(true))
                             

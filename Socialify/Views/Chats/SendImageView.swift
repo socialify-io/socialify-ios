@@ -12,7 +12,7 @@ import CoreData
 struct SendImageView: View {
     @StateObject var client: SocialifyClient = SocialifyClient.shared
     
-    let chatId: String
+    let receiver: User
     
     @Binding var message: String
     @Binding var image: UIImage?
@@ -82,7 +82,7 @@ struct SendImageView: View {
                 Spacer()
                 
                 Button(action: {
-                    SocketIOManager.sharedInstance.sendDM(message: message, id: chatId, image: image)
+                    SocketIOManager.sharedInstance.sendDM(message: message, receiver: receiver, image: image)
                     message = ""
                     isImagePicked = false
                 }) {

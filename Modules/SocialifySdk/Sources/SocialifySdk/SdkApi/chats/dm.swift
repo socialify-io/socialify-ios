@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 import SwiftUI
+import CryptoKit
 
 extension UIImage {
     var base64: String? {
@@ -15,28 +16,362 @@ extension UIImage {
     }
 }
 
+public extension Data {
+    init?(hexString: String) {
+      let len = hexString.count / 2
+      var data = Data(capacity: len)
+      var i = hexString.startIndex
+      for _ in 0..<len {
+        let j = hexString.index(i, offsetBy: 2)
+        let bytes = hexString[i..<j]
+        if var num = UInt8(bytes, radix: 16) {
+          data.append(&num, count: 1)
+        } else {
+          return nil
+        }
+        i = j
+      }
+      self = data
+    }
+    /// Hexadecimal string representation of `Data` object.
+    var hexadecimal: String {
+        return map { String(format: "%02x", $0) }
+            .joined()
+    }
+}
+
 @available(iOS 14.0, *)
 @available(iOSApplicationExtension 14.0, *)
 extension SocketIOManager {
     
-    public func sendDM(message: String, id: String, image: UIImage?) {
-        if(image != nil) {
-            let base64image = image?.base64
+    public func sendDM(message: String, receiver: User, image: UIImage?) {
+        var response: [[String: Any]] = []
+        let newPrivateKey = generatePrivateKey()
+        let context = self.client.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "PendingDM")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \PendingDM.id, ascending: false)]
+        fetchRequest.fetchLimit = 1
+        let fetchResults = try! context.fetch(fetchRequest) as! [PendingDM]
+        
+        var lastPendingDMId = -1
+        
+        if (fetchResults != []) {
+            lastPendingDMId = Int(fetchResults[0].id!)
+        }
+        
+        let entityDescription = NSEntityDescription.entity(
+            forEntityName: "PendingDM",
+            in: context
+        )!
+                
+        let model = PendingDM(
+            entity: entityDescription,
+            insertInto: context
+        )
+                    
+        model.message = message
+        model.receiverId = receiver.id
+        model.id = NSDecimalNumber(string: "\(lastPendingDMId+1)")
+        
+        try! context.save()
+        
+        socket.emit("get_public_e2e_key", ["user": receiver.id])
+        socket.on("get_public_e2e_key") { [self] dataArray, socketAck in
+            var receiverKeys: [[String: String]] = dataArray[0] as! [[String: String]]
+
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "E2EKey")
+            fetchRequest.predicate = NSPredicate(format: "userId == %@", NSString(string: receiver.id!))
+            let fetchResults = try! context.fetch(fetchRequest) as! [E2EKey]
             
-            let payload = ["receiverId": id,
-                           "message": message,
-                           "media": [[
-                                "type": 1,
-                                "media": base64image
-                           ]]] as [String : Any]
+            var readyKeysToEncrypt: [[String: String]] = []
             
-            socket.emit("send_dm", payload)
-        } else {
-            socket.emit("send_dm", ["receiverId": id,
-                                    "message": message,
-                                    "media": []])
+            for key in fetchResults {
+                let toAppend: [String: String] = [
+                    "publicKey": key.key!,
+                    "deviceId": key.deviceId!
+                ]
+                
+                readyKeysToEncrypt.append(toAppend)
+            }
+            
+            let publicKeyPem = newPrivateKey.publicKey.pemRepresentation
+
+            for key in receiverKeys {
+                if (!readyKeysToEncrypt.contains(where: { $0.values.contains(key["deviceId"]!) })) {
+                    let entityDescription = NSEntityDescription.entity(
+                        forEntityName: "E2EKey",
+                        in: context
+                    )!
+
+                    let model = E2EKey(
+                        entity: entityDescription,
+                        insertInto: context
+                    )
+
+                    model.key = key["publicKey"]!
+                    model.userId = receiver.id!
+                    model.deviceId = key["deviceId"]!
+                    
+                    let toAppend: [String: String] = [
+                        "deviceId": key["deviceId"] as! String,
+                        "publicKey": key["publicKey"] as! String
+                    ]
+                    
+                    readyKeysToEncrypt.append(toAppend)
+                    
+                    try! context.save()
+                }
+                self.socket.off("get_public_e2e_key")
+            }
+            
+            for key in readyKeysToEncrypt {
+                let receiverKey = try! P256.KeyAgreement.PublicKey(pemRepresentation: key["publicKey"]!)
+                let symmetricKey = try! deriveSymmetricKey(privateKey: newPrivateKey, publicKey: receiverKey)
+
+                let encrypted = try! encrypt(text: message, symmetricKey: symmetricKey)
+                //let encryptedContent = encrypted.combined!.base64EncodedString()
+
+                let nonce = encrypted.nonce.withUnsafeBytes { Data(Array($0)).hexadecimal }
+                let tag = encrypted.tag.hexadecimal
+                let ciphertext = encrypted.ciphertext.base64EncodedString()
+
+                let dataToAppend: [String: Any] = [
+                    "receiverDeviceId": key["deviceId"],
+                    "nonce": nonce,
+                    "tag": tag,
+                    "ciphertext": ciphertext
+                ]
+
+                response.append(dataToAppend)
+            }
+
+            if(image != nil) {
+                let base64image = image?.base64
+
+                let payload = ["receiverId": receiver.id,
+                               "message": response,
+                               "newPublicKey": newPrivateKey.publicKey.pemRepresentation,
+                               "confirmationId": "\(lastPendingDMId+1)",
+                               "media": [[
+                                    "type": 1,
+                                    "media": base64image
+                               ]]] as [String : Any]
+
+                socket.emit("send_dm", payload)
+            } else {
+                socket.emit("send_dm", ["receiverId": receiver.id,
+                                        "message": response,
+                                        "newPublicKey": newPrivateKey.publicKey.pemRepresentation,
+                                        "confirmationId": "\(lastPendingDMId+1)",
+                                        "media": []])
+            }
+        }
+        
+        
+       
+//        let predicateForReceiver = NSPredicate(format: "receiverId == %@", NSString(string: receiver.id!))
+//        let predicateForSender = NSPredicate(format: "senderId == %@", NSString(string: self.client.getCurrentAccount().userId!))
+//
+//
+//        let finalPredicate = NSCompoundPredicate(type: .and, subpredicates: [predicateForSender, predicateForReceiver])
+//
+//        let fetchRequestIsUserKnown = NSFetchRequest<NSFetchRequestResult>(entityName: "DM")
+//        fetchRequestIsUserKnown.predicate = finalPredicate
+//        let isUserKnown = try! context.fetch(fetchRequestIsUserKnown) as! [DM]
+//
+//        let
+//
+//        if (isUserKnown == []) {
+//
+//        }
+//---------------------------------------------------------------------------
+//        if (isUserKnown != []) {
+//            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "E2EKey")
+//            fetchRequest.predicate = NSPredicate(format: "userId == %@", NSString(string: receiver.id!))
+//            let fetchResults = try! context.fetch(fetchRequest) as! [E2EKey]
+//
+//            let privateKeyPem = self.client.keychain["\(receiver.id)-e2ePrivateKey"]
+//            let privateKey = try! P256.KeyAgreement.PrivateKey(pemRepresentation: privateKeyPem!)
+//            let publicKeyPem = privateKey.publicKey.pemRepresentation
+//
+//            let newPublicKeyPem = privateKey.publicKey.pemRepresentation
+//
+//            for key in fetchResults {
+//                let receiverKey = try! P256.KeyAgreement.PublicKey(pemRepresentation: key.key!)
+//                let symmetricKey = try! deriveSymmetricKey(privateKey: privateKey, publicKey: receiverKey)
+//
+//                let encrypted = try! encrypt(text: message, symmetricKey: symmetricKey)
+//                let encryptedContent = encrypted.combined!
+//
+//                let nonce = encrypted.nonce.withUnsafeBytes { Data(Array($0)).hexadecimal }
+//                let tag = encrypted.tag.hexadecimal
+//                let ciphertext = encrypted.ciphertext.base64EncodedString()
+//
+//                let dataToAppend: [String: Any] = [
+//                    "receiverDeviceId": key.deviceId,
+//                    "senderPublicKey": newPublicKeyPem,
+//                    "nonce": nonce,
+//                    "tag": tag,
+//                    "ciphertext": ciphertext
+//                ]
+//
+//                response.append(dataToAppend)
+//            }
+//
+//
+//            if(image != nil) {
+//                let base64image = image?.base64
+//
+//                let payload = ["receiverId": receiver.id,
+//                               "message": response,
+//                               "newPublicKey": newPrivateKey.publicKey.pemRepresentation,
+//                               "confirmationId": "\(lastPendingDMId+1)",
+//                               "media": [[
+//                                    "type": 1,
+//                                    "media": base64image
+//                               ]]] as [String : Any]
+//
+//                socket.emit("send_dm", payload)
+//            } else {
+//                socket.emit("send_dm", ["receiverId": receiver.id,
+//                                        "message": response,
+//                                        "newPublicKey": newPrivateKey.publicKey.pemRepresentation,
+//                                        "confirmationId": "\(lastPendingDMId+1)",
+//                                        "media": []])
+//            }
+//        } else {
+//            socket.emit("get_public_e2e_key", ["user": receiver.id])
+//            socket.on("get_public_e2e_key") { [self] dataArray, socketAck in
+//                let receiverKeys: [[String: String]] = dataArray[0] as! [[String: String]]
+//
+//                let publicKeyPem = newPrivateKey.publicKey.pemRepresentation
+//
+//                for key in receiverKeys {
+//                    let entityDescription = NSEntityDescription.entity(
+//                        forEntityName: "E2EKey",
+//                        in: context
+//                    )!
+//
+//                    let model = E2EKey(
+//                        entity: entityDescription,
+//                        insertInto: context
+//                    )
+//
+//                    model.key = key["publicKey"] as! String
+//                    model.userId = receiver.id as! String
+//                    model.deviceId = key["deviceId"] as! String
+//
+//                    try! context.save()
+//
+//                    let receiverKey = try! P256.KeyAgreement.PublicKey(pemRepresentation: key["publicKey"]!)
+//                    let symmetricKey = try! deriveSymmetricKey(privateKey: newPrivateKey, publicKey: receiverKey)
+//
+//                    let encrypted = try! encrypt(text: message, symmetricKey: symmetricKey)
+//                    //let encryptedContent = encrypted.combined!.base64EncodedString()
+//
+//                    let nonce = encrypted.nonce.withUnsafeBytes { Data(Array($0)).hexadecimal }
+//                    let tag = encrypted.tag.hexadecimal
+//                    let ciphertext = encrypted.ciphertext.base64EncodedString()
+//
+//                    let dataToAppend: [String: Any] = [
+//                        "receiverDeviceId": key["deviceId"],
+//                        "nonce": nonce,
+//                        "tag": tag,
+//                        "ciphertext": ciphertext
+//                    ]
+//
+//                    response.append(dataToAppend)
+//                }
+//
+//                if(image != nil) {
+//                    let base64image = image?.base64
+//
+//                    let payload = ["receiverId": receiver.id,
+//                                   "message": response,
+//                                   "newPublicKey": newPrivateKey.publicKey.pemRepresentation,
+//                                   "confirmationId": "\(lastPendingDMId+1)",
+//                                   "media": [[
+//                                        "type": 1,
+//                                        "media": base64image
+//                                   ]]] as [String : Any]
+//
+//                    socket.emit("send_dm", payload)
+//                } else {
+//                    socket.emit("send_dm", ["receiverId": receiver.id,
+//                                            "message": response,
+//                                            "newPublicKey": newPrivateKey.publicKey.pemRepresentation,
+//                                            "confirmationId": "\(lastPendingDMId+1)",
+//                                            "media": []])
+//                }
+//            }
+//        }
+        
+        self.socket.on("dm_confirmation") { [self] dataArray, socketAck in
+            let data = dataArray[0] as! [String: String]
+            
+            if (Int(data["confirmationId"]!) == lastPendingDMId+1) {
+                self.client.keychain["\(receiver.id!)-e2ePrivateKey"] = newPrivateKey.pemRepresentation
+                
+                let confirmationId = NSDecimalNumber(string: "\(lastPendingDMId+1)")
+                
+                let fetchRequestOnConfirmation = NSFetchRequest<NSFetchRequestResult>(entityName: "PendingDM")
+                fetchRequestOnConfirmation.predicate = NSPredicate(format: "id == %@", confirmationId)
+                let fetchResultsOnConfirmation = try! context.fetch(fetchRequestOnConfirmation) as! [PendingDM]
+               
+                print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+                print(fetchResultsOnConfirmation)
+                print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+                
+                if (fetchResultsOnConfirmation != []) {
+                
+                    var fetchedMessage = fetchResultsOnConfirmation[0]
+                    
+    //                for dm in fetchResultsOnConfirmation {
+    //                    if (dm.id == NSDecimalNumber(string: confirmationId)) {
+    //                        fetchedMessage = dm
+    //                    }
+    //                }
+                    
+                    let entityDescription = NSEntityDescription.entity(
+                        forEntityName: "DM",
+                        in: context
+                    )!
+                    
+                    let DMModel = DM(
+                        entity: entityDescription,
+                        insertInto: context
+                    )
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                    let date = dateFormatter.date(from: "\(data["date"]!)")
+                    
+                    let currentAccount = self.client.getCurrentAccount()
+
+                    
+                    DMModel.username = currentAccount.username
+                    DMModel.message = message
+                    DMModel.date = date
+                    DMModel.id = data["id"]!
+                    DMModel.senderId = currentAccount.userId
+                    DMModel.receiverId = receiver.id
+                    
+                    print("=========================")
+                    print(DMModel)
+                    print("=========================")
+                    
+                    context.delete(fetchedMessage)
+                    try! context.save()
+                    
+                    self.sortChats(chatId: receiver.id!)
+                    self.socket.off("dm_confirmation")
+                }
+            }
         }
     }
+        
+       
     
     public func fetchDMs(chatId: String) {
         let context = self.client.persistentContainer.viewContext
@@ -129,7 +464,7 @@ extension SocketIOManager {
                 }
                 self.socket.emit("delete_dms", ["sender": chatId, "from": dm["id"], "to": dm["id"]])
             }
-            //self.sortChats(chatId: chatId)
+            self.sortChats(chatId: chatId)
         }
     }
     
@@ -157,46 +492,107 @@ extension SocketIOManager {
             print("+++++")
         
             if(allDMsWithSameId == []) {
+                let fetchRequestForIsFirstMessage = NSFetchRequest<NSFetchRequestResult>(entityName: "DM")
+                
+//                let predicateForReceiver = NSPredicate(format: "receiverId == %@", NSString(string: senderId))
+//                let predicateForSender = NSPredicate(format: "senderId == %@", NSString(string: receiverId))
+//                let finalPredicate = NSCompoundPredicate(type: .and, subpredicates: [predicateForSender, predicateForReceiver])
+
+                
+                let predicateForReceivedMessageReceived = NSPredicate(format: "receiverId == %@", NSString(string: receiverId))
+                let predicateForSendMessageReceived = NSPredicate(format: "receiverId == %@", NSString(string: senderId))
+                let predicateForSendMessageSend = NSPredicate(format: "senderId == %@", NSString(string: receiverId))
+                let predicateForReceivedMessageSend = NSPredicate(format: "senderId == %@", NSString(string: senderId))
+                
+                let predicateAndReceived = NSCompoundPredicate(type: .and, subpredicates: [predicateForReceivedMessageSend, predicateForReceivedMessageReceived])
+                let predicateAndSend = NSCompoundPredicate(type: .and, subpredicates: [predicateForSendMessageSend, predicateForSendMessageReceived])
+                
+                let finalPredicate = NSCompoundPredicate(type: .or, subpredicates: [predicateAndSend, predicateAndReceived])
+                
+                fetchRequestForIsFirstMessage.predicate = finalPredicate
+                
+                let isFirstMessage = try! context.fetch(fetchRequestForIsFirstMessage) as! [DM]
+               
+                var privateKeyPem: String = ""
+                
+                if (isFirstMessage == []) {
+                    print("FIRST MESSAGE")
+                    privateKeyPem = self.client.keychain["\(currentAccount.id)-e2ePublicKey"]!
+                    let newE2EPrivateKey = generatePrivateKey()
+                    let e2ePublicKeyPem = newE2EPrivateKey.publicKey.pemRepresentation
+                    self.socket.emit("update_public_e2e_key", ["key": e2ePublicKeyPem])
+                    self.socket.on("update_public_e2e_key") {_,_ in
+                        self.client.keychain["\(currentAccount.id)-e2ePublicKey"] = newE2EPrivateKey.pemRepresentation
+                        self.socket.off("update_public_e2e_key")
+                    }
+                    self.client.keychain["\(chatId)-e2ePrivateKey"] = privateKeyPem
+                } else {
+                    print("NOT FIRST MESSAGE")
+                    privateKeyPem = self.client.keychain["\(senderId)-e2ePrivateKey"]!
+                }
+                
+                let privateKey = try! P256.KeyAgreement.PrivateKey(pemRepresentation: privateKeyPem)
+                
+                let senderDeviceId: String = data["deviceId"] as! String
+               
+                let context = self.client.persistentContainer.viewContext
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "E2EKey")
+                fetchRequest.predicate = NSPredicate(format: "deviceId == %@", NSString(string: senderDeviceId))
+                let fetchResults = try! context.fetch(fetchRequest) as! [E2EKey]
+                
+                var publicKeyPem = data["senderNewPublicKey"] as! String
+                
+//                if(fetchResults == []) {
+//                    publicKeyPem = data["senderNewPublicKey"] as! String
+//                } else {
+//                    publicKeyPem = fetchResults[0].key as! String
+//                }
+                
+                let publicKey = try! P256.KeyAgreement.PublicKey(pemRepresentation: publicKeyPem)
+                let symmetricKey = try! deriveSymmetricKey(privateKey: privateKey, publicKey: publicKey)
+            
+                var encryptedMessage: [String: String] = [:]
+                
+                for message in data["message"] as! [[String: String]] {
+                    if (message["deviceId"] == currentAccount.deviceId) {
+                        encryptedMessage = message
+                    }
+                }
+                
+                let ciphertextRaw: String = encryptedMessage["ciphertext"]!
+                let nonceRaw: String = encryptedMessage["nonce"]!
+                let tagRaw: String = encryptedMessage["tag"]!
+                
+                let ciphertext = Data(base64Encoded: ciphertextRaw)
+                let nonce = Data(hexString: "\(nonceRaw)")
+                let tag = Data(hexString: "\(tagRaw)")
+                
+                let sealedBox = try! AES.GCM.SealedBox(nonce: AES.GCM.Nonce(data: nonce!),
+                                                       ciphertext: ciphertext!,
+                                                       tag: tag!)
+                
+                let decryptedData = try! AES.GCM.open(sealedBox, using: symmetricKey)
+                let decryptedMessage = String(decoding: decryptedData, as: UTF8.self)
+                
                 let entityDescription = NSEntityDescription.entity(
                     forEntityName: "DM",
                     in: context
                 )!
-
+                
                 let DMModel = DM(
                     entity: entityDescription,
                     insertInto: context
                 )
-                
-//                let predicateForReceivedMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: receiverId))
-//                let predicateForSendMessageReceived = NSPredicate(format: "receiverId == %@", NSNumber(value: senderId))
-//                let predicateForSendMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value: senderId))
-//                let predicateForReceivedMessageSend = NSPredicate(format: "senderId == %@", NSNumber(value:  receiverId))
-//
-//                let predicateAndReceived = NSCompoundPredicate(type: .and, subpredicates: [predicateForReceivedMessageSend, predicateForReceivedMessageReceived])
-//                let predicateAndSend = NSCompoundPredicate(type: .and, subpredicates: [predicateForSendMessageSend, predicateForSendMessageReceived])
-//
-//                let finalPredicate = NSCompoundPredicate(type: .or, subpredicates: [predicateAndSend, predicateAndReceived])
-//
-//                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DM")
-//                fetchRequest.predicate = finalPredicate
-//                fetchRequest.sortDescriptors = [NSSortDescriptor(
-//                                                keyPath: \DM.id,
-//                                                ascending: true)]
-//
-//                var messages = try! context.fetch(fetchRequest) as! [DM]
-    //            if(messages.count >= 16) {
-    //                try! context.delete(messages.last!)
-    //            }
                 
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
                 let date = dateFormatter.date(from: "\(data["date"]!)")
 
                 DMModel.username = data["username"] as? String
-                DMModel.message = data["message"] as? String
+                DMModel.message = decryptedMessage as? String
                 DMModel.date = date
-                DMModel.id = data["id"] as! String
-                DMModel.senderId = "\(String(describing: senderId))" as! String
+                DMModel.id = data["id"] as? String
+                DMModel.senderId = "\(String(describing: senderId))"
                 DMModel.receiverId = "\(String(describing: receiverId))" as! String
                 
                 let media = data["media"] as! [[String: Any]]
@@ -216,6 +612,34 @@ extension SocketIOManager {
                     MediaModel.type = mediaElement["type"] as! Int16
                     MediaModel.messageId = DMModel.id as! String
                     MediaModel.url = mediaElement["mediaURL"] as! String
+                }
+               
+               
+                // TUTAJ ZRÓB TO SAMO CO POWYŻEJ LINIA 326 <-------
+                let fetchRequestForE2EKey = NSFetchRequest<NSFetchRequestResult>(entityName: "E2EKey")
+                fetchRequestForE2EKey.predicate = NSPredicate(format: "deviceId == %@", NSString(string: senderDeviceId))
+                let fetchResultsForE2EKey = try! context.fetch(fetchRequest) as! [E2EKey]
+                
+                if(fetchResults == []) {
+                    let entityDescription = NSEntityDescription.entity(
+                        forEntityName: "E2EKey",
+                        in: context
+                    )!
+                            
+                    let model = E2EKey(
+                        entity: entityDescription,
+                        insertInto: context
+                    )
+                    
+                    model.key = data["senderNewPublicKey"] as! String
+                    model.userId = chatId as! String
+                    model.deviceId = senderDeviceId as! String
+                    
+                    try! context.save()
+                } else {
+                    fetchResultsForE2EKey[0].key = data["senderNewPublicKey"] as! String
+                    
+                    try! context.save()
                 }
                 
                 self.sortChats(chatId: chatId)

@@ -157,7 +157,11 @@ struct DMView: View {
                         
                 Button(action: {
                     if(message != "") {
-                        SocketIOManager.sharedInstance.sendDM(message: message, id: receiver.id!, image: nil)
+                        if(messages.count == 0) {
+                            SocketIOManager.sharedInstance.sendDM(message: message, receiver: receiver, image: nil)
+                        } else {
+                            SocketIOManager.sharedInstance.sendDM(message: message, receiver: receiver, image: nil)
+                        }
                         message = ""
                     }
                 }) {
@@ -183,7 +187,7 @@ struct DMView: View {
             ImagePicker(image: self.$image, isImagePicked: self.$isImagePicked)
         }
         .sheet(isPresented: $isImagePicked) {
-            SendImageView(chatId: receiver.id!, message: $message, image: $image, isImagePicked: $isImagePicked)
+            SendImageView(receiver: receiver, message: $message, image: $image, isImagePicked: $isImagePicked)
         }
         .onAppear {
             self.currentAccount = client.getCurrentAccount()
