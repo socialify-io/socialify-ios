@@ -70,6 +70,10 @@ struct DMView: View {
             sortDescriptors: [],
             predicate: NSPredicate(format: "chatId == %@", NSString(string: receiver.id!))
         )
+        
+        print("ĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄA")
+        print(messages)
+        print("ĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄA")
     }
     
     var body: some View {
