@@ -19,6 +19,7 @@ struct AccountCardView: View {
     
     var body: some View {
         VStack {
+            ScrollView {
             ZStack {
                 Image(systemName: "person.circle.fill")
                     .renderingMode(.template)
@@ -158,6 +159,7 @@ struct AccountCardView: View {
                     }
                 }.foregroundColor(Color.red)
                     .padding(.bottom, 15)
+            }
                 
             }.background(Color("CustomAppearanceItemColor"))
                 .cornerRadius(12)
@@ -173,14 +175,17 @@ struct AccountCardView: View {
                 .cornerRadius(12)
                 .foregroundColor(Color.red)
                 .padding()
-                .padding(.bottom)
+                .padding(.bottom, -55)
             
         }.background(Color("BackgroundColor"))
-        .frame(width: .infinity, height: .infinity)
+        //.frame(width: .infinity, height: .infinity)
         .alert(isPresented: $isLogOutAlertPresented) {
             Alert(title: Text("Log out"), message: Text("Do you want to log out from \(account.username ?? "<username can't be loaded>") account? All account data will be deleted from this device."), primaryButton: .cancel(), secondaryButton: .destructive(Text("Log out")) { client.deleteAccount(account: account)
                 self.presentationMode.wrappedValue.dismiss()
             } )
+        }
+        .onAppear() {
+            Global.tabBar!.isHidden = true
         }
     }
 }

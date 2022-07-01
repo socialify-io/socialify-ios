@@ -89,7 +89,11 @@ struct AccountManagerView: View {
         }
         .onAppear {
             self.accounts = client.fetchAccounts()
+            Global.tabBar!.isHidden = true
         }
+//        .onDisappear() {
+//            Global.tabBar!.isHidden = false
+//        }
     }
 }
 

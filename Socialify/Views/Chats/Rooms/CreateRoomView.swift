@@ -98,6 +98,7 @@ struct CreateRoomView: View {
             }
         }
         .background(Color("BackgroundColor"))
+        .padding(.bottom, -55)
         .alert(isPresented: $showAlert) {
             switch activeAlert {
             case .success:

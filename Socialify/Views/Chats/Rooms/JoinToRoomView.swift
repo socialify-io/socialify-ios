@@ -110,6 +110,7 @@ struct JoinToRoomView: View {
             }
         }
         .background(Color("BackgroundColor"))
+        .padding(.bottom, -55)
     }
 }
 

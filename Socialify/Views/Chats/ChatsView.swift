@@ -382,6 +382,8 @@ struct ChatsView: View {
                     self.searchResults = result
                 })
             }
+           
+            Global.tabBar!.isHidden = false
             
             //SocketIOManager.sharedInstance.fetchLastUnreadDMs()
         }
