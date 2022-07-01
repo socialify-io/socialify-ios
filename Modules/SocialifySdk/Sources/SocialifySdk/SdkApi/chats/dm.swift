@@ -112,6 +112,7 @@ extension SocketIOManager {
                     model.key = key["publicKey"]!
                     model.userId = receiver.id!
                     model.deviceId = key["deviceId"]!
+                    model.dmId = "0"
                     
                     let toAppend: [String: String] = [
                         "deviceId": key["deviceId"] as! String,
@@ -270,17 +271,20 @@ extension SocketIOManager {
                     
                     if (isFirstMessage == []) {
                         privateKeyPem = self.client.keychain["\(currentAccount.id)-e2ePublicKey"]!
-                        let newE2EPrivateKey = generatePrivateKey()
-                        let e2ePublicKeyPem = newE2EPrivateKey.publicKey.pemRepresentation
-                        self.socket.emit("update_public_e2e_key", ["key": e2ePublicKeyPem])
-                        self.socket.on("update_public_e2e_key") {_,_ in
-                            self.client.keychain["\(currentAccount.id)-e2ePublicKey"] = newE2EPrivateKey.pemRepresentation
-                            self.socket.off("update_public_e2e_key")
-                        }
+//                        let newE2EPrivateKey = generatePrivateKey()
+//                        let e2ePublicKeyPem = newE2EPrivateKey.publicKey.pemRepresentation
+//                        self.socket.emit("update_public_e2e_key", ["key": e2ePublicKeyPem])
+//                        self.socket.on("update_public_e2e_key") {_,_ in
+//                            self.client.keychain["\(currentAccount.id)-e2ePublicKey"] = newE2EPrivateKey.pemRepresentation
+//                            self.socket.off("update_public_e2e_key")
+//                        }
                         self.client.keychain["\(chatId)-e2ePrivateKey"] = privateKeyPem
                     } else {
                         privateKeyPem = self.client.keychain["\(senderId)-e2ePrivateKey"]!
                     }
+                    
+                    // tutaj się wyjebuje bo te klucze się tam nie zapisują do keychaina czy coś to trzeba zapisywać w tych fetchLastDMs jak w linii 280
+                    // ogólnie trzeba dodać też id wiadomości do klucza w bazie publicznego i żeby patrzało na id przy każdej wiadomości i aktualizowało klucz tylko wtedy, jak id jest większe niż to w kluczu, żeby klucz był zawsze do najnowszej wiadomości
                     
                     let privateKey = try! P256.KeyAgreement.PrivateKey(pemRepresentation: privateKeyPem)
                     
@@ -342,10 +346,6 @@ extension SocketIOManager {
                         DMModel.receiverId = receiverId
                         DMModel.isRead = true
                         
-                        print("DMMODEL DMMODEL DEMMOLD E JDFPAJPIODFJAIOPWDIO WADJHJAWJ")
-                        print(DMModel)
-                        print("DMMODEL DMMODEL DEMMOLD E JDFPAJPIODFJAIOPWDIO WADJHJAWJ")
-                        
                         try! context.save()
                         
                         let media = dm["media"] as! [[String: Any]]
@@ -386,14 +386,17 @@ extension SocketIOManager {
                         model.key = dm["senderNewPublicKey"] as! String
                         model.userId = chatId as! String
                         model.deviceId = senderDeviceId as! String
+                        model.dmId = dm["id"] as! String
                         
                         try! context.save()
                     } else {
-                        fetchResultsForE2EKey[0].key = dm["senderNewPublicKey"] as! String
+                        let idInSavedKey: String = fetchResultsForE2EKey[0].dmId!
+                        if ("\(dm["id"])" > idInSavedKey) {
+                            fetchResultsForE2EKey[0].key = dm["senderNewPublicKey"] as! String
+                        }
                         
                         try! context.save()
                     }
-                    
 
                     try! context.save()
                 }
@@ -444,13 +447,13 @@ extension SocketIOManager {
                 
                 if (isFirstMessage == []) {
                     privateKeyPem = self.client.keychain["\(currentAccount.id)-e2ePublicKey"]!
-                    let newE2EPrivateKey = generatePrivateKey()
-                    let e2ePublicKeyPem = newE2EPrivateKey.publicKey.pemRepresentation
-                    self.socket.emit("update_public_e2e_key", ["key": e2ePublicKeyPem])
-                    self.socket.on("update_public_e2e_key") {_,_ in
-                        self.client.keychain["\(currentAccount.id)-e2ePublicKey"] = newE2EPrivateKey.pemRepresentation
-                        self.socket.off("update_public_e2e_key")
-                    }
+//                    let newE2EPrivateKey = generatePrivateKey()
+//                    let e2ePublicKeyPem = newE2EPrivateKey.publicKey.pemRepresentation
+//                    self.socket.emit("update_public_e2e_key", ["key": e2ePublicKeyPem])
+//                    self.socket.on("update_public_e2e_key") {_,_ in
+//                        self.client.keychain["\(currentAccount.id)-e2ePublicKey"] = newE2EPrivateKey.pemRepresentation
+//                        self.socket.off("update_public_e2e_key")
+//                    }
                     self.client.keychain["\(chatId)-e2ePrivateKey"] = privateKeyPem
                 } else {
                     privateKeyPem = self.client.keychain["\(senderId)-e2ePrivateKey"]!
@@ -552,10 +555,14 @@ extension SocketIOManager {
                     model.key = data["senderNewPublicKey"] as! String
                     model.userId = chatId as! String
                     model.deviceId = senderDeviceId as! String
+                    model.dmId = data["id"] as! String
                     
                     try! context.save()
                 } else {
-                    fetchResultsForE2EKey[0].key = data["senderNewPublicKey"] as! String
+                    let idInSavedKey: String = fetchResultsForE2EKey[0].dmId!
+                    if ("\(data["id"])" > idInSavedKey) {
+                        fetchResultsForE2EKey[0].key = data["senderNewPublicKey"] as! String
+                    }
                     
                     try! context.save()
                 }
@@ -572,7 +579,7 @@ extension SocketIOManager {
         socket.off("send_dm")
     }
     
-    private func sortChats(chatId: String) {
+    public func sortChats(chatId: String) {
         let context = self.client.persistentContainer.viewContext
         let currentAccount = self.client.getCurrentAccount()
         var chats = self.getChats()

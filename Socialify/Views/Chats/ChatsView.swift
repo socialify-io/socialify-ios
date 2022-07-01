@@ -383,8 +383,6 @@ struct ChatsView: View {
                 })
             }
             
-            //SocketIOManager.sharedInstance.getFetchLastUnreadDMsResponse()
-            
             //SocketIOManager.sharedInstance.fetchLastUnreadDMs()
         }
         .background(Color("BackgroundColor"))
