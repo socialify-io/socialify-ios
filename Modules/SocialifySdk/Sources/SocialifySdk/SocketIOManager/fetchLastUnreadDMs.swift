@@ -172,8 +172,9 @@ extension SocketIOManager {
                         try! context.save()
                     } else {
                         let idInSavedKey: String = fetchResultsForE2EKey[0].dmId!
-                        if ("\(dm["id"])" > idInSavedKey) {
+                        if ("\(dm["id"] ?? "")" > idInSavedKey) {
                             fetchResultsForE2EKey[0].key = dm["senderNewPublicKey"] as! String
+                            print("ZAPISUJE KLUCZ W LAST UNREAD DMS")
                         }
                         
                         try! context.save()
