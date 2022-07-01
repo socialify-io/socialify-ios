@@ -7,6 +7,18 @@
 
 import SwiftUI
 
+struct Global {
+    static var tabBar : UITabBar?
+}
+
+extension UITabBar {
+    override open func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        Global.tabBar = self
+        print("Tab Bar moved to superview")
+    }
+}
+
 struct NavigationBarView: View {
     @State private var showLoginModal = false
     
@@ -41,38 +53,39 @@ struct NavigationBarView: View {
         
         
         
-        
-        TabView() {
-            NavigationView {
-                ChatsView()
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        NavigationLink(destination: AccountManagerView()) {
-                            Image(systemName: "person.circle")
-                        }
-                    }
-                    
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink(destination: AddRoomView()) {
-                            Image(systemName: "plus")
-                        }
-                    }
-                }
-            }
-            .tabItem {
-                Label("Chats", systemImage: "message.fill")
-                    .accessibility(label: Text("Chats"))
-            }
-            
-            NavigationView {
-                MoreView()
+        ZStack {
+            TabView() {
+                NavigationView {
+                    ChatsView()
                     .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            NavigationLink(destination: AccountManagerView()) {
+                                Image(systemName: "person.circle")
+                            }
+                        }
                         
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            NavigationLink(destination: AddRoomView()) {
+                                Image(systemName: "plus")
+                            }
+                        }
                     }
                 }
                 .tabItem {
-                    Label("Settings", systemImage: "gear")
-                        .accessibility(label: Text("Settings"))
+                    Label("Chats", systemImage: "message.fill")
+                        .accessibility(label: Text("Chats"))
+                }
+                
+                NavigationView {
+                    MoreView()
+                        .toolbar {
+                            
+                        }
+                    }
+                    .tabItem {
+                        Label("Settings", systemImage: "gear")
+                            .accessibility(label: Text("Settings"))
+                }
             }
         }
     }

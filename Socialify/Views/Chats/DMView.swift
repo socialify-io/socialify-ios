@@ -176,6 +176,7 @@ struct DMView: View {
                 }
                 Spacer()
             }//.shadow(color: Color("ShadowColor"), radius: 5)
+            //.padding(.bottom, 15)
             
     }.padding()
         //.background(Color("BackgroundColor"))
@@ -186,7 +187,8 @@ struct DMView: View {
                 }
             }
         }
-        .background(Color("BackgroundColor"))
+        .background(Color("BackgroundColor"))//.edgesIgnoringSafeArea(.bottom)
+        .padding(.bottom, -55)
         .sheet(isPresented: $isShowPicker) {
             ImagePicker(image: self.$image, isImagePicked: self.$isImagePicked)
         }
@@ -204,14 +206,16 @@ struct DMView: View {
             
             let context = self.client.persistentContainer.viewContext
             try! context.save()
+            
+            Global.tabBar!.isHidden = true
 //            print("{{{{{{{{FETCH REQUEST}}}}}}}}}}}")
 //            print(fetchRequest)
 //            print("{{{{{{{{FETCH REQUEST}}}}}}}}}}}")
             //self.messages = SocketIOManager.sharedInstance.getDMsFromDB(user: receiver)
         }
-//        .onDisappear {
-//            SocketIOManager.sharedInstance.stopReceivingMessages()
-//        }
+        .onDisappear {
+            Global.tabBar!.isHidden = false
+        }
     }
 }
 
