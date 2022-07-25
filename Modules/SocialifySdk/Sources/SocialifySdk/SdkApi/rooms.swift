@@ -12,14 +12,14 @@ import CoreData
 @available(iOSApplicationExtension 14.0, *)
 extension SocialifyClient {
     
-    public func fetchRooms() -> [Room] {
+    public func fetchGroups() -> [ChatGroup] {
         let context = self.persistentContainer.viewContext
-        return getRoomsFromCoreData(context: context)
+        return getGroupsFromCoreData(context: context)
     }
     
-    private func getRoomsFromCoreData(context: NSManagedObjectContext) -> [Room] {
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Room")
-        let rooms = try! context.fetch(fetchRequest) as! [Room]
-        return rooms.sorted { $0.id < $1.id }
+    private func getGroupsFromCoreData(context: NSManagedObjectContext) -> [ChatGroup] {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Group")
+        let groups = try! context.fetch(fetchRequest) as! [ChatGroup]
+        return groups.sorted { $0.id < $1.id }
     }
 }

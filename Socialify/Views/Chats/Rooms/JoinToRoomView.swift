@@ -8,7 +8,7 @@
 import SwiftUI
 import SocialifySdk
 
-struct JoinToRoomView: View {
+struct JoinToGroupView: View {
     @StateObject var client: SocialifyClient = SocialifyClient.shared
     @Environment(\.presentationMode) var presentationMode
     
@@ -25,7 +25,7 @@ struct JoinToRoomView: View {
     @State private var errorAlertShow: ErrorAlert?
     @State private var showErrorReportModal = false
     
-    @State private var roomId = ""
+    @State private var groupId = ""
     @State private var password = ""
     
     @State private var buttonText = "Join"
@@ -43,7 +43,7 @@ struct JoinToRoomView: View {
                     .foregroundColor(.accentColor)
                     .padding(.bottom, -40)
                 
-                Text("Join to room")
+                Text("Join to group")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
@@ -54,7 +54,7 @@ struct JoinToRoomView: View {
             Spacer()
             
             VStack {
-                TextField(LocalizedStringKey("Room ID"), text: $roomId)
+                TextField(LocalizedStringKey("Group ID"), text: $groupId)
                     .autocapitalization(.none)
                     .font(Font.body.weight(Font.Weight.medium))
                     .multilineTextAlignment(.center)
@@ -64,7 +64,7 @@ struct JoinToRoomView: View {
                     .cornerRadius(cornerRadius)
                     .overlay(
                         RoundedRectangle(cornerRadius: cornerRadius)
-                            .stroke(setColor(input: roomId, clicked: clicked), lineWidth: 2)
+                            .stroke(setColor(input: groupId, clicked: clicked), lineWidth: 2)
                     )
             }.padding(.bottom, 60)
             
@@ -73,18 +73,18 @@ struct JoinToRoomView: View {
             
             CustomButtonView(action: {
                 clicked = true
-                if(roomId != ""){
-                    SocketIOManager.sharedInstance.joinRoom(roomId: roomId) { value in
-                        switch(value){
-                        case .success(let value):
-                            self.activeAlert = .success
-                            self.showAlert = true
-                            
-                        case .failure(let error):
-                            errorAlertShow = ErrorAlert(name: "errors.default".localized, description: "errors.default_description".localized)
-                        }
-                    }
-                }
+//                if(groupId != ""){
+//                    SocketIOManager.sharedInstance.joinGroup(groupId: groupId) { value in
+//                        switch(value){
+//                        case .success(let value):
+//                            self.activeAlert = .success
+//                            self.showAlert = true
+//
+//                        case .failure(let error):
+//                            errorAlertShow = ErrorAlert(name: "errors.default".localized, description: "errors.default_description".localized)
+//                        }
+//                    }
+//                }
             }, title: buttonText)
             .padding(.bottom)
         }.padding()
@@ -113,9 +113,9 @@ struct JoinToRoomView: View {
         .padding(.bottom, -55)
     }
 }
-
-struct JoinToRoomView_Previews: PreviewProvider {
-    static var previews: some View {
-        JoinToRoomView()
-    }
-}
+//
+//struct JoinToRoomView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        JoinToRoomView()
+//    }
+//}

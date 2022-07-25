@@ -15,6 +15,11 @@
         <attribute name="type" optional="YES" attributeType="String"/>
         <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="ChatGroup" representedClassName="ChatGroup" syncable="YES" codeGenerationType="class">
+        <attribute name="groupDescription" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="DM" representedClassName="DM" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="String"/>
@@ -51,24 +56,20 @@
         <attribute name="message" optional="YES" attributeType="String"/>
         <attribute name="receiverId" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="Room" representedClassName="Room" syncable="YES" codeGenerationType="class">
-        <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="roomId" optional="YES" attributeType="String"/>
-    </entity>
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
         <attribute name="avatar" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="username" optional="YES" attributeType="String"/>
     </entity>
     <elements>
+        <element name="Account" positionX="-459" positionY="-126" width="128" height="104"/>
         <element name="Chat" positionX="-610.19140625" positionY="54.81640625" width="128" height="119"/>
+        <element name="DM" positionX="-450" positionY="-135" width="128" height="134"/>
         <element name="E2EKey" positionX="-649.5546875" positionY="-133.7734375" width="128" height="89"/>
+        <element name="ChatGroup" positionX="-459" positionY="-90" width="128" height="74"/>
         <element name="Media" positionX="-451.7421875" positionY="-123.21875" width="128" height="89"/>
         <element name="Message" positionX="-261.921875" positionY="-252.34375" width="128" height="149"/>
         <element name="PendingDM" positionX="-450" positionY="-99" width="128" height="74"/>
-        <element name="Room" positionX="-403.984375" positionY="-16.7734375" width="128" height="59"/>
         <element name="User" positionX="-447.484375" positionY="-232.59765625" width="128" height="74"/>
-        <element name="Account" positionX="-459" positionY="-126" width="128" height="104"/>
-        <element name="DM" positionX="-450" positionY="-135" width="128" height="134"/>
     </elements>
 </model>

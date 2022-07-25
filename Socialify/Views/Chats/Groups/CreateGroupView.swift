@@ -8,7 +8,7 @@
 import SwiftUI
 import SocialifySdk
 
-struct CreateRoomView: View {
+struct CreateGroupView: View {
     @StateObject var client: SocialifyClient = SocialifyClient.shared
     @Environment(\.presentationMode) var presentationMode
     
@@ -25,8 +25,9 @@ struct CreateRoomView: View {
     @State private var errorAlertShow: ErrorAlert?
     @State private var showErrorReportModal = false
     
-    @State private var roomName = ""
-    @State private var password = ""
+    @State private var groupName = ""
+    @State private var groupDescription = ""
+    //@State private var password = ""
     
     @State private var buttonText = "Create"
     
@@ -43,7 +44,7 @@ struct CreateRoomView: View {
                     .foregroundColor(.accentColor)
                     .padding(.bottom, -40)
                 
-                Text("Create your room")
+                Text("Create your group")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
@@ -54,7 +55,10 @@ struct CreateRoomView: View {
             Spacer()
             
             VStack {
-                TextField(LocalizedStringKey("Room name"), text: $roomName)
+                // |-----------------------------------------------|
+                // | TU DODAJ TO POLE Z DESKTYPCJĄ I RESZTĘ JAK SĄ |
+                // |-----------------------------------------------|
+                TextField(LocalizedStringKey("Group name"), text: $groupName)
                     .autocapitalization(.none)
                     .font(Font.body.weight(Font.Weight.medium))
                     .multilineTextAlignment(.center)
@@ -64,7 +68,20 @@ struct CreateRoomView: View {
                     .cornerRadius(cornerRadius)
                     .overlay(
                         RoundedRectangle(cornerRadius: cornerRadius)
-                            .stroke(setColor(input: roomName, clicked: clicked), lineWidth: 2)
+                            .stroke(setColor(input: groupName, clicked: clicked), lineWidth: 2)
+                    )
+                
+                TextField(LocalizedStringKey("Description"), text: $groupDescription)
+                    .autocapitalization(.none)
+                    .font(Font.body.weight(Font.Weight.medium))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                    .frame(height: cellHeight)
+                    .background(cellBackground)
+                    .cornerRadius(cornerRadius)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: cornerRadius)
+                            .stroke(setColor(input: groupDescription, clicked: clicked), lineWidth: 2)
                     )
             }.padding(.bottom, 60)
             
@@ -73,8 +90,8 @@ struct CreateRoomView: View {
             
             CustomButtonView(action: {
                 clicked = true
-                if(roomName != ""){
-                    SocketIOManager.sharedInstance.createRoom(roomName: roomName, password: password) { value in
+                if(groupName != ""){
+                    SocketIOManager.sharedInstance.createGroup(groupName: groupName, groupDescription: groupDescription) { value in
                         switch(value){
                         case .success(let value):
                             self.activeAlert = .success
@@ -102,7 +119,7 @@ struct CreateRoomView: View {
         .alert(isPresented: $showAlert) {
             switch activeAlert {
             case .success:
-                return Alert(title: Text("success"), message: Text("You room has successfully created!"), dismissButton: .default(Text("got_it")){
+                return Alert(title: Text("success"), message: Text("Group has successfully created!"), dismissButton: .default(Text("got_it")){
                         DispatchQueue.main.async{
                             self.presentationMode.wrappedValue.dismiss()
                         }
@@ -113,9 +130,9 @@ struct CreateRoomView: View {
         }
     }
 }
-
-struct CreateRoomView_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateRoomView()
-    }
-}
+//
+//struct CreateRoomView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CreateRoomView()
+//    }
+//}

@@ -8,7 +8,7 @@
 import SwiftUI
 import SocialifySdk
 
-struct AddRoomView: View {
+struct AddGroupView: View {
     @Environment(\.presentationMode) var presentationMode
     
     let cellHeight: CGFloat = 55
@@ -25,7 +25,7 @@ struct AddRoomView: View {
                     .foregroundColor(.accentColor)
                     .padding(.bottom, -40)
                 
-                Text("Add Room")
+                Text("Add Group")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
@@ -35,7 +35,7 @@ struct AddRoomView: View {
                 .padding(.top, 20)
             
             VStack {
-                NavigationLink("Create room", destination: CreateRoomView())
+                NavigationLink("Create group", destination: CreateGroupView())
                     .font(.headline)
                     .multilineTextAlignment(.center)
                     .padding()
@@ -44,7 +44,7 @@ struct AddRoomView: View {
                     .background(Color("ButtonColor"))
                     .cornerRadius(12)
                 
-                NavigationLink("Join to room", destination: JoinToRoomView())
+                NavigationLink("Join to existing group", destination: JoinToGroupView())
                     .font(.headline)
                     .multilineTextAlignment(.center)
                     .padding()
@@ -65,9 +65,9 @@ struct AddRoomView: View {
         }
     }
 }
-
-struct AddRoomView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddRoomView()
-    }
-}
+//
+//struct AddRoomView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddRoomView()
+//    }
+//}

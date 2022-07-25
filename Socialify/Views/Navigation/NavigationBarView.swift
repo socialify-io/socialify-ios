@@ -65,7 +65,7 @@ struct NavigationBarView: View {
                         }
                         
                         ToolbarItem(placement: .navigationBarTrailing) {
-                            NavigationLink(destination: AddRoomView()) {
+                            NavigationLink(destination: AddGroupView()) {
                                 Image(systemName: "plus")
                             }
                         }

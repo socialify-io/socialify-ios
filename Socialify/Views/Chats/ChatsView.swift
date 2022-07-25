@@ -58,8 +58,8 @@ struct ChatTileView: View {
     }
     
     var body: some View {
-        if(chat.type == "Room") {
-            NavigationLink(destination: RoomView(room: client.getRoomById(roomId: chat.chatId!)).navigationBarTitle(chat.name ?? "<chat name couldn't be loaded>").environment(\.managedObjectContext, CoreDataModel.shared.persistentContainer.viewContext)) {
+        if(chat.type == "Group") {
+            NavigationLink(destination: GroupView(group: client.getGroupById(groupId: chat.chatId!)).environment(\.managedObjectContext, CoreDataModel.shared.persistentContainer.viewContext)) {
                 HStack {
                     Image("Facebook")
                         .resizable()
@@ -67,50 +67,33 @@ struct ChatTileView: View {
                         .frame(width: 50, height: 50)
                         .padding(.trailing, 4)
 
-                    if messages.count != 0 {
-                        if messages[0].isRead {
-                            VStack {
-                                Text(chat.name ?? "<chat name couldn't be loaded>")
-                                    .font(.callout)
-                                    .foregroundColor(Color("CustomForegroundColor"))
-                                    .frame(maxWidth: .infinity, alignment: .leading)
+//                    if messages[0].isRead {
+                        VStack {
+                            Text(chat.name ?? "<chat name couldn't be loaded>")
+                                .font(.callout)
+                                .foregroundColor(Color("CustomForegroundColor"))
+                                .frame(maxWidth: .infinity, alignment: .leading)
 
-                                if messages[0].isSystemNotification {
-                                    Text("\(messages[0].message ?? "") • \(calendar.component(.hour, from: messages[0].date!)):\(calendar.component(.minute, from: messages[0].date!))")
-                                        .font(.caption)
-                                        .foregroundColor(Color("CustomForegroundColor"))
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                } else {
-                                   Text("\(messages[0].username ?? "") \(messages[0].message ?? "Sended image") • \(calendar.component(.hour, from: messages[0].date!)):\(calendar.component(.minute, from: messages[0].date!))")
-                                        .font(.caption)
-                                        .foregroundColor(Color("CustomForegroundColor"))
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                }
-                            }
-                        } else {
-                            VStack {
-                                Text(chat.name ?? "<chat name couldn't be loaded>")
-                                    .font(.callout)
-                                    .bold()
-                                    .foregroundColor(Color("CustomForegroundColor"))
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                               
-                                if messages[0].isSystemNotification {
-                                    Text("\(messages[0].message ?? "") • \(calendar.component(.hour, from: messages[0].date!)):\(calendar.component(.minute, from: messages[0].date!))")
-                                        .bold()
-                                        .font(.caption)
-                                        .foregroundColor(Color("CustomForegroundColor"))
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                } else{
-                                    Text("\(messages[0].username ?? ""): \(messages[0].message ?? "Sended image") • \(calendar.component(.hour, from: messages[0].date!)):\(calendar.component(.minute, from: messages[0].date!))")
-                                        .bold()
-                                        .font(.caption)
-                                        .foregroundColor(Color("CustomForegroundColor"))
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                }
-                            }
+                            Text(client.getGroupById(groupId: chat.chatId!).groupDescription ?? "")
+                                .font(.caption)
+                                .foregroundColor(Color("CustomForegroundColor"))
+                                .frame(maxWidth: .infinity, alignment: .leading)
                         }
-                    }
+//                    } else {
+//                        VStack {
+//                            Text(chat.name ?? "<chat name couldn't be loaded>")
+//                                .font(.callout)
+//                                .bold()
+//                                .foregroundColor(Color("CustomForegroundColor"))
+//                                .frame(maxWidth: .infinity, alignment: .leading)
+//
+//                            Text("\(client.getGroupById(groupId: chat.chatId!).description)")
+//                                .bold()
+//                                .font(.caption)
+//                                .foregroundColor(Color("CustomForegroundColor"))
+//                                .frame(maxWidth: .infinity, alignment: .leading)
+//                        }
+//                    }
                 }.font(.headline)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
@@ -180,7 +163,6 @@ struct ChatsView: View {
     @State private var searchResults: [User] = []
     @State private var selectedView = "Chats"
     @State private var userPickerSelection = ""
-    
     @State var searchText = ""
     @State private var isSearchBarEditing = false
     
@@ -373,7 +355,13 @@ struct ChatsView: View {
                     .onAppear {}
             }
         }
-        .navigationBarTitle("Chats", displayMode: .inline)
+        .navigationBarTitle("", displayMode: .inline)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text("Chats")
+                    .bold()
+            }
+        }
         //.background(Color("BackgroundColor"))
         .onAppear {
             

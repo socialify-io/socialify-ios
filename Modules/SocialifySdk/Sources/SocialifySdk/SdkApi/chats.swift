@@ -71,16 +71,16 @@ extension SocialifyClient {
         return dms
     }
     
-    private func fetchLastMessages() -> [FetchedResults<Message>] {
-        let rooms = self.fetchRooms()
-        var messages: [FetchedResults<Message>] = []
-        
-        for room in rooms {
-            messages.append(self.fetchLastLiveMessageForRoom(roomId: room.roomId as! Int))
-        }
-        
-        return messages
-    }
+//    private func fetchLastMessages() -> [FetchedResults<Message>] {
+//        let rooms = self.fetchRooms()
+//        var messages: [FetchedResults<Message>] = []
+//
+//        for room in rooms {
+//            messages.append(self.fetchLastLiveMessageForRoom(roomId: room.roomId as! Int))
+//        }
+//
+//        return messages
+//    }
     
     public func fetchLastLiveDM(receiver: String) -> FetchedResults<DM> {
         let request: NSFetchRequest<DM> = DM.fetchRequest()

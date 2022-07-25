@@ -8,8 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		5C03BA6C27C19A4E0087F852 /* JoinToRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C03BA6B27C19A4E0087F852 /* JoinToRoomView.swift */; };
-		5C03BA6E27C19A640087F852 /* CreateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C03BA6D27C19A640087F852 /* CreateRoomView.swift */; };
+		5C03BA6E27C19A640087F852 /* CreateGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C03BA6D27C19A640087F852 /* CreateGroupView.swift */; };
 		5C0465102687E868006D3126 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C04650F2687E868006D3126 /* NavigationBarView.swift */; };
+		5C21C38B2874A124007C0B2B /* GroupDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21C38A2874A124007C0B2B /* GroupDetailsView.swift */; };
+		5C21C38D2874A388007C0B2B /* GroupMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21C38C2874A388007C0B2B /* GroupMembersView.swift */; };
+		5C21C38F2874DCE1007C0B2B /* AddGroupMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21C38E2874DCE1007C0B2B /* AddGroupMembersView.swift */; };
 		5C2A2EDE26B9F46D006CC3D6 /* models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A2EDD26B9F46D006CC3D6 /* models.swift */; };
 		5C2F3878281EE58400F5142F /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F3877281EE58400F5142F /* ImagePicker.swift */; };
 		5C2F387A281EED2300F5142F /* SendImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F3879281EED2300F5142F /* SendImageView.swift */; };
@@ -31,7 +34,7 @@
 		5C4EA433282F03B400F92714 /* ContributorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4EA432282F03B400F92714 /* ContributorsView.swift */; };
 		5C51429728241AB700921F51 /* getImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C51429628241AB700921F51 /* getImage.swift */; };
 		5C51429928241C3600921F51 /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C51429828241C3600921F51 /* MessageBubble.swift */; };
-		5C58B52726C14720008AE2B0 /* AddRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C58B52626C14720008AE2B0 /* AddRoomView.swift */; };
+		5C58B52726C14720008AE2B0 /* AddGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C58B52626C14720008AE2B0 /* AddGroupView.swift */; };
 		5C66589B26B5A72F00614E9C /* ErrorReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C66589A26B5A72F00614E9C /* ErrorReportView.swift */; };
 		5C709F1E280D7E9300099E83 /* RoomMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C709F1D280D7E9300099E83 /* RoomMembersView.swift */; };
 		5C73EA9B26112822008F7315 /* SocialifyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EA9A26112822008F7315 /* SocialifyApp.swift */; };
@@ -45,6 +48,8 @@
 		5C88D8CE26B8B0F900BAC9A7 /* setColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C88D8CD26B8B0F900BAC9A7 /* setColor.swift */; };
 		5C88D8D726B8CA0600BAC9A7 /* string.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C88D8D626B8CA0600BAC9A7 /* string.swift */; };
 		5C89D9C526D2F08C0099564E /* DMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C89D9C426D2F08C0099564E /* DMView.swift */; };
+		5C9879FE287DD02A0084F5D7 /* LinkDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9879FD287DD02A0084F5D7 /* LinkDetailsView.swift */; };
+		5CA265F42873A96100EF780E /* GroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA265F32873A96100EF780E /* GroupView.swift */; };
 		5CADDB9C2611E72200F690D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C73EA9E26112823008F7315 /* Assets.xcassets */; };
 		5CADDBB92611F5A100F690D0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5CADDBBB2611F5A100F690D0 /* Localizable.strings */; };
 		5CC47C6126B0A2E90001BB7D /* SocialifySdk in Frameworks */ = {isa = PBXBuildFile; productRef = 5CC47C6026B0A2E90001BB7D /* SocialifySdk */; };
@@ -70,8 +75,11 @@
 
 /* Begin PBXFileReference section */
 		5C03BA6B27C19A4E0087F852 /* JoinToRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinToRoomView.swift; sourceTree = "<group>"; };
-		5C03BA6D27C19A640087F852 /* CreateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomView.swift; sourceTree = "<group>"; };
+		5C03BA6D27C19A640087F852 /* CreateGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
 		5C04650F2687E868006D3126 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
+		5C21C38A2874A124007C0B2B /* GroupDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsView.swift; sourceTree = "<group>"; };
+		5C21C38C2874A388007C0B2B /* GroupMembersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMembersView.swift; sourceTree = "<group>"; };
+		5C21C38E2874DCE1007C0B2B /* AddGroupMembersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupMembersView.swift; sourceTree = "<group>"; };
 		5C2A2EDD26B9F46D006CC3D6 /* models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = models.swift; sourceTree = "<group>"; };
 		5C2F3877281EE58400F5142F /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		5C2F3879281EED2300F5142F /* SendImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendImageView.swift; sourceTree = "<group>"; };
@@ -94,7 +102,7 @@
 		5C4EA432282F03B400F92714 /* ContributorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorsView.swift; sourceTree = "<group>"; };
 		5C51429628241AB700921F51 /* getImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getImage.swift; sourceTree = "<group>"; };
 		5C51429828241C3600921F51 /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
-		5C58B52626C14720008AE2B0 /* AddRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRoomView.swift; sourceTree = "<group>"; };
+		5C58B52626C14720008AE2B0 /* AddGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupView.swift; sourceTree = "<group>"; };
 		5C66589A26B5A72F00614E9C /* ErrorReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReportView.swift; sourceTree = "<group>"; };
 		5C709F1D280D7E9300099E83 /* RoomMembersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMembersView.swift; sourceTree = "<group>"; };
 		5C73EA9726112822008F7315 /* Socialify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Socialify.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +123,8 @@
 		5C88D8CD26B8B0F900BAC9A7 /* setColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setColor.swift; sourceTree = "<group>"; };
 		5C88D8D626B8CA0600BAC9A7 /* string.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = string.swift; sourceTree = "<group>"; };
 		5C89D9C426D2F08C0099564E /* DMView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMView.swift; sourceTree = "<group>"; };
+		5C9879FD287DD02A0084F5D7 /* LinkDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkDetailsView.swift; sourceTree = "<group>"; };
+		5CA265F32873A96100EF780E /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
 		5CADDBBA2611F5A100F690D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5CADDBBF2611F5DB00F690D0 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5CC2CFF027B5C446001CFB40 /* Socialify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Socialify.entitlements; sourceTree = "<group>"; };
@@ -150,9 +160,7 @@
 		5C03BA6A27C19A350087F852 /* Rooms */ = {
 			isa = PBXGroup;
 			children = (
-				5C58B52626C14720008AE2B0 /* AddRoomView.swift */,
 				5C03BA6B27C19A4E0087F852 /* JoinToRoomView.swift */,
-				5C03BA6D27C19A640087F852 /* CreateRoomView.swift */,
 				5C47E84326C32079005F4D0E /* RoomView.swift */,
 				5CFFD58E27E265880038C108 /* RoomDetailsView.swift */,
 				5C709F1D280D7E9300099E83 /* RoomMembersView.swift */,
@@ -227,6 +235,7 @@
 		5C58B52526C146F5008AE2B0 /* Chats */ = {
 			isa = PBXGroup;
 			children = (
+				5CFB3783287119BA00F3E2B9 /* Groups */,
 				5C03BA6A27C19A350087F852 /* Rooms */,
 				5C73EA9C26112822008F7315 /* ChatsView.swift */,
 				5C47E84526C32662005F4D0E /* ChatView.swift */,
@@ -360,6 +369,20 @@
 				5CADDBBB2611F5A100F690D0 /* Localizable.strings */,
 			);
 			path = Localization;
+			sourceTree = "<group>";
+		};
+		5CFB3783287119BA00F3E2B9 /* Groups */ = {
+			isa = PBXGroup;
+			children = (
+				5C58B52626C14720008AE2B0 /* AddGroupView.swift */,
+				5C03BA6D27C19A640087F852 /* CreateGroupView.swift */,
+				5CA265F32873A96100EF780E /* GroupView.swift */,
+				5C21C38A2874A124007C0B2B /* GroupDetailsView.swift */,
+				5C21C38C2874A388007C0B2B /* GroupMembersView.swift */,
+				5C21C38E2874DCE1007C0B2B /* AddGroupMembersView.swift */,
+				5C9879FD287DD02A0084F5D7 /* LinkDetailsView.swift */,
+			);
+			path = Groups;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -498,6 +521,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C21C38F2874DCE1007C0B2B /* AddGroupMembersView.swift in Sources */,
 				5C2F4805282C0A3B000EA08A /* PrivacyView.swift in Sources */,
 				5C709F1E280D7E9300099E83 /* RoomMembersView.swift in Sources */,
 				5C3DD2242613B78F00B8E532 /* CustomButtonView.swift in Sources */,
@@ -506,7 +530,7 @@
 				5C2F3878281EE58400F5142F /* ImagePicker.swift in Sources */,
 				5C2F4807282C125B000EA08A /* DataView.swift in Sources */,
 				5C33AB8D2689D16600640F1C /* FacebookItemView.swift in Sources */,
-				5C03BA6E27C19A640087F852 /* CreateRoomView.swift in Sources */,
+				5C03BA6E27C19A640087F852 /* CreateGroupView.swift in Sources */,
 				5C51429928241C3600921F51 /* MessageBubble.swift in Sources */,
 				5C4AC87826AF760E005E7027 /* RegisterView.swift in Sources */,
 				5CFFD58F27E265880038C108 /* RoomDetailsView.swift in Sources */,
@@ -515,7 +539,8 @@
 				5C3DD22A2613C81700B8E532 /* MediaItemView.swift in Sources */,
 				5C73EA9D26112822008F7315 /* ChatsView.swift in Sources */,
 				5C3AD26226BC5C3B00D04367 /* AccountCardView.swift in Sources */,
-				5C58B52726C14720008AE2B0 /* AddRoomView.swift in Sources */,
+				5C58B52726C14720008AE2B0 /* AddGroupView.swift in Sources */,
+				5CA265F42873A96100EF780E /* GroupView.swift in Sources */,
 				5C495BC7261A72100004D538 /* LoginView.swift in Sources */,
 				5C2F4809282D6C3C000EA08A /* LicenceView.swift in Sources */,
 				5C03BA6C27C19A4E0087F852 /* JoinToRoomView.swift in Sources */,
@@ -527,9 +552,12 @@
 				5C2F4803282BD42C000EA08A /* MoreView.swift in Sources */,
 				5C66589B26B5A72F00614E9C /* ErrorReportView.swift in Sources */,
 				5C44F35A26894265003A5768 /* AccountManagerView.swift in Sources */,
+				5C21C38D2874A388007C0B2B /* GroupMembersView.swift in Sources */,
 				5C89D9C526D2F08C0099564E /* DMView.swift in Sources */,
 				5C4EA433282F03B400F92714 /* ContributorsView.swift in Sources */,
 				5C88D8D726B8CA0600BAC9A7 /* string.swift in Sources */,
+				5C21C38B2874A124007C0B2B /* GroupDetailsView.swift in Sources */,
+				5C9879FE287DD02A0084F5D7 /* LinkDetailsView.swift in Sources */,
 				5C47E84426C32079005F4D0E /* RoomView.swift in Sources */,
 				5C0465102687E868006D3126 /* NavigationBarView.swift in Sources */,
 				5C51429728241AB700921F51 /* getImage.swift in Sources */,
