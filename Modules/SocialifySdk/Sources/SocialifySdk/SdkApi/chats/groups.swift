@@ -39,7 +39,7 @@ extension SocketIOManager {
             
             let data = dataArray[0] as! [String: Any]
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
-            fetchRequest.predicate = NSPredicate(format: "id == %@", data["id"] as! CVarArg)
+            fetchRequest.predicate = NSPredicate(format: "id == %@", data["_id"] as! CVarArg)
             let allMessagesWithSameId = try! context.fetch(fetchRequest) as! [Message]
           
             print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa")
@@ -57,14 +57,10 @@ extension SocketIOManager {
                     insertInto: context
                 )
                 
-//                print("dupadupadupadupadupaduapduapduapduapda")
-//                print(Int(data["roomId"]!))
-//                print("dupadupadupadupadupaduapduapduapduapda")
-//
-                let roomId: String = data["roomId"] as! String //Int((data["roomId"] as! NSString).floatValue)
+                let groupId: String = data["group"] as! String //Int((data["roomId"] as! NSString).floatValue)
                 
                 let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
-                fetchRequest.predicate = NSPredicate(format: "room == %@", roomId as! CVarArg)
+                fetchRequest.predicate = NSPredicate(format: "group == %@", groupId as! CVarArg)
                 fetchRequest.sortDescriptors = [NSSortDescriptor(
                                                 keyPath: \Message.id,
                                                 ascending: true)]
@@ -73,16 +69,17 @@ extension SocketIOManager {
                 
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-                let date = dateFormatter.date(from: "\(data["date"]!)")
+                let date = dateFormatter.date(from: "\(data["timestamp"]!)")
 
-                let isSystemNotification: Bool = data["is_system_notification"]! as! Bool
+                let isSystemNotification: Bool = data["isSystemNotification"]! as! Bool
                 print(isSystemNotification)
                 
                 MessageModel.username = data["username"] as? String
                 MessageModel.message = data["message"] as? String
                 MessageModel.date = date
-                MessageModel.id = data["id"] as! String
-                MessageModel.room = roomId as! String
+                MessageModel.id = data["_id"] as! String
+                MessageModel.group = groupId
+                MessageModel.room = data["room"] as! String
                 MessageModel.isSystemNotification = isSystemNotification
                 
                 if(isSystemNotification) {
@@ -274,6 +271,14 @@ extension SocketIOManager {
             
             completion(.success(sections))
         }
+    }
+    
+    public func sendMessage(groupId: String,
+                             roomId: String,
+                             message: String) {
+        socket.emit("send_message", ["groupId": groupId,
+                                     "roomId": roomId,
+                                     "message": message])
     }
     
     private func addGroupToDB(groupId: String, groupName: String, groupDescription: String) {
