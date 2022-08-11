@@ -27,6 +27,7 @@ struct GroupView: View {
     @State private var roomsSections: [SocialifyClient.RoomsSection] = []
     @State private var currentRoom: SocialifyClient.GroupRoom?
     @State private var isRoomsShown: Bool = false
+    @State private var isVoiceRoomAlertShown: Bool = false
     
     @State var isShowPicker: Bool = false
     @State var isImagePicked: Bool = false
@@ -116,17 +117,21 @@ struct GroupView: View {
                         Section(header: Text(section.name)) {
                             ForEach(section.rooms) { room in
                                 Button(action: {
-                                    isRoomsShown.toggle()
-                                    
-                                    currentRoom = room
-                                   
-                                    let dictRoom = [
-                                        "id": room.id,
-                                        "name": room.name,
-                                        "type": String(describing: SocialifyClient.parseFromRoomType(type: room.type))
-                                    ] as [String: String]
-                                    
-                                    defaults.set(dictRoom, forKey: "\(group.id!)CurrentRoom")
+                                    if(room.type == SocialifyClient.RoomType.voice) {
+                                        isVoiceRoomAlertShown = true
+                                    } else {
+                                        isRoomsShown.toggle()
+                                        
+                                        currentRoom = room
+                                       
+                                        let dictRoom = [
+                                            "id": room.id,
+                                            "name": room.name,
+                                            "type": String(describing: SocialifyClient.parseFromRoomType(type: room.type))
+                                        ] as [String: String]
+                                        
+                                        defaults.set(dictRoom, forKey: "\(group.id!)CurrentRoom")
+                                    }
                                 }) {
                                     Text(room.name)
                                         .foregroundColor(Color("CustomForegroundColor"))
@@ -137,7 +142,11 @@ struct GroupView: View {
                 }
             }
         }
-
+        .alert(isPresented: $isVoiceRoomAlertShown) {
+            Alert(title: Text("Unavailable"),
+                  message: Text("Voice rooms is currently " +
+                                "unavailable."))
+        }
         .onAppear {
             SocketIOManager.sharedInstance.fetchRooms(groupId: group.id!) { result in
                 switch(result) {
@@ -153,51 +162,53 @@ struct GroupView: View {
     
     var messagesArea: some View {
         ForEach(Array(messages.enumerated()), id: \.element) { index, message in
-            if(message.username != currentAccount?.username) {
-                VStack {
-                    if(index == 0 || messages[index-1].username != message.username) {
-                        HStack {
+            if(message.room == currentRoom?.id) {
+                if(message.username != currentAccount?.username) {
+                    VStack {
+                        if(index == 0 || messages[index-1].username != message.username) {
+                            HStack {
+                                Spacer()
+                                    .frame(width: 44)
+                                
+                                Text(message.username ?? "<username can't be loaded>")
+                                    .font(.caption)
+                                    .foregroundColor(Color("CustomForegroundColor"))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.leading, 18)
+                            }.padding(.bottom, -2)
                             Spacer()
-                                .frame(width: 44)
-                            
-                            Text(message.username ?? "<username can't be loaded>")
-                                .font(.caption)
-                                .foregroundColor(Color("CustomForegroundColor"))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading, 18)
-                        }.padding(.bottom, -2)
-                        Spacer()
-                    }
-                    
-                    
-                    HStack {
-                        
-                        if messages.count-1 == index || messages.count-1 > index && messages[index+1].username != message.username {
-                            VStack {
-                                Spacer()
-                                Image(systemName: "person.circle.fill")
-                                    .renderingMode(.template)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 32)
-                                    .foregroundColor(.accentColor)
-                                    .padding(.trailing, 4)
-                            }
-                        } else {
-                            VStack {
-                                Spacer()
-                                    .frame(width: 36)
-                            }
                         }
-                       
-                        LeftMessageBubble(message: message, media: media)
-                    }
-                    Spacer()
-                }.id(index)
-            } else {
-                HStack {
-                    RightMessageBubble(message: message, media: media)
-                }.id(index)
+                        
+                        
+                        HStack {
+                            
+                            if messages.count-1 == index || messages.count-1 > index && messages[index+1].username != message.username {
+                                VStack {
+                                    Spacer()
+                                    Image(systemName: "person.circle.fill")
+                                        .renderingMode(.template)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: 32)
+                                        .foregroundColor(.accentColor)
+                                        .padding(.trailing, 4)
+                                }
+                            } else {
+                                VStack {
+                                    Spacer()
+                                        .frame(width: 36)
+                                }
+                            }
+                            
+                            LeftMessageBubble(message: message, media: media)
+                        }
+                        Spacer()
+                    }.id(index)
+                } else {
+                    HStack {
+                        RightMessageBubble(message: message, media: media)
+                    }.id(index)
+                }
             }
         }
     }
@@ -206,7 +217,7 @@ struct GroupView: View {
         VStack {
             ScrollViewReader { value in
                 ScrollView {
-                   messagesArea
+                    messagesArea
                 }
             }
             Spacer()
@@ -265,6 +276,7 @@ struct GroupView: View {
                 roomsView
             }
         }
+        
         .onAppear {
             Global.tabBar!.isHidden = true
             

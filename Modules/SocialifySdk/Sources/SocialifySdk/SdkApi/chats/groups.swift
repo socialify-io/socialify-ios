@@ -104,7 +104,7 @@ extension SocketIOManager {
                 let data = resp["data"] as! [String: String]
                 let groupId = data["groupId"]!
 
-                self.addGroupToDB(groupId: groupId, groupName: groupName, groupDescription: groupDescription)
+                self.addGroupToDB(groupId: groupId, groupName: groupName, groupDescription: groupDescription, myRole: 1)
                 
 //                self.connectRoom(roomId: roomId)
 //                self.socket.emit("activate_room", ["roomId": roomId])
@@ -130,7 +130,7 @@ extension SocketIOManager {
                 let groupName = data["groupName"]!
                 let groupDescription = data["groupDescription"]!
 
-                self.addGroupToDB(groupId: groupId, groupName: groupName, groupDescription: groupDescription)
+                self.addGroupToDB(groupId: groupId, groupName: groupName, groupDescription: groupDescription, myRole: 2)
                 
                 completion(.success(true))
             } else {
@@ -205,6 +205,32 @@ extension SocketIOManager {
         }
     }
     
+    public func getGroupMembers(groupId: String, completion: @escaping (Result<[SocialifyClient.GroupMember], Error>) -> Void) {
+        socket.emit("get_group_members", ["groupId": groupId])
+        socket.on("get_group_members") { [self] dataArray, socketAck in
+            let resp: [String: Any] = dataArray[0] as! [String: Any]
+            socket.off("get_group_members")
+            let success: Bool = resp["success"] as! Bool
+            
+            if(!success) {
+                completion(.failure(SocialifyClient.SdkError.UnexpectedError))
+                return
+            }
+            
+            let data: [[String: Any]] = resp["data"] as! [[String: Any]]
+            
+            var members: [SocialifyClient.GroupMember] = []
+            
+            for member in data {
+                members.append(SocialifyClient.GroupMember(id: member["_id"] as! String,
+                                                           username: member["username"] as! String,
+                                                           role: member["role"] as! Int))
+            }
+            
+            completion(.success(members))
+        }
+    }
+    
     public func isInviteLinkInMessage(message: String, completion: @escaping ([String: Any]) -> Void) {
         let api_url = client.API_URL
         
@@ -272,6 +298,36 @@ extension SocketIOManager {
             completion(.success(sections))
         }
     }
+
+    public func addSection(groupId: String, name: String, completion: @escaping (Result<Bool, Error>) -> Void) {
+        socket.emit("create_rooms_section", ["groupId": groupId, "name": name])
+        socket.on("create_rooms_section") { [self] dataArray, socketAck in
+            let resp: [String: Any] = dataArray[0] as! [String: Any]
+            socket.off("create_rooms_section")
+            let success: Bool = resp["success"] as! Bool
+                
+            if(success) {
+                completion(.success(true))
+            } else {
+                completion(.failure(SocialifyClient.SdkError.UnexpectedError))
+            }
+        }
+    }
+    
+    public func addRoom(groupId: String, sectionId: String, name: String, type: SocialifyClient.RoomType, completion: @escaping (Result<Bool, Error>) -> Void) {
+        socket.emit("create_room", ["name": name, "type": SocialifyClient.parseFromRoomType(type: type), "groupId": groupId, "sectionId": sectionId])
+        socket.on("create_room") { [self] dataArray, socketAck in
+            let resp: [String: Any] = dataArray[0] as! [String: Any]
+            socket.off("create_room")
+            let success: Bool = resp["success"] as! Bool
+                
+            if(success) {
+                completion(.success(true))
+            } else {
+                completion(.failure(SocialifyClient.SdkError.UnexpectedError))
+            }
+        }
+    }
     
     public func sendMessage(groupId: String,
                              roomId: String,
@@ -281,7 +337,7 @@ extension SocketIOManager {
                                      "message": message])
     }
     
-    private func addGroupToDB(groupId: String, groupName: String, groupDescription: String) {
+    private func addGroupToDB(groupId: String, groupName: String, groupDescription: String, myRole: Int) {
         let context = self.client.persistentContainer.viewContext
 
         let groupEntityDescription = NSEntityDescription.entity(
@@ -308,7 +364,8 @@ extension SocketIOManager {
         groupModel.id = groupId as! String
         groupModel.name = groupName
         groupModel.groupDescription = groupDescription
-
+        groupModel.myRole = Int16(myRole)
+        
         let datenow = Date()
 
         chatModel.type = "Group"

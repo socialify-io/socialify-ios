@@ -13,7 +13,7 @@ struct GroupDetailsView: View {
     let group: ChatGroup
     var body: some View {
         VStack {
-            ScrollView {
+            VStack {
             VStack {
                 ZStack {
                     Image(systemName: "person.circle.fill")
@@ -52,155 +52,176 @@ struct GroupDetailsView: View {
                     //.shadow(color: Color("ShadowColor"), radius: 5)
 
                 }.padding(.horizontal)
-                .padding(.top, 20)
+                //.padding(.top, 20)
+                    .padding(.bottom)
 
-                HStack {
-                    VStack(alignment: HorizontalAlignment.center) {
-                        Image(systemName: "phone.fill")
-                            .renderingMode(.template)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 20)
-                            .padding(.top)
-                            .padding(.horizontal, 11)
+//                HStack {
+//                    VStack(alignment: HorizontalAlignment.center) {
+//                        Image(systemName: "phone.fill")
+//                            .renderingMode(.template)
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(height: 20)
+//                            .padding(.top)
+//                            .padding(.horizontal, 11)
+//
+//                        Text("Call")
+//                            .font(.headline)
+//                            .padding(.horizontal, 34)
+//                            .padding(.bottom)
+//
+//                    }.background(Color("CustomAppearanceItemColor"))
+//                    .cornerRadius(12)
+//                    .padding(.vertical)
+//                    .padding(.horizontal, 4)
+//                    //.shadow(color: Color("ShadowColor"), radius: 5)
+//
+//                    VStack(alignment: HorizontalAlignment.center) {
+//                        Image(systemName: "video.fill")
+//                            .renderingMode(.template)
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(height: 20)
+//                            .padding(.top)
+//                            .padding(.horizontal, 11)
+//
+//                        Text("Video")
+//                            .font(.headline)
+//                            .padding(.horizontal, 34)
+//                            .padding(.bottom)
+//
+//                    }.background(Color("CustomAppearanceItemColor"))
+//                    .cornerRadius(12)
+//                    .padding(.vertical)
+//                    .padding(.horizontal, 4)
+//                    //.shadow(color: Color("ShadowColor"), radius: 5)
+//
+//                    VStack(alignment: HorizontalAlignment.center) {
+//                        Image(systemName: "bell.slash.fill")
+//                            .renderingMode(.template)
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(height: 20)
+//                            .padding(.top)
+//                            .padding(.horizontal, 11)
+//
+//                        Text("Mute")
+//                            .font(.headline)
+//                            .padding(.horizontal, 34)
+//                            .padding(.bottom)
+//
+//                    }.background(Color("CustomAppearanceItemColor"))
+//                    .cornerRadius(12)
+//                    .padding(.vertical)
+//                    .padding(.horizontal, 4)
+//                    //.shadow(color: Color("ShadowColor"), radius: 5)
+//                }.padding(.bottom, -10)
+//                    .zIndex(2)
 
-                        Text("Call")
-                            .font(.headline)
-                            .padding(.horizontal, 34)
-                            .padding(.bottom)
-
-                    }.background(Color("CustomAppearanceItemColor"))
-                    .cornerRadius(12)
-                    .padding(.vertical)
-                    .padding(.horizontal, 4)
-                    //.shadow(color: Color("ShadowColor"), radius: 5)
-
-                    VStack(alignment: HorizontalAlignment.center) {
-                        Image(systemName: "video.fill")
-                            .renderingMode(.template)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 20)
-                            .padding(.top)
-                            .padding(.horizontal, 11)
-
-                        Text("Video")
-                            .font(.headline)
-                            .padding(.horizontal, 34)
-                            .padding(.bottom)
-
-                    }.background(Color("CustomAppearanceItemColor"))
-                    .cornerRadius(12)
-                    .padding(.vertical)
-                    .padding(.horizontal, 4)
-                    //.shadow(color: Color("ShadowColor"), radius: 5)
-
-                    VStack(alignment: HorizontalAlignment.center) {
-                        Image(systemName: "bell.slash.fill")
-                            .renderingMode(.template)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(height: 20)
-                            .padding(.top)
-                            .padding(.horizontal, 11)
-
-                        Text("Mute")
-                            .font(.headline)
-                            .padding(.horizontal, 34)
-                            .padding(.bottom)
-
-                    }.background(Color("CustomAppearanceItemColor"))
-                    .cornerRadius(12)
-                    .padding(.vertical)
-                    .padding(.horizontal, 4)
-                    //.shadow(color: Color("ShadowColor"), radius: 5)
-                }.padding(.bottom, -10)
-                    .zIndex(2)
-
-                VStack {
-                    HStack {
-                        Text("Settings")
-                            .font(.system(size: 26))
-                            .fontWeight(.semibold)
-                            .multilineTextAlignment(.leading)
-
-                        Spacer()
-                    }.padding()
-
-                    Button(action: {}) {
-                        HStack {
-                            Image(systemName: "wallet.pass.fill")
-                                .renderingMode(.template)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: 22)
-                                .padding(.leading, 24)
-
-                            Text("Room ID")
-                                .padding(.leading, 12)
-
-                            Spacer()
-
-                            Text("\(group.id!)")
-                                .padding(.trailing, 20)
-                                .foregroundColor(.secondary)
-                        }
-                    }.foregroundColor(Color("CustomForegroundColor"))
-
-                    Divider()
-                        .padding(8)
-                    
-                    NavigationLink(destination: AddGroupMembersView(group: group)) {
-                        HStack {
-                            Image(systemName: "link.badge.plus")
-                                .renderingMode(.template)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: 24)
-                                .padding(.leading, 20)
-                            
-                            Text("Add members")
-                                .padding(.leading, 7)
-
-                            Spacer()
-
-                            Image(systemName: "chevron.right")
-                                .padding(.trailing, 20)
-                                .foregroundColor(.accentColor)
-                        }
-                    }.foregroundColor(Color("CustomForegroundColor"))
-                    
-                    Divider()
-                        .padding(8)
-                    
-                    NavigationLink(destination: GroupMembersView()) {
-                        HStack {
-                            Image(systemName: "person.2.fill")
-                                .renderingMode(.template)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: 18)
-                                .padding(.leading, 19)
-
-                            Text("Room members")
-                                .padding(.leading, 7)
-
-                            Spacer()
-
-                            Image(systemName: "chevron.right")
-                                .padding(.trailing, 20)
-                                .foregroundColor(.accentColor)
-                        }
-                    }.foregroundColor(Color("CustomForegroundColor"))
-                    .padding(.bottom, 20)
-                }.background(Color("CustomAppearanceItemColor"))
-                    .cornerRadius(12)
-                    .padding()
+                
+                
+//                VStack {
+//                    HStack {
+//                        Text("Settings")
+//                            .font(.system(size: 26))
+//                            .fontWeight(.semibold)
+//                            .multilineTextAlignment(.leading)
+//
+//                        Spacer()
+//                    }.padding()
+//
+//                    Button(action: {}) {
+//                        HStack {
+//                            Image(systemName: "wallet.pass.fill")
+//                                .renderingMode(.template)
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+//                                .frame(height: 22)
+//                                .padding(.leading, 24)
+//
+//                            Text("Room ID")
+//                                .padding(.leading, 12)
+//
+//                            Spacer()
+//
+//                            Text("\(group.id!)")
+//                                .padding(.trailing, 20)
+//                                .foregroundColor(.secondary)
+//                        }
+//                    }.foregroundColor(Color("CustomForegroundColor"))
+//
+//                    Divider()
+//                        .padding(8)
+//
+//                    NavigationLink(destination: AddGroupMembersView(group: group)) {
+//                        HStack {
+//                            Image(systemName: "link.badge.plus")
+//                                .renderingMode(.template)
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+//                                .frame(height: 24)
+//                                .padding(.leading, 20)
+//
+//                            Text("Add members")
+//                                .padding(.leading, 7)
+//
+//                            Spacer()
+//
+//                            Image(systemName: "chevron.right")
+//                                .padding(.trailing, 20)
+//                                .foregroundColor(.accentColor)
+//                        }
+//                    }.foregroundColor(Color("CustomForegroundColor"))
+//
+//                    Divider()
+//                        .padding(8)
+//
+//                    NavigationLink(destination: GroupMembersView()) {
+//                        HStack {
+//                            Image(systemName: "person.2.fill")
+//                                .renderingMode(.template)
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+//                                .frame(height: 18)
+//                                .padding(.leading, 19)
+//
+//                            Text("Room members")
+//                                .padding(.leading, 7)
+//
+//                            Spacer()
+//
+//                            Image(systemName: "chevron.right")
+//                                .padding(.trailing, 20)
+//                                .foregroundColor(.accentColor)
+//                        }
+//                    }.foregroundColor(Color("CustomForegroundColor"))
+//                    .padding(.bottom, 20)
+//                }.background(Color("CustomAppearanceItemColor"))
+//                    .cornerRadius(12)
+//                    .padding()
                 }
             }
+            Form {
+                Section(header: Text("Settings")) {
+                        NavigationLink(destination: AddGroupMembersView(group: group)) {
+                            Label("Add members", systemImage: "link.badge.plus")
+                                .accessibility(label: Text("Add members"))
+                        }
+                        
+                    NavigationLink(destination: GroupMembersView(group: group)) {
+                            Label("Group members", systemImage: "person.2.fill")
+                                .accessibility(label: Text("Group members"))
+                        }
+                    
+                    NavigationLink(destination: RoomsEditView(group: group)) {
+                            Label("Rooms", systemImage: "text.bubble.fill")
+                                .accessibility(label: Text("Rooms"))
+                        }
+                    }
+                }.background(Color("BackgroundForm"))
         }.onAppear {
             Global.tabBar!.isHidden = true
-        }.background(Color("BackgroundColor"))
+        }.background(Color("BackgroundForm"))
 //        .onDisappear {
 //            Global.tabBar!.isHidden = false
 //        }

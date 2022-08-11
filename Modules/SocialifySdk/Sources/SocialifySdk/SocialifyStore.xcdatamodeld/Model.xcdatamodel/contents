@@ -18,6 +18,7 @@
     <entity name="ChatGroup" representedClassName="ChatGroup" syncable="YES" codeGenerationType="class">
         <attribute name="groupDescription" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="myRole" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <entity name="DM" representedClassName="DM" syncable="YES" codeGenerationType="class">

@@ -72,7 +72,7 @@ struct NavigationBarView: View {
                     }
                 }
                 .tabItem {
-                    Label("Chats", systemImage: "message.fill")
+                    Label("Chats", systemImage: "bubble.left.fill")
                         .accessibility(label: Text("Chats"))
                 }
                 
