@@ -28,6 +28,9 @@ struct GroupView: View {
     @State private var currentRoom: SocialifyClient.GroupRoom?
     @State private var isRoomsShown: Bool = false
     @State private var isVoiceRoomAlertShown: Bool = false
+    @State private var lastMessageIndex: String = ""
+    
+    @Namespace var bottomId
     
     @State var isShowPicker: Bool = false
     @State var isImagePicked: Bool = false
@@ -161,65 +164,96 @@ struct GroupView: View {
     }
     
     var messagesArea: some View {
-        ForEach(Array(messages.enumerated()), id: \.element) { index, message in
-            if(message.room == currentRoom?.id) {
-                if(message.username != currentAccount?.username) {
-                    VStack {
-                        if(index == 0 || messages[index-1].username != message.username) {
-                            HStack {
-                                Spacer()
-                                    .frame(width: 44)
-                                
-                                Text(message.username ?? "<username can't be loaded>")
-                                    .font(.caption)
-                                    .foregroundColor(Color("CustomForegroundColor"))
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.leading, 18)
-                            }.padding(.bottom, -2)
-                            Spacer()
-                        }
-                        
-                        
-                        HStack {
-                            
-                            if messages.count-1 == index || messages.count-1 > index && messages[index+1].username != message.username {
+        VStack {
+            ScrollView {
+                ScrollViewReader { value in
+                    ForEach(Array(messages.enumerated()), id: \.element) { index, message in
+                        if(message.room == currentRoom?.id) {
+                            if(message.username != currentAccount?.username) {
                                 VStack {
+                                    if(index == 0 || messages[index-1].username != message.username) {
+                                        HStack {
+                                            Spacer()
+                                                .frame(width: 44)
+                                            
+                                            Text(message.username ?? "<username can't be loaded>")
+                                                .font(.caption)
+                                                .foregroundColor(Color("CustomForegroundColor"))
+                                                .frame(maxWidth: .infinity, alignment: .leading)
+                                                .padding(.leading, 18)
+                                        }.padding(.bottom, -2)
+                                        Spacer()
+                                    }
+                                    
+                                    
+                                    HStack {
+                                        
+                                        if messages.count-1 == index || messages.count-1 > index && messages[index+1].username != message.username {
+                                            VStack {
+                                                Spacer()
+                                                Image(systemName: "person.circle.fill")
+                                                    .renderingMode(.template)
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
+                                                    .frame(height: 32)
+                                                    .foregroundColor(.accentColor)
+                                                    .padding(.trailing, 4)
+                                            }
+                                        } else {
+                                            VStack {
+                                                Spacer()
+                                                    .frame(width: 36)
+                                            }
+                                        }
+                                        
+                                        LeftMessageBubble(message: message, media: media)
+                                    }
                                     Spacer()
-                                    Image(systemName: "person.circle.fill")
-                                        .renderingMode(.template)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(height: 32)
-                                        .foregroundColor(.accentColor)
-                                        .padding(.trailing, 4)
+                                }.id(message.id)
+                                .onAppear {
+                                    lastMessageIndex = message.id!
                                 }
                             } else {
-                                VStack {
-                                    Spacer()
-                                        .frame(width: 36)
+                                HStack {
+                                    RightMessageBubble(message: message, media: media)
+                                }.id(message.id)
+                                .onAppear {
+                                    lastMessageIndex = message.id!
                                 }
                             }
-                            
-                            LeftMessageBubble(message: message, media: media)
                         }
-                        Spacer()
-                    }.id(index)
-                } else {
-                    HStack {
-                        RightMessageBubble(message: message, media: media)
-                    }.id(index)
+                    }.onAppear {
+                        value.scrollTo(bottomId)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            withAnimation {
+                                value.scrollTo(bottomId)
+                            }
+                        }
+                    }
+                    .onChange(of: lastMessageIndex) { _ in
+                        value.scrollTo(bottomId)
+                    }
+                    
+                    VStack {}
+                        .id(bottomId)
+                        .padding(0)
                 }
+//                .onChange(of: lastMessageIndex) { _ in
+//                    value.scrollTo(lastMessageIndex)
+//                }
+//                .onAppear {
+//                    print("JKJKJKJKK")
+//                    print(lastMessageIndex)
+//                    print("JKJKJKJKK")
+//                    value.scrollTo(lastMessageIndex)
+//                }
             }
         }
     }
     
     var body: some View {
         VStack {
-            ScrollViewReader { value in
-                ScrollView {
-                    messagesArea
-                }
-            }
+            messagesArea
             Spacer()
             messageField
         }
