@@ -6,8 +6,22 @@
 //
 
 import SwiftUI
+import SocialifySdk
+
+struct Global {
+    static var tabBar : UITabBar?
+}
+
+extension UITabBar {
+    override open func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        Global.tabBar = self
+        print("Tab Bar moved to superview")
+    }
+}
 
 struct NavigationBarView: View {
+    @StateObject var client: SocialifyClient = SocialifyClient.shared
     @State private var showLoginModal = false
     
     var body: some View {
@@ -41,20 +55,41 @@ struct NavigationBarView: View {
         
         
         
-        
-        TabView() {
-            NavigationView {
-                ChatsView()
+        ZStack {
+            TabView() {
+                NavigationView {
+                    ChatsView()
+                    .toolbar {
+                        ToolbarItem(placement: .navigationBarLeading) {
+                            Button(action: {
+                                print("dupa")
+                            }) {
+                                Text(" Edit")
+                            }
                         }
+                        
+                        ToolbarItem(placement: .navigationBarTrailing) {
+                            NavigationLink(destination: AddGroupView()) {
+                                Image(systemName: "square.and.pencil")
+                            }
+                        }
+                    }
+                }
                 .tabItem {
-                Label("Chats", systemImage: "message.fill")
-                    .accessibility(label: Text("Chats"))
-            } 
-            
-            ChatsView()
-            .tabItem {
-                Label("More", systemImage: "ellipsis.circle.fill")
-                    .accessibility(label: Text("More"))
+                    Label("Chats", systemImage: "bubble.left.fill")
+                        .accessibility(label: Text("Chats"))
+                }
+                
+                NavigationView {
+                    MoreView(account: client.getCurrentAccount())
+                        .toolbar {
+                            
+                        }
+                    }
+                    .tabItem {
+                        Label("Settings", systemImage: "gear")
+                            .accessibility(label: Text("Settings"))
+                }
             }
         }
     }

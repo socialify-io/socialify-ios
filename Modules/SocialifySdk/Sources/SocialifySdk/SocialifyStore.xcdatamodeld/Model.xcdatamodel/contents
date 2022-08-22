@@ -1,17 +1,71 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19186" systemVersion="20E241" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21256.2" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName="Account" syncable="YES" codeGenerationType="class">
-        <attribute name="deviceId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="avatar" optional="YES" attributeType="Binary"/>
+        <attribute name="bio" optional="YES" attributeType="String"/>
+        <attribute name="deviceId" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" valueTransformerName="Int" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="isCurrentAccount" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String"/>
         <attribute name="username" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="Room" representedClassName="Room" syncable="YES" codeGenerationType="class">
+    <entity name="Chat" representedClassName="Chat" syncable="YES" codeGenerationType="class">
+        <attribute name="avatar" optional="YES" attributeType="Binary"/>
+        <attribute name="avatarHash" optional="YES" attributeType="String"/>
+        <attribute name="chatId" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="roomId" optional="YES" attributeType="String"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="userId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
-    <elements>
-        <element name="Account" positionX="-63" positionY="-18" width="128" height="89"/>
-        <element name="Room" positionX="-63" positionY="9" width="128" height="59"/>
-    </elements>
+    <entity name="ChatGroup" representedClassName="ChatGroup" syncable="YES" codeGenerationType="class">
+        <attribute name="groupDescription" optional="YES" attributeType="String"/>
+        <attribute name="icon" optional="YES" attributeType="Binary"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="myRole" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="DM" representedClassName="DM" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="isRead" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="message" optional="YES" attributeType="String"/>
+        <attribute name="receiverId" optional="YES" attributeType="String"/>
+        <attribute name="senderId" optional="YES" attributeType="String"/>
+        <attribute name="username" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="E2EKey" representedClassName="E2EKey" syncable="YES" codeGenerationType="class">
+        <attribute name="deviceId" optional="YES" attributeType="String"/>
+        <attribute name="dmId" optional="YES" attributeType="String"/>
+        <attribute name="key" optional="YES" attributeType="String"/>
+        <attribute name="userId" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Media" representedClassName="Media" syncable="YES" codeGenerationType="class">
+        <attribute name="chatId" optional="YES" attributeType="String"/>
+        <attribute name="messageId" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="url" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="Message" representedClassName="Message" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="group" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="isRead" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="isSystemNotification" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="message" optional="YES" attributeType="String"/>
+        <attribute name="room" optional="YES" attributeType="String"/>
+        <attribute name="sender" optional="YES" attributeType="String"/>
+        <attribute name="username" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="PendingDM" representedClassName="PendingDM" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="message" optional="YES" attributeType="String"/>
+        <attribute name="receiverId" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
+        <attribute name="avatar" optional="YES" attributeType="Binary"/>
+        <attribute name="avatarHash" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="username" optional="YES" attributeType="String"/>
+    </entity>
 </model>

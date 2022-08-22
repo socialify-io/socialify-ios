@@ -15,20 +15,15 @@ extension SocialifyClient {
     
     // MARK: - Sending request
     
-    func request(request: URLRequest, authTokenHeader: String, completion: @escaping (Result<JSON, Error>) -> Void) {
+    func request(request: URLRequest, timestamp: TimeInterval, completion: @escaping (Result<JSON, Error>) -> Void) {
         var request = request
-        let timestamp = NSDate().timeIntervalSince1970
         
-        let authToken = generateAuthToken(timestamp: "\(Int(timestamp))", authTokenHeader: authTokenHeader)
-        
-        request.allHTTPHeaderFields = [
-            "Content-Type": "application/json",
-            "User-Agent": userAgent,
-            "OS": systemVersion,
-            "Timestamp": "\(Int(timestamp))",
-            "AppVersion": LIBRARY_VERSION,
-            "AuthToken": "\(authToken ?? "")"
-        ]
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue(userAgent, forHTTPHeaderField: "User-Agent")
+        request.addValue(systemVersion, forHTTPHeaderField: "OS")
+        request.addValue("\(Int(timestamp))", forHTTPHeaderField: "Timestamp")
+        request.addValue(LIBRARY_VERSION, forHTTPHeaderField: "AppVersion")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             if(error?._code.littleEndian == -1004) {
@@ -44,7 +39,7 @@ extension SocialifyClient {
                 do {
                     let responseBody = try JSON(data: data)
                     if(responseBody["success"] == false) {
-                        let errorCode: Int = responseBody["errors"][0]["code"].rawValue as! Int
+                        let errorCode: Int = responseBody["error"]["code"].rawValue as! Int
                         completion(.failure(self.parseErrorCode(errorCode: errorCode)))
                     } else if(responseBody["success"] == true) {
                         completion(.success(responseBody))
@@ -59,7 +54,7 @@ extension SocialifyClient {
         }.resume()
     }
     
-    func generateAuthToken(timestamp: String, authTokenHeader: String) -> String? {
+    public func generateAuthToken(timestamp: String, authTokenHeader: String) -> String? {
         let salt = BCryptSwift.generateSalt()
         return BCryptSwift.hashPassword("$begin-\(authTokenHeader)$.\(LIBRARY_VERSION)+\(systemVersion)+\(userAgent)#\(timestamp)#.$end-\(authTokenHeader)$", withSalt: salt)
     }

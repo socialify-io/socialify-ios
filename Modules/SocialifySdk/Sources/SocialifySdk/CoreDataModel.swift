@@ -9,28 +9,20 @@ import Foundation
 import CoreData
 import os
 
+@available(iOS 14.0, *)
 @available(iOSApplicationExtension 14.0, *)
-public final class CoreDataModel {
+public final class CoreDataModel: ObservableObject {
     public static let shared: CoreDataModel = CoreDataModel()
     private let logger: Logger = Logger(subsystem: "\(Bundle.main.bundleIdentifier!).CoreData", category: "CoreData")
     
     private init() {}
     
     lazy public var persistentContainer: NSPersistentContainer = {
-        let groupURL: URL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "io.Socialify.socialify-ios.socialifyGroup")!.appendingPathComponent("socialify.sqlite")
+
         let modelURL = Bundle.module.url(forResource: "SocialifyStore", withExtension: "momd")
         let model = NSManagedObjectModel(contentsOf: modelURL!)
-        
-        let container = NSPersistentContainer(name: "VulcanStore", managedObjectModel: model!)
 
-        let description: NSPersistentStoreDescription = NSPersistentStoreDescription()
-        description.url = groupURL
-        description.shouldMigrateStoreAutomatically = true
-        description.shouldInferMappingModelAutomatically = true
-        description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
-        description.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
-        
-        container.persistentStoreDescriptions = [description]
+        let container = NSPersistentContainer(name: "SocialifyStore", managedObjectModel: model!)
         container.loadPersistentStores { storeDescription, error in
             if let error = error {
                 self.logger.error("Could not load store: \(error.localizedDescription)")
@@ -38,12 +30,13 @@ public final class CoreDataModel {
                 self.clearDatabase()
                 return
             }
-            
+
             container.viewContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             self.logger.info("Store loaded!")
         }
-        
+
         return container
+
     }()
     
     /// Saves the CoreData context.

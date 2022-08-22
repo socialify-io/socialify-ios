@@ -8,14 +8,17 @@
 import Foundation
 import SwiftUI
 import SocialifySdk
+import UIKit
 
 struct LoginView: View {
+    @AppStorage("isLogged") private var isLogged: Bool = false
+    
     @StateObject var client: SocialifyClient = SocialifyClient.shared
     @Environment(\.presentationMode) var presentationMode
     
     let cellHeight: CGFloat = 55
     let cornerRadius: CGFloat = 12
-    let cellBackground: Color = Color(UIColor.systemGray5).opacity(0.5)
+    let cellBackground: Color = Color("CustomAppearanceItemColor")
     let borderColor: Color = Color(UIColor.systemGray).opacity(0)
     
     @State private var clicked: Bool = false
@@ -111,19 +114,27 @@ struct LoginView: View {
                     switch(value) {
                     case .success(let value):
                         print(value)
-                        self.presentationMode.wrappedValue.dismiss()
-                        
+                        if(isLogged) {
+                            self.presentationMode.wrappedValue.dismiss()
+                        } else {
+                            isLogged = true
+                            NavigationBarView()
+                                .onAppear {
+                                    SocketIOManager.sharedInstance.connect()
+                                }
+                        }
+
                     case .failure(let error):
                         switch error {
                         case SocialifyClient.ApiError.InvalidUsername:
                             setButton(textOnStart: "Invalid username", textOnEnd: "login.button")
-                            
+
                         case SocialifyClient.ApiError.InvalidPassword:
                             setButton(textOnStart: "Invalid password", textOnEnd: "login.button")
-                            
+
                         case SocialifyClient.SdkError.NoInternetConnection:
                             errorAlertShow = ErrorAlert(name: "errors.no_connection".localized, description: "errors.no_connection_description".localized)
-                            
+
                         default:
                             print(value)
                             errorAlertShow = ErrorAlert(name: "errors.default".localized, description: "errors.default_description".localized)
@@ -133,16 +144,18 @@ struct LoginView: View {
             }, title: buttonText)
             .padding(.bottom)
         }.padding()
+        .background(Color("BackgroundColor"))
         .sheet(isPresented: $showErrorReportModal, onDismiss: {
             }) {
             NavigationView {
                 ErrorReportView(showErrorReportModal: self.$showErrorReportModal)
                     .navigationBarTitle(Text("Back"))
                     .navigationBarHidden(true)
-                    .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.bottom)
+                    //.background(Color("BackgroundColor")).edgesIgnoringSafeArea(.bottom)
             }
         }
         .alert(item: $errorAlertShow) { error in
+        
             Alert(title: Text(errorAlertShow?.name ?? "errors.default"), message: Text(errorAlertShow?.description ?? "errors.default_description"), primaryButton: .cancel(), secondaryButton: .destructive(Text("errors.button")) { self.showErrorReportModal = true } )
         }
     }

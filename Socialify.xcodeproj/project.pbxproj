@@ -7,10 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5C03BA6C27C19A4E0087F852 /* JoinToRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C03BA6B27C19A4E0087F852 /* JoinToRoomView.swift */; };
+		5C03BA6E27C19A640087F852 /* CreateGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C03BA6D27C19A640087F852 /* CreateGroupView.swift */; };
 		5C0465102687E868006D3126 /* NavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C04650F2687E868006D3126 /* NavigationBarView.swift */; };
+		5C21C38B2874A124007C0B2B /* GroupDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21C38A2874A124007C0B2B /* GroupDetailsView.swift */; };
+		5C21C38D2874A388007C0B2B /* GroupMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21C38C2874A388007C0B2B /* GroupMembersView.swift */; };
+		5C21C38F2874DCE1007C0B2B /* AddGroupMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C21C38E2874DCE1007C0B2B /* AddGroupMembersView.swift */; };
 		5C2A2EDE26B9F46D006CC3D6 /* models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2A2EDD26B9F46D006CC3D6 /* models.swift */; };
+		5C2F3878281EE58400F5142F /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F3877281EE58400F5142F /* ImagePicker.swift */; };
+		5C2F387A281EED2300F5142F /* SendImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F3879281EED2300F5142F /* SendImageView.swift */; };
+		5C2F4803282BD42C000EA08A /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F4802282BD42C000EA08A /* MoreView.swift */; };
+		5C2F4805282C0A3B000EA08A /* PrivacyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F4804282C0A3B000EA08A /* PrivacyView.swift */; };
+		5C2F4807282C125B000EA08A /* DataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F4806282C125A000EA08A /* DataView.swift */; };
+		5C2F4809282D6C3C000EA08A /* LicenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C2F4808282D6C3C000EA08A /* LicenceView.swift */; };
 		5C33AB8D2689D16600640F1C /* FacebookItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C33AB8C2689D16600640F1C /* FacebookItemView.swift */; };
-		5C3AD25E26BC062800D04367 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 5C3AD25D26BC062800D04367 /* KeychainAccess */; };
 		5C3AD26026BC5A5600D04367 /* AccountTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3AD25F26BC5A5600D04367 /* AccountTileView.swift */; };
 		5C3AD26226BC5C3B00D04367 /* AccountCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3AD26126BC5C3B00D04367 /* AccountCardView.swift */; };
 		5C3DD2242613B78F00B8E532 /* CustomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3DD2232613B78F00B8E532 /* CustomButtonView.swift */; };
@@ -21,22 +31,33 @@
 		5C47E84626C32662005F4D0E /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C47E84526C32662005F4D0E /* ChatView.swift */; };
 		5C495BC7261A72100004D538 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C495BC6261A72100004D538 /* LoginView.swift */; };
 		5C4AC87826AF760E005E7027 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4AC87726AF760E005E7027 /* RegisterView.swift */; };
-		5C58B52726C14720008AE2B0 /* NewRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C58B52626C14720008AE2B0 /* NewRoomView.swift */; };
-		5C624B3926C1CE0E00E6432B /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 5C624B3826C1CE0E00E6432B /* SocketIO */; };
+		5C4E0F962899E37400C1E88E /* RoomsEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4E0F952899E37400C1E88E /* RoomsEditView.swift */; };
+		5C4EA433282F03B400F92714 /* ContributorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C4EA432282F03B400F92714 /* ContributorsView.swift */; };
+		5C51429728241AB700921F51 /* getImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C51429628241AB700921F51 /* getImage.swift */; };
+		5C51429928241C3600921F51 /* MessageBubble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C51429828241C3600921F51 /* MessageBubble.swift */; };
+		5C58B52726C14720008AE2B0 /* AddGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C58B52626C14720008AE2B0 /* AddGroupView.swift */; };
 		5C66589B26B5A72F00614E9C /* ErrorReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C66589A26B5A72F00614E9C /* ErrorReportView.swift */; };
+		5C709F1E280D7E9300099E83 /* RoomMembersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C709F1D280D7E9300099E83 /* RoomMembersView.swift */; };
 		5C73EA9B26112822008F7315 /* SocialifyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EA9A26112822008F7315 /* SocialifyApp.swift */; };
 		5C73EA9D26112822008F7315 /* ChatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EA9C26112822008F7315 /* ChatsView.swift */; };
 		5C73EAA226112823008F7315 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C73EAA126112823008F7315 /* Preview Assets.xcassets */; };
 		5C73EAAD26112823008F7315 /* SocialifyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EAAC26112823008F7315 /* SocialifyTests.swift */; };
 		5C73EAB826112823008F7315 /* SocialifyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EAB726112823008F7315 /* SocialifyUITests.swift */; };
 		5C73EAD0261129E1008F7315 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C73EACF261129E1008F7315 /* OnboardingView.swift */; };
-		5C773D7B26B0C152007DE945 /* BCryptSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 5C773D7A26B0C152007DE945 /* BCryptSwift */; };
+		5C785B982825717A000FE1BA /* ChatImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C785B972825717A000FE1BA /* ChatImageView.swift */; };
 		5C7D56122642010100B518C9 /* LoginWithOptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7D56112642010100B518C9 /* LoginWithOptionView.swift */; };
 		5C88D8CE26B8B0F900BAC9A7 /* setColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C88D8CD26B8B0F900BAC9A7 /* setColor.swift */; };
 		5C88D8D726B8CA0600BAC9A7 /* string.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C88D8D626B8CA0600BAC9A7 /* string.swift */; };
+		5C89D9C526D2F08C0099564E /* DMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C89D9C426D2F08C0099564E /* DMView.swift */; };
+		5C9879FE287DD02A0084F5D7 /* LinkDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C9879FD287DD02A0084F5D7 /* LinkDetailsView.swift */; };
+		5CA265F42873A96100EF780E /* GroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA265F32873A96100EF780E /* GroupView.swift */; };
 		5CADDB9C2611E72200F690D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C73EA9E26112823008F7315 /* Assets.xcassets */; };
 		5CADDBB92611F5A100F690D0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5CADDBBB2611F5A100F690D0 /* Localizable.strings */; };
 		5CC47C6126B0A2E90001BB7D /* SocialifySdk in Frameworks */ = {isa = PBXBuildFile; productRef = 5CC47C6026B0A2E90001BB7D /* SocialifySdk */; };
+		5CC7716E28ABE2C2008F962C /* NewContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC7716D28ABE2C2008F962C /* NewContactView.swift */; };
+		5CC7717028AC27B5008F962C /* UserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC7716F28AC27B4008F962C /* UserDetailsView.swift */; };
+		5CE1DF5728A192970082371F /* CreateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE1DF5628A192960082371F /* CreateRoomView.swift */; };
+		5CFFD58F27E265880038C108 /* RoomDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFFD58E27E265880038C108 /* RoomDetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,8 +78,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5C03BA6B27C19A4E0087F852 /* JoinToRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinToRoomView.swift; sourceTree = "<group>"; };
+		5C03BA6D27C19A640087F852 /* CreateGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
 		5C04650F2687E868006D3126 /* NavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarView.swift; sourceTree = "<group>"; };
+		5C21C38A2874A124007C0B2B /* GroupDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDetailsView.swift; sourceTree = "<group>"; };
+		5C21C38C2874A388007C0B2B /* GroupMembersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupMembersView.swift; sourceTree = "<group>"; };
+		5C21C38E2874DCE1007C0B2B /* AddGroupMembersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupMembersView.swift; sourceTree = "<group>"; };
 		5C2A2EDD26B9F46D006CC3D6 /* models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = models.swift; sourceTree = "<group>"; };
+		5C2F3877281EE58400F5142F /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		5C2F3879281EED2300F5142F /* SendImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendImageView.swift; sourceTree = "<group>"; };
+		5C2F4802282BD42C000EA08A /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
+		5C2F4804282C0A3B000EA08A /* PrivacyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyView.swift; sourceTree = "<group>"; };
+		5C2F4806282C125A000EA08A /* DataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataView.swift; sourceTree = "<group>"; };
+		5C2F4808282D6C3C000EA08A /* LicenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenceView.swift; sourceTree = "<group>"; };
 		5C33AB8C2689D16600640F1C /* FacebookItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookItemView.swift; sourceTree = "<group>"; };
 		5C3AD25F26BC5A5600D04367 /* AccountTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTileView.swift; sourceTree = "<group>"; };
 		5C3AD26126BC5C3B00D04367 /* AccountCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountCardView.swift; sourceTree = "<group>"; };
@@ -71,8 +103,13 @@
 		5C495BC6261A72100004D538 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		5C4AC87726AF760E005E7027 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		5C4AC88126AF8EFB005E7027 /* SocialifySdk */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SocialifySdk; path = Modules/SocialifySdk; sourceTree = SOURCE_ROOT; };
-		5C58B52626C14720008AE2B0 /* NewRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRoomView.swift; sourceTree = "<group>"; };
+		5C4E0F952899E37400C1E88E /* RoomsEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomsEditView.swift; sourceTree = "<group>"; };
+		5C4EA432282F03B400F92714 /* ContributorsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorsView.swift; sourceTree = "<group>"; };
+		5C51429628241AB700921F51 /* getImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = getImage.swift; sourceTree = "<group>"; };
+		5C51429828241C3600921F51 /* MessageBubble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBubble.swift; sourceTree = "<group>"; };
+		5C58B52626C14720008AE2B0 /* AddGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupView.swift; sourceTree = "<group>"; };
 		5C66589A26B5A72F00614E9C /* ErrorReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReportView.swift; sourceTree = "<group>"; };
+		5C709F1D280D7E9300099E83 /* RoomMembersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomMembersView.swift; sourceTree = "<group>"; };
 		5C73EA9726112822008F7315 /* Socialify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Socialify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C73EA9A26112822008F7315 /* SocialifyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialifyApp.swift; sourceTree = "<group>"; };
 		5C73EA9C26112822008F7315 /* ChatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsView.swift; sourceTree = "<group>"; };
@@ -86,11 +123,20 @@
 		5C73EAB726112823008F7315 /* SocialifyUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialifyUITests.swift; sourceTree = "<group>"; };
 		5C73EAB926112823008F7315 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5C73EACF261129E1008F7315 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		5C785B972825717A000FE1BA /* ChatImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatImageView.swift; sourceTree = "<group>"; };
 		5C7D56112642010100B518C9 /* LoginWithOptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithOptionView.swift; sourceTree = "<group>"; };
 		5C88D8CD26B8B0F900BAC9A7 /* setColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setColor.swift; sourceTree = "<group>"; };
 		5C88D8D626B8CA0600BAC9A7 /* string.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = string.swift; sourceTree = "<group>"; };
+		5C89D9C426D2F08C0099564E /* DMView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMView.swift; sourceTree = "<group>"; };
+		5C9879FD287DD02A0084F5D7 /* LinkDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkDetailsView.swift; sourceTree = "<group>"; };
+		5CA265F32873A96100EF780E /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
 		5CADDBBA2611F5A100F690D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5CADDBBF2611F5DB00F690D0 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5CC2CFF027B5C446001CFB40 /* Socialify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Socialify.entitlements; sourceTree = "<group>"; };
+		5CC7716D28ABE2C2008F962C /* NewContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContactView.swift; sourceTree = "<group>"; };
+		5CC7716F28AC27B4008F962C /* UserDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsView.swift; sourceTree = "<group>"; };
+		5CE1DF5628A192960082371F /* CreateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomView.swift; sourceTree = "<group>"; };
+		5CFFD58E27E265880038C108 /* RoomDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,9 +144,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C3AD25E26BC062800D04367 /* KeychainAccess in Frameworks */,
-				5C773D7B26B0C152007DE945 /* BCryptSwift in Frameworks */,
-				5C624B3926C1CE0E00E6432B /* SocketIO in Frameworks */,
 				5CC47C6126B0A2E90001BB7D /* SocialifySdk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -122,6 +165,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5C03BA6A27C19A350087F852 /* Rooms */ = {
+			isa = PBXGroup;
+			children = (
+				5C03BA6B27C19A4E0087F852 /* JoinToRoomView.swift */,
+				5C47E84326C32079005F4D0E /* RoomView.swift */,
+				5CFFD58E27E265880038C108 /* RoomDetailsView.swift */,
+				5C709F1D280D7E9300099E83 /* RoomMembersView.swift */,
+			);
+			path = Rooms;
+			sourceTree = "<group>";
+		};
 		5C04650E2687E829006D3126 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,6 +183,18 @@
 				5C44F354268921E7003A5768 /* TabBarIcon.swift */,
 			);
 			path = Navigation;
+			sourceTree = "<group>";
+		};
+		5C2F4801282BD419000EA08A /* More */ = {
+			isa = PBXGroup;
+			children = (
+				5C2F4802282BD42C000EA08A /* MoreView.swift */,
+				5C2F4804282C0A3B000EA08A /* PrivacyView.swift */,
+				5C2F4806282C125A000EA08A /* DataView.swift */,
+				5C2F4808282D6C3C000EA08A /* LicenceView.swift */,
+				5C4EA432282F03B400F92714 /* ContributorsView.swift */,
+			);
+			path = More;
 			sourceTree = "<group>";
 		};
 		5C3DD2192613B33600B8E532 /* Login */ = {
@@ -147,6 +213,9 @@
 				5C7D56112642010100B518C9 /* LoginWithOptionView.swift */,
 				5C33AB8C2689D16600640F1C /* FacebookItemView.swift */,
 				5C88D8CD26B8B0F900BAC9A7 /* setColor.swift */,
+				5C51429628241AB700921F51 /* getImage.swift */,
+				5C51429828241C3600921F51 /* MessageBubble.swift */,
+				5C785B972825717A000FE1BA /* ChatImageView.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -174,10 +243,14 @@
 		5C58B52526C146F5008AE2B0 /* Chats */ = {
 			isa = PBXGroup;
 			children = (
+				5CFB3783287119BA00F3E2B9 /* Groups */,
+				5C03BA6A27C19A350087F852 /* Rooms */,
 				5C73EA9C26112822008F7315 /* ChatsView.swift */,
-				5C58B52626C14720008AE2B0 /* NewRoomView.swift */,
-				5C47E84326C32079005F4D0E /* RoomView.swift */,
 				5C47E84526C32662005F4D0E /* ChatView.swift */,
+				5C89D9C426D2F08C0099564E /* DMView.swift */,
+				5C2F3877281EE58400F5142F /* ImagePicker.swift */,
+				5CC7716D28ABE2C2008F962C /* NewContactView.swift */,
+				5CC7716F28AC27B4008F962C /* UserDetailsView.swift */,
 			);
 			path = Chats;
 			sourceTree = "<group>";
@@ -215,6 +288,7 @@
 		5C73EA9926112822008F7315 /* Socialify */ = {
 			isa = PBXGroup;
 			children = (
+				5CC2CFF027B5C446001CFB40 /* Socialify.entitlements */,
 				5C88D8D526B8C9D900BAC9A7 /* helpers */,
 				5CADDBB32611F56200F690D0 /* Localization */,
 				5C73EACA261129B0008F7315 /* Views */,
@@ -271,6 +345,7 @@
 		5C73EACA261129B0008F7315 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5C2F4801282BD419000EA08A /* More */,
 				5C58B52526C146F5008AE2B0 /* Chats */,
 				5C66589926B5A71C00614E9C /* ErrorReport */,
 				5C44F3562689422F003A5768 /* AccountManager */,
@@ -305,6 +380,23 @@
 			path = Localization;
 			sourceTree = "<group>";
 		};
+		5CFB3783287119BA00F3E2B9 /* Groups */ = {
+			isa = PBXGroup;
+			children = (
+				5C58B52626C14720008AE2B0 /* AddGroupView.swift */,
+				5C03BA6D27C19A640087F852 /* CreateGroupView.swift */,
+				5CA265F32873A96100EF780E /* GroupView.swift */,
+				5C21C38A2874A124007C0B2B /* GroupDetailsView.swift */,
+				5C21C38C2874A388007C0B2B /* GroupMembersView.swift */,
+				5C21C38E2874DCE1007C0B2B /* AddGroupMembersView.swift */,
+				5C2F3879281EED2300F5142F /* SendImageView.swift */,
+				5C9879FD287DD02A0084F5D7 /* LinkDetailsView.swift */,
+				5C4E0F952899E37400C1E88E /* RoomsEditView.swift */,
+				5CE1DF5628A192960082371F /* CreateRoomView.swift */,
+			);
+			path = Groups;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -323,9 +415,6 @@
 			name = Socialify;
 			packageProductDependencies = (
 				5CC47C6026B0A2E90001BB7D /* SocialifySdk */,
-				5C773D7A26B0C152007DE945 /* BCryptSwift */,
-				5C3AD25D26BC062800D04367 /* KeychainAccess */,
-				5C624B3826C1CE0E00E6432B /* SocketIO */,
 			);
 			productName = Socialify;
 			productReference = 5C73EA9726112822008F7315 /* Socialify.app */;
@@ -400,10 +489,6 @@
 			);
 			mainGroup = 5C73EA8E26112822008F7315;
 			packageReferences = (
-				5C773D7926B0C152007DE945 /* XCRemoteSwiftPackageReference "BCryptSwift" */,
-				5C5FF0E426B2354700FD6636 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				5C3AD25C26BC062800D04367 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
-				5C624B3726C1CE0E00E6432B /* XCRemoteSwiftPackageReference "socket" */,
 			);
 			productRefGroup = 5C73EA9826112822008F7315 /* Products */;
 			projectDirPath = "";
@@ -448,26 +533,50 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C21C38F2874DCE1007C0B2B /* AddGroupMembersView.swift in Sources */,
+				5C4E0F962899E37400C1E88E /* RoomsEditView.swift in Sources */,
+				5C2F4805282C0A3B000EA08A /* PrivacyView.swift in Sources */,
+				5C709F1E280D7E9300099E83 /* RoomMembersView.swift in Sources */,
 				5C3DD2242613B78F00B8E532 /* CustomButtonView.swift in Sources */,
+				5C2F387A281EED2300F5142F /* SendImageView.swift in Sources */,
 				5C3AD26026BC5A5600D04367 /* AccountTileView.swift in Sources */,
+				5C2F3878281EE58400F5142F /* ImagePicker.swift in Sources */,
+				5C2F4807282C125B000EA08A /* DataView.swift in Sources */,
 				5C33AB8D2689D16600640F1C /* FacebookItemView.swift in Sources */,
+				5C03BA6E27C19A640087F852 /* CreateGroupView.swift in Sources */,
+				5C51429928241C3600921F51 /* MessageBubble.swift in Sources */,
 				5C4AC87826AF760E005E7027 /* RegisterView.swift in Sources */,
+				5CFFD58F27E265880038C108 /* RoomDetailsView.swift in Sources */,
+				5C785B982825717A000FE1BA /* ChatImageView.swift in Sources */,
 				5C47E84626C32662005F4D0E /* ChatView.swift in Sources */,
+				5CC7716E28ABE2C2008F962C /* NewContactView.swift in Sources */,
 				5C3DD22A2613C81700B8E532 /* MediaItemView.swift in Sources */,
 				5C73EA9D26112822008F7315 /* ChatsView.swift in Sources */,
 				5C3AD26226BC5C3B00D04367 /* AccountCardView.swift in Sources */,
-				5C58B52726C14720008AE2B0 /* NewRoomView.swift in Sources */,
+				5CE1DF5728A192970082371F /* CreateRoomView.swift in Sources */,
+				5C58B52726C14720008AE2B0 /* AddGroupView.swift in Sources */,
+				5CA265F42873A96100EF780E /* GroupView.swift in Sources */,
 				5C495BC7261A72100004D538 /* LoginView.swift in Sources */,
+				5C2F4809282D6C3C000EA08A /* LicenceView.swift in Sources */,
+				5C03BA6C27C19A4E0087F852 /* JoinToRoomView.swift in Sources */,
 				5C7D56122642010100B518C9 /* LoginWithOptionView.swift in Sources */,
 				5C73EAD0261129E1008F7315 /* OnboardingView.swift in Sources */,
 				5C44F355268921E7003A5768 /* TabBarIcon.swift in Sources */,
 				5C88D8CE26B8B0F900BAC9A7 /* setColor.swift in Sources */,
 				5C73EA9B26112822008F7315 /* SocialifyApp.swift in Sources */,
+				5C2F4803282BD42C000EA08A /* MoreView.swift in Sources */,
 				5C66589B26B5A72F00614E9C /* ErrorReportView.swift in Sources */,
 				5C44F35A26894265003A5768 /* AccountManagerView.swift in Sources */,
+				5C21C38D2874A388007C0B2B /* GroupMembersView.swift in Sources */,
+				5C89D9C526D2F08C0099564E /* DMView.swift in Sources */,
+				5C4EA433282F03B400F92714 /* ContributorsView.swift in Sources */,
 				5C88D8D726B8CA0600BAC9A7 /* string.swift in Sources */,
+				5C21C38B2874A124007C0B2B /* GroupDetailsView.swift in Sources */,
+				5C9879FE287DD02A0084F5D7 /* LinkDetailsView.swift in Sources */,
+				5CC7717028AC27B5008F962C /* UserDetailsView.swift in Sources */,
 				5C47E84426C32079005F4D0E /* RoomView.swift in Sources */,
 				5C0465102687E868006D3126 /* NavigationBarView.swift in Sources */,
+				5C51429728241AB700921F51 /* getImage.swift in Sources */,
 				5C2A2EDE26B9F46D006CC3D6 /* models.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -569,7 +678,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -626,7 +735,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -641,20 +750,29 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGN_ENTITLEMENTS = Socialify/Socialify.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Socialify/Preview Content\"";
 				DEVELOPMENT_TEAM = AAPC4WPC5Y;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Socialify/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.Socialify.socialify-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -665,20 +783,29 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGNING_ALLOWED = YES;
+				CODE_SIGN_ENTITLEMENTS = Socialify/Socialify.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Socialify/Preview Content\"";
 				DEVELOPMENT_TEAM = AAPC4WPC5Y;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Socialify/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				NEW_SETTING = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "io.Socialify.socialify-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
+				SUPPORTS_MACCATALYST = YES;
+				SWIFT_COMPILATION_MODE = singlefile;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -805,57 +932,7 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		5C3AD25C26BC062800D04367 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
-			requirement = {
-				kind = exactVersion;
-				version = 4.2.2;
-			};
-		};
-		5C5FF0E426B2354700FD6636 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON";
-			requirement = {
-				kind = exactVersion;
-				version = 5.0.0;
-			};
-		};
-		5C624B3726C1CE0E00E6432B /* XCRemoteSwiftPackageReference "socket" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/socketio/socket.io-client-swift";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-		5C773D7926B0C152007DE945 /* XCRemoteSwiftPackageReference "BCryptSwift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Pengwius/BCryptSwift";
-			requirement = {
-				kind = exactVersion;
-				version = 1.1.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		5C3AD25D26BC062800D04367 /* KeychainAccess */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5C3AD25C26BC062800D04367 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
-			productName = KeychainAccess;
-		};
-		5C624B3826C1CE0E00E6432B /* SocketIO */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5C624B3726C1CE0E00E6432B /* XCRemoteSwiftPackageReference "socket" */;
-			productName = SocketIO;
-		};
-		5C773D7A26B0C152007DE945 /* BCryptSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5C773D7926B0C152007DE945 /* XCRemoteSwiftPackageReference "BCryptSwift" */;
-			productName = BCryptSwift;
-		};
 		5CC47C6026B0A2E90001BB7D /* SocialifySdk */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SocialifySdk;

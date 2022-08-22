@@ -9,17 +9,11 @@ import SwiftUI
 import SocialifySdk
 
 @main
+
 @available(iOS 13.0, *)
 struct SocialifyApp: App {
-    @AppStorage("isLogged") private var isLogged: Bool = true
+    @AppStorage("isLogged") private var isLogged: Bool = false
     @AppStorage("needsAppOnboarding") private var needsAppOnboarding: Bool = true
-    
-    init () {
-        if(isLogged) {
-            SocketIOManager.sharedInstance.connect()
-            SocketIOManager.sharedInstance.listenForMessages()
-        }
-    }
     
     var body: some Scene {
         WindowGroup {
@@ -28,16 +22,20 @@ struct SocialifyApp: App {
             } else {
                 if(isLogged) {
                     NavigationBarView()
+                        .onAppear {
+                            SocketIOManager.sharedInstance.connect()
+                            
+                        }
+                        .environment(\.managedObjectContext, CoreDataModel.shared.persistentContainer.viewContext)
                 } else {
                     NavigationView {
                         LoginView()
                             .navigationBarTitle(Text("Back"))
                             .navigationBarHidden(true)
-                            .background(Color("BackgroundColor").ignoresSafeArea(.all))
+                            //.background(Color("BackgroundColor").ignoresSafeArea(.all))
                     }
                 }
             }
         }
     }
 }
-

@@ -22,30 +22,50 @@ extension SocialifyClient {
             switch value {
             case .success(let value):
                 do {
-                    let passwordClear = try ClearMessage(string: password, using: .utf8)
+                    let serverPublicKey = value.0
+                    let privateKey = generatePrivateKey()
+                    let symmetricKey = try! deriveSymmetricKey(privateKey: privateKey, publicKey: serverPublicKey)
                     
-                    let encryptedPassword = try passwordClear.encrypted(with: value.0, padding: .OAEP).data.base64EncodedString() // 0 means model of public key
+                    let encrypted = try! encrypt(text: password, symmetricKey: symmetricKey)
                     
                     let url = URL(string: "\(self.API_ROUTE)v\(self.API_VERSION)/newDevice")!
+                    
+                    let encryptedCiphertext = encrypted.ciphertext.base64EncodedString()
+                    let encryptedTag = encrypted.tag.base64EncodedString()
+                    let nonceBytes = encrypted.nonce.withUnsafeBytes { Data(Array($0)) }
+                    let nonceData = Data(bytes: nonceBytes)
+                    let nonce = nonceData.withUnsafeBytes {
+                                        (pointer: UnsafePointer<Int8>) -> [Int8] in
+                        let buffer = UnsafeBufferPointer(start: pointer,
+                                                         count: nonceData.count)
+                        return Array<Int8>(buffer)
+                    }
+                    
+                    let encryptedPassword = try! encrypted.combined!
                     
                     var request = URLRequest(url: url)
                     request.httpMethod = "POST"
                     
                     let keys = try SwiftyRSA.generateRSAKeyPair(sizeInBits: 2048)
+                    let signKey = P256.Signing.PrivateKey()
+                    let pubKey = signKey.publicKey
                     
-                    let fingerprint = try Insecure.SHA1.hash(data: keys.privateKey.pemString().data(using: .utf8)!).hexStr
+                    let e2ePrivateKey = generatePrivateKey()
+                    let e2ePublicKeyPem = e2ePrivateKey.publicKey.pemRepresentation
                     
                     let payload: [String: Any] = [
                         "username": username,
-                        "password": encryptedPassword,
+                        "password": encryptedPassword.base64EncodedString().dropFirst(16),
                         "pubKey": value.1, // 1 means public key as string
+                        "clientPubKey": privateKey.publicKey.pemRepresentation,
+                        "nonce": nonce,
                         "device": [
                             "deviceName": "\(self.deviceModel) - \(self.systemVersion)",
                             "timestamp": "\(Int(NSDate().timeIntervalSince1970))",
                             "appVersion": self.LIBRARY_VERSION,
                             "os": self.systemVersion,
-                            "signPubKey": try keys.publicKey.pemString(),
-                            "fingerprint": fingerprint
+                            "signPubKey": pubKey.pemRepresentation,
+                            "publicE2EKey": e2ePublicKeyPem
                         ]
                     ]
                     
@@ -53,7 +73,12 @@ extension SocialifyClient {
                     
                     request.httpBody = jsonPayload
                     
-                    self.request(request: request, authTokenHeader: "newDevice") { value in
+                    let timestamp = NSDate().timeIntervalSince1970
+                    let authToken = self.generateAuthToken(timestamp: "\(Int(timestamp))", authTokenHeader: "newDevice")
+                    
+                    request.addValue(authToken ?? "", forHTTPHeaderField: "AuthToken")
+                    
+                    self.request(request: request, timestamp: timestamp) { value in
                         switch value {
                         case .success(let response):
                             let context = self.persistentContainer.viewContext
@@ -69,9 +94,10 @@ extension SocialifyClient {
                             )
                             
                             model.username = username
-                            model.deviceId = Int64("\(response["data"]["id"])")!
+                            model.deviceId = "\(response["data"]["deviceId"])"
+                            model.userId = "\(response["data"]["userId"])"
+                            model.bio = ""
                             model.isCurrentAccount = true
-
                             
                             let accounts = self.fetchAccounts()
                             
@@ -83,7 +109,7 @@ extension SocialifyClient {
                             
                             model.id = accountId
                             
-                            for account in accounts as! [Account] {
+                            for account in accounts {
                                 if(account.isCurrentAccount) {
                                     account.isCurrentAccount = false
                                 }
@@ -95,8 +121,9 @@ extension SocialifyClient {
                                 try context.save()
                             } catch { completion(.failure(SdkError.SavingContextError)) }
                             
-                            self.keychain["\(accountId)-privateKey"] = try? keys.privateKey.pemString()
-                            
+                            self.keychain["\(accountId)-privateKey"] = signKey.pemRepresentation
+                            self.keychain["\(accountId)-e2ePublicKey"] = e2ePrivateKey.pemRepresentation
+                           
                             completion(.success(true))
                             
                         case .failure(let error):

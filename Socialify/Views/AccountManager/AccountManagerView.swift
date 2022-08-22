@@ -70,14 +70,13 @@ struct AccountManagerView: View {
             }
         }.navigationBarTitle("Accounts")
         .padding()
+        //.background(Color("BackgroundColor"))
         .background(Color("BackgroundColor"))
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button(action: { showLoginModal = true }) {
                     Image(systemName: "plus")
                 }
-                .padding()
-                .padding(.bottom, 16)
             }
         }
         .sheet(isPresented: $showLoginModal, onDismiss: { self.accounts = client.fetchAccounts() }) {
@@ -85,12 +84,16 @@ struct AccountManagerView: View {
                 LoginView()
                     .navigationBarTitle(Text("Back"))
                     .navigationBarHidden(true)
-                    .background(Color("BackgroundColor")).edgesIgnoringSafeArea(.bottom)
+                    //.background(Color("BackgroundColor")).edgesIgnoringSafeArea(.bottom)
             }
         }
         .onAppear {
             self.accounts = client.fetchAccounts()
+            Global.tabBar!.isHidden = true
         }
+//        .onDisappear() {
+//            Global.tabBar!.isHidden = false
+//        }
     }
 }
 

@@ -63,6 +63,7 @@ struct AccountTileView: View {
                 NavigationLink("\(cardImage)", destination: AccountCardView(account: account))
                     .foregroundColor(Color.accentColor)
                     .padding(.trailing, 8)
+                    .padding(.bottom, 8)
 
             }.font(.headline)
             .multilineTextAlignment(.center)
@@ -71,7 +72,6 @@ struct AccountTileView: View {
             .padding(.vertical, 10)
             .background(Color("CustomAppearanceItemColor"))
             .cornerRadius(20)
-            .shadow(color: Color("ShadowColor"), radius: 5)
     }
 }
 
