@@ -10,46 +10,46 @@ import Foundation
 @available(iOS 14.0, *)
 extension SocialifyClient {
     
-//    public struct InfoAboutRoom {
-//        public init(roomId: String,
-//                    isPublic: Bool,
-//                    roomName: String,
-//                    roomMembers: [[String: Any]]
-//        ) {
-//            self.roomId = roomId
-//            self.isPublic = isPublic
-//            self.roomName = roomName
-//            self.roomMembers = []
-//
-//            for member in roomMembers {
-//                self.roomMembers.append(
-//                    RoomMember(id: member["id"] as! String,
-//                               username: member["username"] as! String,
-//                               role: member["role"] as! Int
-//                              )
-//                )
-//            }
-//        }
-//
-//        public var roomId: String
-//        public var isPublic: Bool
-//        public var roomName: String
-//        public var roomMembers: [RoomMember]
-//    }
+    //    public struct InfoAboutRoom {
+    //        public init(roomId: String,
+    //                    isPublic: Bool,
+    //                    roomName: String,
+    //                    roomMembers: [[String: Any]]
+    //        ) {
+    //            self.roomId = roomId
+    //            self.isPublic = isPublic
+    //            self.roomName = roomName
+    //            self.roomMembers = []
+    //
+    //            for member in roomMembers {
+    //                self.roomMembers.append(
+    //                    RoomMember(id: member["id"] as! String,
+    //                               username: member["username"] as! String,
+    //                               role: member["role"] as! Int
+    //                              )
+    //                )
+    //            }
+    //        }
+    //
+    //        public var roomId: String
+    //        public var isPublic: Bool
+    //        public var roomName: String
+    //        public var roomMembers: [RoomMember]
+    //    }
     
-//    links = [{
-//            "_id": str(x['_id']),
-//            "linkName": x['linkName'],
-//            "link": f'{url}/invite/{str(x["_id"])}',
-//            "isAdminApprovalNeeded": x['isAdminApprovalNeeded'],
-//            "isUnlimitedUses": x['isUnlimitedUses'],
-//            "isExpiryDateSet": x['isExpiryDateSet'],
-//            "uses": x['uses'],
-//            "expiryDate": x['expiryDate'],
-//            "usedTimes": x['usedTimes'],
-//            "isForSpecialUsers": x["isForSpecialUsers"],
-//            "specialUsers": x["specialUsers"]
-//        } for x in group['inviteLinks']]
+    //    links = [{
+    //            "_id": str(x['_id']),
+    //            "linkName": x['linkName'],
+    //            "link": f'{url}/invite/{str(x["_id"])}',
+    //            "isAdminApprovalNeeded": x['isAdminApprovalNeeded'],
+    //            "isUnlimitedUses": x['isUnlimitedUses'],
+    //            "isExpiryDateSet": x['isExpiryDateSet'],
+    //            "uses": x['uses'],
+    //            "expiryDate": x['expiryDate'],
+    //            "usedTimes": x['usedTimes'],
+    //            "isForSpecialUsers": x["isForSpecialUsers"],
+    //            "specialUsers": x["specialUsers"]
+    //        } for x in group['inviteLinks']]
     
     public struct GroupLink: Identifiable {
         public init(id: String,
@@ -86,6 +86,7 @@ extension SocialifyClient {
         public var usedTimes: Int
         public var expiryDate: Date?
     }
+    
     
     public struct GroupMember: Identifiable {
         public init(id: String,
@@ -136,21 +137,31 @@ extension SocialifyClient {
         case voice
     }
     
+    public enum SystemNotificationType {
+        case iconUpdate
+    }
+    
+    static func parseSystemNotificationtype(type: Int) -> SystemNotificationType {
+        switch type {
+        case 1:     return SystemNotificationType.iconUpdate
+            
+        default:    return SystemNotificationType.iconUpdate
+        }
+    }
+    
     static func parseRoomType(type: Int) -> RoomType {
         switch type {
-            case 1:     return RoomType.text
-            case 2:     return RoomType.voice
-                
-            default:    return RoomType.text
+        case 1:     return RoomType.text
+        case 2:     return RoomType.voice
+            
+        default:    return RoomType.text
         }
     }
     
     static public func parseFromRoomType(type: RoomType) -> Int {
         switch type {
-            case RoomType.text:     return 1
-            case RoomType.voice:    return 2
-                
-            default:                return 1
+        case RoomType.text:     return 1
+        case RoomType.voice:    return 2
         }
     }
     
@@ -161,10 +172,31 @@ extension SocialifyClient {
     
     static func parseGroupRole(roleId: Int) -> GroupRole {
         switch roleId {
-            case 1:     return GroupRole.admin
-            case 2:     return GroupRole.member
+        case 1:     return GroupRole.admin
+        case 2:     return GroupRole.member
             
-            default:    return GroupRole.member
+        default:    return GroupRole.member
+        }
+    }
+    
+    public enum GroupType {
+        case publicGroup
+        case privateGroup
+    }
+    
+    static func parseToGroupType(typeId: Int) -> GroupType {
+        switch typeId {
+        case 1:     return GroupType.publicGroup
+        case 2:     return GroupType.privateGroup
+            
+        default:    return GroupType.publicGroup
+        }
+    }
+    
+    static func parseFromGroupType(type: GroupType) -> Int {
+        switch type {
+        case GroupType.publicGroup:     return 1
+        case GroupType.privateGroup:    return 2
         }
     }
 }

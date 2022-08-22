@@ -60,7 +60,7 @@ struct GroupMembersView: View {
                 switch(response) {
                 case .success(let resp):
                     groupMembers = resp
-                case .failure(let error):
+                case .failure(_):
                     print("NIE DZIAŁA!!!")
                 }
             }

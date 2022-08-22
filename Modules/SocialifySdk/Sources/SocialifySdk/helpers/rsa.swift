@@ -55,8 +55,6 @@ func genKeysPair() -> Result<[String: String], Error> {
             return .failure(SocialifyClient.SdkError.RSAPrivateKeyToStringError)
         }
         
-        print("Key pair generated OK")
-        
         return .success(response)
     } else {
         print("Error generating key pair: \(statusCode)")

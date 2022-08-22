@@ -9,6 +9,7 @@ import SwiftUI
 import SocialifySdk
 
 @main
+
 @available(iOS 13.0, *)
 struct SocialifyApp: App {
     @AppStorage("isLogged") private var isLogged: Bool = false
@@ -24,14 +25,6 @@ struct SocialifyApp: App {
                         .onAppear {
                             SocketIOManager.sharedInstance.connect()
                             
-                            SocketIOManager.sharedInstance.getDMMessage() { response in
-                                //SocketIOManager.messages.append(response)
-                                
-                            }
-                            
-                            SocketIOManager.sharedInstance.listenForMessages() { response in
-                                
-                            }
                         }
                         .environment(\.managedObjectContext, CoreDataModel.shared.persistentContainer.viewContext)
                 } else {

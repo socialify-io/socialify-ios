@@ -11,20 +11,102 @@ import SocialifySdk
 
 struct GroupDetailsView: View {
     let group: ChatGroup
+   
+    @State private var isShowPicker: Bool = false
+    @State private var showEditSheet: Bool = false
+    @State private var isImagePicked: Bool = false
+    
+    @State private var name: String = ""
+    @State private var about: String = ""
+    @State private var icon: UIImage? = nil
+    
+    private var editHeader: some View {
+        HStack {
+            Spacer()
+            Button(action: {
+                isShowPicker.toggle()
+            }) {
+                VStack {
+                    Image(uiImage: icon ?? UIImage(data: group.icon!)!)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 130, height: 130)
+                        .clipShape(Circle())
+
+                    
+                    Button(action: {
+                        isShowPicker.toggle()
+                    }) {
+                        Text("Change icon")
+                    }
+                }
+            }
+            Spacer()
+        }
+    }
+    
+    private var editView: some View {
+        VStack {
+            Form {
+                Section(header: editHeader
+                    .textCase(nil)
+                    .foregroundColor(nil)) {}
+                
+                Section(header: Text("Name")) {
+                    TextField("Name", text: $name)
+                }
+                
+                Section(header: Text("About"),
+                        footer: Text("Tell something about this group")) {
+                    TextField("About", text: $about)
+                }
+            }
+        }.navigationTitle("Edit group")
+        .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $isShowPicker) {
+            ImagePicker(image: self.$icon, isImagePicked: self.$isImagePicked)
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    showEditSheet.toggle()
+                }) {
+                    Text("Cancel")
+                }
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    if(icon != UIImage(data: group.icon!)) {
+                        SocketIOManager.sharedInstance.updateGroupIcon(groupId: group.id!, icon: icon!) { response in
+                            switch(response) {
+                            case .success(_):
+                                showEditSheet.toggle()
+                                
+                            case .failure(_):
+                                print("ZEPUSLO SIEE")
+                            }
+                        }
+                    }
+                }) {
+                    Text("Done")
+                }
+            }
+        }
+    }
+    
     var body: some View {
         VStack {
             VStack {
             VStack {
                 ZStack {
-                    Image(systemName: "person.circle.fill")
-                        .renderingMode(.template)
+                    Image(uiImage: UIImage(data: group.icon!)!)
                         .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(height: 92)
-                        .foregroundColor(.accentColor)
+                        .aspectRatio(contentMode: .fill)
+                        .clipShape(Circle())
+                        .frame(width: 92, height: 92)
                         .padding(.bottom, 150)
                         .zIndex(2)
-                        //.shadow(color: Color("ShadowColor"), radius: 20)
 
                     VStack {
                         Text(group.name ?? "<name can't be loaded>")
@@ -49,158 +131,12 @@ struct GroupDetailsView: View {
                     .zIndex(1)
                     .cornerRadius(12)
                     .padding(.top, 50)
-                    //.shadow(color: Color("ShadowColor"), radius: 5)
 
                 }.padding(.horizontal)
-                //.padding(.top, 20)
                     .padding(.bottom)
-
-//                HStack {
-//                    VStack(alignment: HorizontalAlignment.center) {
-//                        Image(systemName: "phone.fill")
-//                            .renderingMode(.template)
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(height: 20)
-//                            .padding(.top)
-//                            .padding(.horizontal, 11)
-//
-//                        Text("Call")
-//                            .font(.headline)
-//                            .padding(.horizontal, 34)
-//                            .padding(.bottom)
-//
-//                    }.background(Color("CustomAppearanceItemColor"))
-//                    .cornerRadius(12)
-//                    .padding(.vertical)
-//                    .padding(.horizontal, 4)
-//                    //.shadow(color: Color("ShadowColor"), radius: 5)
-//
-//                    VStack(alignment: HorizontalAlignment.center) {
-//                        Image(systemName: "video.fill")
-//                            .renderingMode(.template)
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(height: 20)
-//                            .padding(.top)
-//                            .padding(.horizontal, 11)
-//
-//                        Text("Video")
-//                            .font(.headline)
-//                            .padding(.horizontal, 34)
-//                            .padding(.bottom)
-//
-//                    }.background(Color("CustomAppearanceItemColor"))
-//                    .cornerRadius(12)
-//                    .padding(.vertical)
-//                    .padding(.horizontal, 4)
-//                    //.shadow(color: Color("ShadowColor"), radius: 5)
-//
-//                    VStack(alignment: HorizontalAlignment.center) {
-//                        Image(systemName: "bell.slash.fill")
-//                            .renderingMode(.template)
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(height: 20)
-//                            .padding(.top)
-//                            .padding(.horizontal, 11)
-//
-//                        Text("Mute")
-//                            .font(.headline)
-//                            .padding(.horizontal, 34)
-//                            .padding(.bottom)
-//
-//                    }.background(Color("CustomAppearanceItemColor"))
-//                    .cornerRadius(12)
-//                    .padding(.vertical)
-//                    .padding(.horizontal, 4)
-//                    //.shadow(color: Color("ShadowColor"), radius: 5)
-//                }.padding(.bottom, -10)
-//                    .zIndex(2)
-
-                
-                
-//                VStack {
-//                    HStack {
-//                        Text("Settings")
-//                            .font(.system(size: 26))
-//                            .fontWeight(.semibold)
-//                            .multilineTextAlignment(.leading)
-//
-//                        Spacer()
-//                    }.padding()
-//
-//                    Button(action: {}) {
-//                        HStack {
-//                            Image(systemName: "wallet.pass.fill")
-//                                .renderingMode(.template)
-//                                .resizable()
-//                                .aspectRatio(contentMode: .fit)
-//                                .frame(height: 22)
-//                                .padding(.leading, 24)
-//
-//                            Text("Room ID")
-//                                .padding(.leading, 12)
-//
-//                            Spacer()
-//
-//                            Text("\(group.id!)")
-//                                .padding(.trailing, 20)
-//                                .foregroundColor(.secondary)
-//                        }
-//                    }.foregroundColor(Color("CustomForegroundColor"))
-//
-//                    Divider()
-//                        .padding(8)
-//
-//                    NavigationLink(destination: AddGroupMembersView(group: group)) {
-//                        HStack {
-//                            Image(systemName: "link.badge.plus")
-//                                .renderingMode(.template)
-//                                .resizable()
-//                                .aspectRatio(contentMode: .fit)
-//                                .frame(height: 24)
-//                                .padding(.leading, 20)
-//
-//                            Text("Add members")
-//                                .padding(.leading, 7)
-//
-//                            Spacer()
-//
-//                            Image(systemName: "chevron.right")
-//                                .padding(.trailing, 20)
-//                                .foregroundColor(.accentColor)
-//                        }
-//                    }.foregroundColor(Color("CustomForegroundColor"))
-//
-//                    Divider()
-//                        .padding(8)
-//
-//                    NavigationLink(destination: GroupMembersView()) {
-//                        HStack {
-//                            Image(systemName: "person.2.fill")
-//                                .renderingMode(.template)
-//                                .resizable()
-//                                .aspectRatio(contentMode: .fit)
-//                                .frame(height: 18)
-//                                .padding(.leading, 19)
-//
-//                            Text("Room members")
-//                                .padding(.leading, 7)
-//
-//                            Spacer()
-//
-//                            Image(systemName: "chevron.right")
-//                                .padding(.trailing, 20)
-//                                .foregroundColor(.accentColor)
-//                        }
-//                    }.foregroundColor(Color("CustomForegroundColor"))
-//                    .padding(.bottom, 20)
-//                }.background(Color("CustomAppearanceItemColor"))
-//                    .cornerRadius(12)
-//                    .padding()
                 }
             }
+            
             Form {
                 Section(header: Text("Settings")) {
                         NavigationLink(destination: AddGroupMembersView(group: group)) {
@@ -221,7 +157,26 @@ struct GroupDetailsView: View {
                 }.background(Color("BackgroundForm"))
         }.onAppear {
             Global.tabBar!.isHidden = true
+            
+            icon = UIImage(data: group.icon!)
+            name = group.name!
+            about = group.groupDescription!
         }.background(Color("BackgroundForm"))
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    showEditSheet.toggle()
+                }) {
+                    Text("Edit ")
+                }
+            }
+        }
+        .sheet(isPresented: $showEditSheet) {
+            NavigationView {
+                editView
+            }
+        }
+        
 //        .onDisappear {
 //            Global.tabBar!.isHidden = false
 //        }

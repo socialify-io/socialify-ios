@@ -6,11 +6,23 @@
 //
 
 import SwiftUI
+import SocialifySdk
+import CoreData
 
 struct MoreView: View {
+    let account: Account
     
-    init(){
+    @State private var showEditSheet: Bool = false
+    @State private var username: String = ""
+    @State private var bio: String = ""
+    @State private var image: UIImage? = nil
+    
+    @State var isShowPicker: Bool = false
+    @State var isImagePicked: Bool = false
+    
+    init(account: Account){
         UITableView.appearance().backgroundColor = .clear
+        self.account = account
     }
     
     private var appCredits: some View {
@@ -34,10 +46,132 @@ struct MoreView: View {
         }
     }
     
+    private var editHeader: some View {
+        HStack {
+            Spacer()
+            Button(action: {
+                isShowPicker.toggle()
+            }) {
+                VStack {
+                    Image(uiImage: image ?? UIImage(data: account.avatar!)!)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 130, height: 130)
+                        .clipShape(Circle())
+
+                    
+                    Button(action: {
+                        isShowPicker.toggle()
+                    }) {
+                        Text("Change avatar")
+                    }
+                }
+            }
+            Spacer()
+        }
+    }
+    
+    private var editAccount: some View {
+        VStack {
+            Form {
+                Section(header: editHeader
+                    .textCase(nil)
+                    .foregroundColor(nil)) {}
+                
+                Section(header: Text("Username")) {
+                    TextField("Username", text: $username)
+                }
+                
+                Section(header: Text("Bio"),
+                        footer: Text("Tell something about yourself :)")) {
+                    TextField("Bio", text: $bio)
+                }
+            }
+        }
+        .onAppear {
+            username = account.username ?? "<username can't be loaded>"
+            bio = account.bio ?? ""
+            image = UIImage(data: account.avatar!)!
+        }
+        .sheet(isPresented: $isShowPicker) {
+            ImagePicker(image: self.$image, isImagePicked: self.$isImagePicked)
+        }
+        .navigationTitle("Edit account")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    showEditSheet.toggle()
+                }) {
+                    Text("Cancel")
+                }
+            }
+            
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    if(bio != account.bio ?? "") {
+                        SocketIOManager.sharedInstance.updateBio(bio: bio) { response in
+                            switch(response) {
+                            case .success(_):
+                                showEditSheet.toggle()
+                                
+                            case .failure(_):
+                                print("ZEPUSLO SIEE")
+                            }
+                        }
+                    }
+                    
+                    if(image != UIImage(data: account.avatar!)) {
+                        SocketIOManager.sharedInstance.updateAvatar(avatar: image!) { response in
+                            switch(response) {
+                            case .success(_):
+                                showEditSheet.toggle()
+
+                            case .failure(_):
+                                print("ZEPUSLO SIEE")
+                            }
+                        }
+                    }
+                }) {
+                    Text("Done")
+                }
+            }
+        }
+    }
+    
+    private var formHeader: some View {
+        VStack {
+            Image(uiImage: image ?? UIImage(data: account.avatar!)!)
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: 130, height: 130)
+                .clipShape(Circle())
+            
+            VStack {
+                Text((username ?? account.username) ?? "<username can't be loaded>")
+                    .font(.title)
+                    .fontWeight(.semibold)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+                    .padding(.bottom, 1)
+                    .foregroundColor(.primary)
+                
+                Text((bio ?? account.bio) ?? "<bio can't be loaded>")
+                    .font(.title3)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.secondary)
+                    .padding(.bottom)
+                
+            }
+        }
+    }
+    
     var body: some View {
         VStack {
             Form {
-                Section {
+                Section(header: formHeader
+                    .textCase(nil)
+                    .foregroundColor(nil)) {
                     NavigationLink(destination: PrivacyView()) {
                         Label("Devices", systemImage: "laptopcomputer.and.iphone")
                             .accessibility(label: Text("Devices"))
@@ -143,13 +277,41 @@ struct MoreView: View {
             }
             .background(Color("BackgroundColor"))
         }
-        .navigationBarTitle("Settings", displayMode: .inline)
+        //.navigationBarTitle("Settings", displayMode: .inline)
+//        .navigationBarTitle(account.username ?? "<username can't be loaded>", displayMode: .inline)
         .background(Color("BackgroundColor"))
+        .onAppear {
+            image = UIImage(data: account.avatar!)
+            username = account.username!
+            bio = account.bio!
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    print("dupa")
+                }) {
+                    Image(systemName: "square.and.arrow.up")
+                }
+            }
+            
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    showEditSheet.toggle()
+                }) {
+                    Text(" Edit")
+                }
+            }
+        }
+        .sheet(isPresented: $showEditSheet) {
+            NavigationView {
+                editAccount
+            }
+        }
     }
 }
 
-struct MoreView_Previews: PreviewProvider {
-    static var previews: some View {
-        MoreView()
-    }
-}
+//struct MoreView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MoreView()
+//    }
+//}

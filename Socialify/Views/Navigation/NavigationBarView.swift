@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SocialifySdk
 
 struct Global {
     static var tabBar : UITabBar?
@@ -20,6 +21,7 @@ extension UITabBar {
 }
 
 struct NavigationBarView: View {
+    @StateObject var client: SocialifyClient = SocialifyClient.shared
     @State private var showLoginModal = false
     
     var body: some View {
@@ -59,14 +61,16 @@ struct NavigationBarView: View {
                     ChatsView()
                     .toolbar {
                         ToolbarItem(placement: .navigationBarLeading) {
-                            NavigationLink(destination: AccountManagerView()) {
-                                Image(systemName: "person.circle")
+                            Button(action: {
+                                print("dupa")
+                            }) {
+                                Text(" Edit")
                             }
                         }
                         
                         ToolbarItem(placement: .navigationBarTrailing) {
                             NavigationLink(destination: AddGroupView()) {
-                                Image(systemName: "plus")
+                                Image(systemName: "square.and.pencil")
                             }
                         }
                     }
@@ -77,7 +81,7 @@ struct NavigationBarView: View {
                 }
                 
                 NavigationView {
-                    MoreView()
+                    MoreView(account: client.getCurrentAccount())
                         .toolbar {
                             
                         }

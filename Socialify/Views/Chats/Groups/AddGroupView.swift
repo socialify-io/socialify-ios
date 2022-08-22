@@ -25,7 +25,7 @@ struct AddGroupView: View {
                     .foregroundColor(.accentColor)
                     .padding(.bottom, -40)
                 
-                Text("Add Group")
+                Text("New chat")
                     .font(.largeTitle)
                     .fontWeight(.semibold)
                     .multilineTextAlignment(.center)
@@ -35,6 +35,15 @@ struct AddGroupView: View {
                 .padding(.top, 20)
             
             VStack {
+                NavigationLink("New contact", destination: NewContactView())
+                    .font(.headline)
+                    .multilineTextAlignment(.center)
+                    .padding()
+                    .frame(height: 55)
+                    .frame(maxWidth: .infinity)
+                    .background(Color("ButtonColor"))
+                    .cornerRadius(12)
+                
                 NavigationLink("Create group", destination: CreateGroupView())
                     .font(.headline)
                     .multilineTextAlignment(.center)

@@ -132,10 +132,6 @@ extension SocialifyClient {
             predicate: NSPredicate(format: "room == %@", NSNumber(value: roomId))
         )
         
-        print("000000000000000000000000000000000000000000000")
-        print(messages)
-        print("000000000000000000000000000000000000000000000")
-        
         return messages
     }
 }

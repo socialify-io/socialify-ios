@@ -25,10 +25,7 @@ extension SocialifyClient {
         request.addValue(LIBRARY_VERSION, forHTTPHeaderField: "AppVersion")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         
-        print(request.allHTTPHeaderFields)
-        
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            print(String(decoding: data!, as: UTF8.self))
             if(error?._code.littleEndian == -1004) {
                 completion(.failure(SdkError.NoInternetConnection))
             } else {
@@ -41,7 +38,6 @@ extension SocialifyClient {
                 
                 do {
                     let responseBody = try JSON(data: data)
-                    print(responseBody)
                     if(responseBody["success"] == false) {
                         let errorCode: Int = responseBody["error"]["code"].rawValue as! Int
                         completion(.failure(self.parseErrorCode(errorCode: errorCode)))

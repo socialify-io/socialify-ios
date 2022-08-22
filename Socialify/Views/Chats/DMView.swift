@@ -70,10 +70,6 @@ struct DMView: View {
             sortDescriptors: [],
             predicate: NSPredicate(format: "chatId == %@", NSString(string: receiver.id!))
         )
-        
-        print("ĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄA")
-        print(messages)
-        print("ĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄĄA")
     }
     
     var body: some View {
@@ -103,12 +99,11 @@ struct DMView: View {
                                         if messages.count-1 == index || messages.count-1 > index && messages[index+1].username != message.username {
                                             VStack {
                                                 Spacer()
-                                                Image(systemName: "person.circle.fill")
-                                                    .renderingMode(.template)
+                                                Image(uiImage: UIImage(data: receiver.avatar!)!)
                                                     .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                                    .frame(height: 32)
-                                                    .foregroundColor(.accentColor)
+                                                    .aspectRatio(contentMode: .fill)
+                                                    .clipShape(Circle())
+                                                    .frame(width: 34, height: 34)
                                                     .padding(.trailing, 4)
                                             }
                                         } else {
@@ -182,8 +177,33 @@ struct DMView: View {
         //.background(Color("BackgroundColor"))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {}) {
-                    Image(systemName: "gear")
+                Button(action: {
+                    print("dupa")
+                }) {
+                    Image(systemName: "mic.fill")
+                }
+            }
+           
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    print("dupa")
+                }) {
+                    Image(systemName: "video.fill")
+                }
+            }
+            
+            ToolbarItem(placement: .navigationBarLeading) {
+                NavigationLink(destination: UserDetailsView()) {
+                    HStack {
+                        Image(uiImage: UIImage(data: receiver.avatar!)!)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .clipShape(Circle())
+                            .frame(width: 30, height: 30)
+                        
+                        Text(receiver.username ?? "<username>")
+                            .foregroundColor(Color("CustomForegroundColor"))
+                    }
                 }
             }
         }

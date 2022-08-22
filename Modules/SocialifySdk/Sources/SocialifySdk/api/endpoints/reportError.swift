@@ -34,7 +34,6 @@ extension SocialifyClient {
         self.request(request: request, timestamp: timestamp) { value in
             switch value {
             case .success(let value):
-                print(value)
                 completion(.success(true))
                 
             case .failure(let error):

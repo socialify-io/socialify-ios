@@ -96,6 +96,7 @@ extension SocialifyClient {
                             model.username = username
                             model.deviceId = "\(response["data"]["deviceId"])"
                             model.userId = "\(response["data"]["userId"])"
+                            model.bio = ""
                             model.isCurrentAccount = true
                             
                             let accounts = self.fetchAccounts()

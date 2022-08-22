@@ -65,7 +65,6 @@ extension SocialifyClient {
         let signature = SecKeyCreateSignature(secKey!, algorithm, digest.data as CFData, &error)! as NSData as Data
         
         let base64Signature = signature.base64EncodedString
-        print(signatureCore)
             
         headersJson.updateValue("\(base64Signature)", forKey: "Signature")
         

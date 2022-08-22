@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21256.2" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Account" representedClassName="Account" syncable="YES" codeGenerationType="class">
+        <attribute name="avatar" optional="YES" attributeType="Binary"/>
+        <attribute name="bio" optional="YES" attributeType="String"/>
         <attribute name="deviceId" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" valueTransformerName="Int" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="isCurrentAccount" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
@@ -8,7 +10,8 @@
         <attribute name="username" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Chat" representedClassName="Chat" syncable="YES" codeGenerationType="class">
-        <attribute name="avatar" optional="YES" attributeType="String"/>
+        <attribute name="avatar" optional="YES" attributeType="Binary"/>
+        <attribute name="avatarHash" optional="YES" attributeType="String"/>
         <attribute name="chatId" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -17,6 +20,7 @@
     </entity>
     <entity name="ChatGroup" representedClassName="ChatGroup" syncable="YES" codeGenerationType="class">
         <attribute name="groupDescription" optional="YES" attributeType="String"/>
+        <attribute name="icon" optional="YES" attributeType="Binary"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="myRole" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -59,7 +63,8 @@
         <attribute name="receiverId" optional="YES" attributeType="String"/>
     </entity>
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
-        <attribute name="avatar" optional="YES" attributeType="String"/>
+        <attribute name="avatar" optional="YES" attributeType="Binary"/>
+        <attribute name="avatarHash" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="username" optional="YES" attributeType="String"/>
     </entity>

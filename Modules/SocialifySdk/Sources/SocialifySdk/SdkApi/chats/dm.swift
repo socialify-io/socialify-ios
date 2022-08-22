@@ -218,7 +218,213 @@ extension SocketIOManager {
         }
     }
         
-       
+    public func fetchAllUnreadDMs() {
+        socket.emit("fetch_all_unread_dms")
+        socket.on("fetch_all_unread_dms") { [self] dataArray, socketAck in
+            let resp: [String: Any] = dataArray[0] as! [String: Any]
+            socket.off("fetch_all_unread_dms")
+            let success: Bool = resp["success"] as! Bool
+            
+            if(!success) {
+                return
+            }
+            
+            let context = self.client.persistentContainer.viewContext
+            
+            let dms: [[String: Any]] = resp["dms"] as! [[String: Any]]
+           
+            let currentAccount = self.client.getCurrentAccount()
+            
+            for dm in dms {
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "DM")
+                fetchRequest.predicate = NSPredicate(format: "id == %@", dm["id"] as! CVarArg)
+                let allDMsWithSameId = try! context.fetch(fetchRequest) as! [DM]
+                
+                if(allDMsWithSameId == []) {
+                    let receiverId: String = "\(dm["receiver"] ?? "")"
+                    let senderId: String = "\(dm["sender"] ?? "")"
+                            
+                    var chatId: String
+                    
+                    if(receiverId == currentAccount.userId) { chatId = senderId }
+                    else { chatId = receiverId }
+                    
+                    let fetchRequestForIsFirstMessage = NSFetchRequest<NSFetchRequestResult>(entityName: "DM")
+                
+                    let predicateForReceivedMessageReceived = NSPredicate(format: "receiverId == %@", NSString(string: receiverId))
+                    let predicateForSendMessageReceived = NSPredicate(format: "receiverId == %@", NSString(string: senderId))
+                    let predicateForSendMessageSend = NSPredicate(format: "senderId == %@", NSString(string: receiverId))
+                    let predicateForReceivedMessageSend = NSPredicate(format: "senderId == %@", NSString(string: senderId))
+                    
+                    let predicateAndReceived = NSCompoundPredicate(type: .and, subpredicates: [predicateForReceivedMessageSend, predicateForReceivedMessageReceived])
+                    let predicateAndSend = NSCompoundPredicate(type: .and, subpredicates: [predicateForSendMessageSend, predicateForSendMessageReceived])
+                    
+                    let finalPredicate = NSCompoundPredicate(type: .or, subpredicates: [predicateAndSend, predicateAndReceived])
+                    
+                    fetchRequestForIsFirstMessage.predicate = finalPredicate
+                    
+                    let isFirstMessage = try! context.fetch(fetchRequestForIsFirstMessage) as! [DM]
+                   
+                    var privateKeyPem: String = ""
+                    
+                    if (isFirstMessage == []) {
+                        privateKeyPem = self.client.keychain["\(currentAccount.id)-e2ePublicKey"]!
+//                        let newE2EPrivateKey = generatePrivateKey()
+//                        let e2ePublicKeyPem = newE2EPrivateKey.publicKey.pemRepresentation
+//                        self.socket.emit("update_public_e2e_key", ["key": e2ePublicKeyPem])
+//                        self.socket.on("update_public_e2e_key") {_,_ in
+//                            self.client.keychain["\(currentAccount.id)-e2ePublicKey"] = newE2EPrivateKey.pemRepresentation
+//                            self.socket.off("update_public_e2e_key")
+//                        }
+                        self.client.keychain["\(chatId)-e2ePrivateKey"] = privateKeyPem
+                    } else {
+                        privateKeyPem = self.client.keychain["\(senderId)-e2ePrivateKey"]!
+                    }
+                    
+                    // tutaj się wyjebuje bo te klucze się tam nie zapisują do keychaina czy coś to trzeba zapisywać w tych fetchLastDMs jak w linii 280
+                    // ogólnie trzeba dodać też id wiadomości do klucza w bazie publicznego i żeby patrzało na id przy każdej wiadomości i aktualizowało klucz tylko wtedy, jak id jest większe niż to w kluczu, żeby klucz był zawsze do najnowszej wiadomości
+                    
+                    let privateKey = try! P256.KeyAgreement.PrivateKey(pemRepresentation: privateKeyPem)
+                    
+                    let senderDeviceId: String = dm["deviceId"] as! String
+                   
+                    let context = self.client.persistentContainer.viewContext
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "E2EKey")
+                    fetchRequest.predicate = NSPredicate(format: "deviceId == %@", NSString(string: senderDeviceId))
+                    let fetchResults = try! context.fetch(fetchRequest) as! [E2EKey]
+                    
+                    var publicKeyPem = dm["senderNewPublicKey"] as! String
+                    
+                    let publicKey = try! P256.KeyAgreement.PublicKey(pemRepresentation: publicKeyPem)
+                    let symmetricKey = try! deriveSymmetricKey(privateKey: privateKey, publicKey: publicKey)
+                
+                    var encryptedMessage: [String: String] = [:]
+                    
+                    for message in dm["message"] as! [[String: String]] {
+                        if (message["deviceId"] == currentAccount.deviceId) {
+                            encryptedMessage = message
+                        }
+                    }
+                    
+                    if (encryptedMessage != [:]) {
+                        let ciphertextRaw: String = encryptedMessage["ciphertext"]!
+                        let nonceRaw: String = encryptedMessage["nonce"]!
+                        let tagRaw: String = encryptedMessage["tag"]!
+                        
+                        let ciphertext = Data(base64Encoded: ciphertextRaw)
+                        let nonce = Data(hexString: "\(nonceRaw)")
+                        let tag = Data(hexString: "\(tagRaw)")
+                        
+                        let sealedBox = try! AES.GCM.SealedBox(nonce: AES.GCM.Nonce(data: nonce!),
+                                                               ciphertext: ciphertext!,
+                                                               tag: tag!)
+                        
+                        let decryptedData = try! AES.GCM.open(sealedBox, using: symmetricKey)
+                        let decryptedMessage = String(decoding: decryptedData, as: UTF8.self)
+                        
+                        let entityDescription = NSEntityDescription.entity(
+                            forEntityName: "DM",
+                            in: context
+                        )!
+                        
+                        let DMModel = DM(
+                            entity: entityDescription,
+                            insertInto: context
+                        )
+                        
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                        let date = dateFormatter.date(from: "\(dm["date"]!)")
+
+                        DMModel.username = dm["username"] as? String
+                        DMModel.message = decryptedMessage as? String
+                        DMModel.date = date
+                        DMModel.id = dm["id"] as? String
+                        DMModel.senderId = senderId
+                        DMModel.receiverId = receiverId
+                        DMModel.isRead = true
+                        
+                        try! context.save()
+                        
+                        let media = dm["media"] as! [[String: Any]]
+                        
+                        for mediaElement in media {
+                            let entityDescription = NSEntityDescription.entity(
+                                forEntityName: "Media",
+                                in: context
+                            )!
+
+                            let MediaModel = Media(
+                                entity: entityDescription,
+                                insertInto: context
+                            )
+                            
+                            MediaModel.chatId = chatId as! String
+                            MediaModel.type = mediaElement["type"] as! Int16
+                            MediaModel.messageId = DMModel.id as! String
+                            MediaModel.url = mediaElement["mediaURL"] as! String
+                        }
+                    }
+                   
+                    let fetchRequestForE2EKey = NSFetchRequest<NSFetchRequestResult>(entityName: "E2EKey")
+                    fetchRequestForE2EKey.predicate = NSPredicate(format: "deviceId == %@", NSString(string: senderDeviceId))
+                    let fetchResultsForE2EKey = try! context.fetch(fetchRequest) as! [E2EKey]
+                    
+                    if(fetchResults == []) {
+                        let entityDescription = NSEntityDescription.entity(
+                            forEntityName: "E2EKey",
+                            in: context
+                        )!
+                                
+                        let model = E2EKey(
+                            entity: entityDescription,
+                            insertInto: context
+                        )
+                        
+                        model.key = dm["senderNewPublicKey"] as! String
+                        model.userId = chatId as! String
+                        model.deviceId = senderDeviceId as! String
+                        model.dmId = dm["id"] as! String
+                        
+                        try! context.save()
+                    } else {
+                        let idInSavedKey: String = fetchResultsForE2EKey[0].dmId!
+                        if ("\(dm["id"] ?? "")" > idInSavedKey) {
+                            fetchResultsForE2EKey[0].key = dm["senderNewPublicKey"] as! String
+                        }
+                        
+                        try! context.save()
+                    }
+                    
+                    let fetchRequestForChat = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
+                    fetchRequestForChat.predicate = NSPredicate(format: "id == %@", NSString(string: chatId))
+                    let fetchResultsForChat = try! context.fetch(fetchRequestForChat) as! [Chat]
+                    
+                    if(!fetchResultsForChat.isEmpty) {
+                        
+                        let avatarHash: String = fetchResultsForChat[0].avatarHash!
+                        let avatarHashFromData: String = dm["avatarHash"]! as! String
+                        
+                        if(avatarHashFromData != avatarHash) {
+                            self.socket.emit("get_information_about_account", chatId)
+                            self.socket.on("get_information_about_account") { [self] dataArray, socketAck in
+                                let resp: [String: String] = dataArray[0] as! [String: String]
+                                socket.off("get_information_about_account")
+                                
+                                fetchResultsForChat[0].avatar = Data(base64Encoded: resp["avatar"]!)
+                                fetchResultsForChat[0].avatarHash = resp["avatarHash"]
+                            }
+                        }
+                    }
+
+                    try! context.save()
+                    self.socket.emit("delete_dms", ["sender": chatId, "from": dm["id"], "to": dm["id"]])
+                    
+                    self.sortChats(chatId: chatId)
+                }
+            }
+        }
+    }
     
     public func fetchDMs(chatId: String) {
         let context = self.client.persistentContainer.viewContext
@@ -228,10 +434,6 @@ extension SocketIOManager {
         self.socket.on("fetch_dms") { dataArray, socketAck in
             
             var data: [[String: Any]] = dataArray[0] as! [[String: Any]]
-            
-            print("[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]")
-            print(data)
-            print("[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]")
             
             data.sort {
                 item1, item2 in
@@ -393,24 +595,45 @@ extension SocketIOManager {
                         let idInSavedKey: String = fetchResultsForE2EKey[0].dmId!
                         if ("\(dm["id"] ?? "")" > idInSavedKey) {
                             fetchResultsForE2EKey[0].key = dm["senderNewPublicKey"] as! String
-                            print("ZAPISUJE KLUCZ W FETCH DMS")
                         }
                         
                         try! context.save()
+                    }
+                    
+                    let fetchRequestForChat = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
+                    fetchRequestForChat.predicate = NSPredicate(format: "chatId == %@", NSString(string: chatId))
+                    let fetchResultsForChat = try! context.fetch(fetchRequestForChat) as! [Chat]
+                    
+                    if (!fetchResultsForChat.isEmpty) {
+                        let avatarHash: String = fetchResultsForChat[0].avatarHash ?? ""
+                        let avatarHashFromData: String = dm["avatarHash"]! as! String
+                        
+                        if(avatarHashFromData != avatarHash) {
+                            self.socket.emit("get_information_about_account", chatId)
+                            self.socket.on("get_information_about_account") { [self] dataArray, socketAck in
+                                let resp: [String: String] = dataArray[0] as! [String: String]
+                                socket.off("get_information_about_account")
+                                
+                                fetchResultsForChat[0].avatar = Data(base64Encoded: resp["avatar"]!)
+                                fetchResultsForChat[0].avatarHash = resp["avatarHash"]
+                            }
+                        }
                     }
 
                     try! context.save()
                 }
                 self.socket.emit("delete_dms", ["sender": chatId, "from": dm["id"], "to": dm["id"]])
             }
-            self.sortChats(chatId: chatId)
+          
+            if(!data.isEmpty) {
+                self.sortChats(chatId: chatId)
+            }
             self.socket.off("fetch_dms")
         }
     }
     
-    public func getDMMessage(completion: @escaping (DM) -> Void) {
-        socket.on("send_dm") { dataArray, socketAck in
-            print("dostałem wiadomość")
+    public func listenForDMs(completion: @escaping (DM) -> Void) {
+        socket.on("send_dm") { [self] dataArray, socketAck in
             let context = self.client.persistentContainer.viewContext
 
             let data = dataArray[0] as! [String: Any]
@@ -563,10 +786,31 @@ extension SocketIOManager {
                     let idInSavedKey: String = fetchResultsForE2EKey[0].dmId!
                     if ("\(data["id"] ?? "")" > idInSavedKey) {
                         fetchResultsForE2EKey[0].key = data["senderNewPublicKey"] as! String
-                        print("ZAPISUJE KLUCZ W GET DM MESSAGES")
                     }
                     
                     try! context.save()
+                }
+                
+                let fetchRequestForChat = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
+                fetchRequestForChat.predicate = NSPredicate(format: "chatId == %@", NSString(string: chatId))
+                let fetchResultsForChat = try! context.fetch(fetchRequestForChat) as! [Chat]
+          
+                if (!fetchResultsForChat.isEmpty) {
+                    let avatarHash: String = fetchResultsForChat[0].avatarHash ?? ""
+                    let avatarHashFromData: String = data["avatarHash"] as! String
+                    
+                    if(avatarHashFromData != avatarHash) {
+                        self.socket.emit("get_information_about_account", chatId)
+                        self.socket.on("get_information_about_account") { [self] dataArray, socketAck in
+                            let resp: [String: String] = dataArray[0] as! [String: String]
+                            socket.off("get_information_about_account")
+                            
+                            fetchResultsForChat[0].avatar = Data(base64Encoded: resp["avatar"]!)
+                            fetchResultsForChat[0].avatarHash = resp["avatarHash"]
+                            
+                            try! context.save()
+                        }
+                    }
                 }
                 
                 self.sortChats(chatId: chatId)
@@ -621,8 +865,9 @@ extension SocketIOManager {
 
             self.socket.on("get_information_about_account") { dataArray, socketAck in
                 let data = dataArray[0] as! [String: Any]
-                print(data)
                 newChatModel.name = data["username"] as? String
+                newChatModel.avatarHash = data["avatarHash"] as? String
+                newChatModel.avatar = Data(base64Encoded: data["avatar"] as! String)
                 chats = chats.sorted { $0.id > $1.id }
                 try! context.save()
                 self.socket.off("get_information_about_account")
@@ -660,7 +905,7 @@ extension SocketIOManager {
         }
         return messageId
     }
-        
+    
     func isChatInDB(chatId: String) -> Bool {
         let chats = getChats()
 

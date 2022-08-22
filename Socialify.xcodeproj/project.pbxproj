@@ -54,6 +54,8 @@
 		5CADDB9C2611E72200F690D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5C73EA9E26112823008F7315 /* Assets.xcassets */; };
 		5CADDBB92611F5A100F690D0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5CADDBBB2611F5A100F690D0 /* Localizable.strings */; };
 		5CC47C6126B0A2E90001BB7D /* SocialifySdk in Frameworks */ = {isa = PBXBuildFile; productRef = 5CC47C6026B0A2E90001BB7D /* SocialifySdk */; };
+		5CC7716E28ABE2C2008F962C /* NewContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC7716D28ABE2C2008F962C /* NewContactView.swift */; };
+		5CC7717028AC27B5008F962C /* UserDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC7716F28AC27B4008F962C /* UserDetailsView.swift */; };
 		5CE1DF5728A192970082371F /* CreateRoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE1DF5628A192960082371F /* CreateRoomView.swift */; };
 		5CFFD58F27E265880038C108 /* RoomDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CFFD58E27E265880038C108 /* RoomDetailsView.swift */; };
 /* End PBXBuildFile section */
@@ -131,6 +133,8 @@
 		5CADDBBA2611F5A100F690D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5CADDBBF2611F5DB00F690D0 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5CC2CFF027B5C446001CFB40 /* Socialify.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Socialify.entitlements; sourceTree = "<group>"; };
+		5CC7716D28ABE2C2008F962C /* NewContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContactView.swift; sourceTree = "<group>"; };
+		5CC7716F28AC27B4008F962C /* UserDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailsView.swift; sourceTree = "<group>"; };
 		5CE1DF5628A192960082371F /* CreateRoomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateRoomView.swift; sourceTree = "<group>"; };
 		5CFFD58E27E265880038C108 /* RoomDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -245,6 +249,8 @@
 				5C47E84526C32662005F4D0E /* ChatView.swift */,
 				5C89D9C426D2F08C0099564E /* DMView.swift */,
 				5C2F3877281EE58400F5142F /* ImagePicker.swift */,
+				5CC7716D28ABE2C2008F962C /* NewContactView.swift */,
+				5CC7716F28AC27B4008F962C /* UserDetailsView.swift */,
 			);
 			path = Chats;
 			sourceTree = "<group>";
@@ -543,6 +549,7 @@
 				5CFFD58F27E265880038C108 /* RoomDetailsView.swift in Sources */,
 				5C785B982825717A000FE1BA /* ChatImageView.swift in Sources */,
 				5C47E84626C32662005F4D0E /* ChatView.swift in Sources */,
+				5CC7716E28ABE2C2008F962C /* NewContactView.swift in Sources */,
 				5C3DD22A2613C81700B8E532 /* MediaItemView.swift in Sources */,
 				5C73EA9D26112822008F7315 /* ChatsView.swift in Sources */,
 				5C3AD26226BC5C3B00D04367 /* AccountCardView.swift in Sources */,
@@ -566,6 +573,7 @@
 				5C88D8D726B8CA0600BAC9A7 /* string.swift in Sources */,
 				5C21C38B2874A124007C0B2B /* GroupDetailsView.swift in Sources */,
 				5C9879FE287DD02A0084F5D7 /* LinkDetailsView.swift in Sources */,
+				5CC7717028AC27B5008F962C /* UserDetailsView.swift in Sources */,
 				5C47E84426C32079005F4D0E /* RoomView.swift in Sources */,
 				5C0465102687E868006D3126 /* NavigationBarView.swift in Sources */,
 				5C51429728241AB700921F51 /* getImage.swift in Sources */,

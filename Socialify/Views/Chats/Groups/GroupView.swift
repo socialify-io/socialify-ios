@@ -17,6 +17,46 @@ extension UserDefaults {
 
 }
 
+struct UserAvatarInGroupMessage: View {
+    let userId: String
+   
+    @State private var sender: User? = nil
+    
+    var body: some View {
+        VStack {
+            Spacer()
+            
+            if sender?.avatar != nil {
+                Image(uiImage: UIImage(data: sender!.avatar!)!)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .clipShape(Circle())
+                    .frame(width: 34, height: 34)
+                    .padding(.trailing, 4)
+            } else {
+                Image(systemName: "person.circle.fill")
+                    .renderingMode(.template)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(height: 34)
+                    .foregroundColor(.accentColor)
+                    .padding(.trailing, 4)
+            }
+            
+        }.onAppear {
+            SocketIOManager.sharedInstance.getUserDataById(userId: userId) { response in
+                switch(response) {
+                case .success(let resp):
+                    sender = resp
+                    
+                case .failure(_):
+                    print("NIER DZIALĄSDQWS")
+                }
+            }
+        }
+    }
+}
+
 struct GroupView: View {
     @StateObject var client: SocialifyClient = SocialifyClient.shared
     
@@ -136,8 +176,21 @@ struct GroupView: View {
                                         defaults.set(dictRoom, forKey: "\(group.id!)CurrentRoom")
                                     }
                                 }) {
-                                    Text(room.name)
-                                        .foregroundColor(Color("CustomForegroundColor"))
+                                    HStack {
+                                        Text(room.name)
+                                            .foregroundColor(Color("CustomForegroundColor"))
+                                        
+                                        Spacer()
+                                        
+                                        switch(room.type) {
+                                        case SocialifyClient.RoomType.text:
+                                            Image(systemName: "text.alignleft")
+                                                .foregroundColor(.secondary)
+                                        case SocialifyClient.RoomType.voice:
+                                            Image(systemName: "speaker.wave.3.fill")
+                                                .foregroundColor(.secondary)
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -189,16 +242,8 @@ struct GroupView: View {
                                     HStack {
                                         
                                         if messages.count-1 == index || messages.count-1 > index && messages[index+1].username != message.username {
-                                            VStack {
-                                                Spacer()
-                                                Image(systemName: "person.circle.fill")
-                                                    .renderingMode(.template)
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                                    .frame(height: 32)
-                                                    .foregroundColor(.accentColor)
-                                                    .padding(.trailing, 4)
-                                            }
+                                            UserAvatarInGroupMessage(userId: message.sender!)
+                                               
                                         } else {
                                             VStack {
                                                 Spacer()
@@ -269,9 +314,10 @@ struct GroupView: View {
             ToolbarItem(placement: .navigationBarLeading) {
                 NavigationLink(destination: GroupDetailsView(group: group)) {
                     HStack {
-                        Image("Facebook")
+                        Image(uiImage: UIImage(data: group.icon!)!)
                             .resizable()
-                            .cornerRadius(360)
+                            .aspectRatio(contentMode: .fill)
+                            .clipShape(Circle())
                             .frame(width: 30, height: 30)
                         
                         VStack(alignment: .leading, spacing: 0) {

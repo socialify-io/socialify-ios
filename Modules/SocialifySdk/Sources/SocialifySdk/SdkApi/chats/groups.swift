@@ -41,60 +41,61 @@ extension SocketIOManager {
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
             fetchRequest.predicate = NSPredicate(format: "id == %@", data["_id"] as! CVarArg)
             let allMessagesWithSameId = try! context.fetch(fetchRequest) as! [Message]
-          
-            print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa")
-            print(data)
-            print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa")
             
             if (allMessagesWithSameId == []) {
-                let entityDescription = NSEntityDescription.entity(
-                    forEntityName: "Message",
-                    in: context
-                )!
-
-                let MessageModel = Message(
-                    entity: entityDescription,
-                    insertInto: context
-                )
-                
-                let groupId: String = data["group"] as! String //Int((data["roomId"] as! NSString).floatValue)
-                
-                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
-                fetchRequest.predicate = NSPredicate(format: "group == %@", groupId as! CVarArg)
-                fetchRequest.sortDescriptors = [NSSortDescriptor(
-                                                keyPath: \Message.id,
-                                                ascending: true)]
-                
-                var messages = try! context.fetch(fetchRequest) as! [Message]
-                
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-                let date = dateFormatter.date(from: "\(data["timestamp"]!)")
-
                 let isSystemNotification: Bool = data["isSystemNotification"]! as! Bool
-                print(isSystemNotification)
-                
-                MessageModel.username = data["username"] as? String
-                MessageModel.message = data["message"] as? String
-                MessageModel.date = date
-                MessageModel.id = data["_id"] as! String
-                MessageModel.group = groupId
-                MessageModel.room = data["room"] as! String
-                MessageModel.isSystemNotification = isSystemNotification
-                
-                if(isSystemNotification) {
-                    MessageModel.sender = nil
+
+                if (isSystemNotification) {
+                    self.newGroupSystemNotification(data: data)
                 } else {
-                    MessageModel.sender = data["sender"] as! String
+                    let entityDescription = NSEntityDescription.entity(
+                        forEntityName: "Message",
+                        in: context
+                    )!
+                    
+                    let MessageModel = Message(
+                        entity: entityDescription,
+                        insertInto: context
+                    )
+                    
+                    let groupId: String = data["group"] as! String //Int((data["roomId"] as! NSString).floatValue)
+                    
+                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
+                    fetchRequest.predicate = NSPredicate(format: "group == %@", groupId as! CVarArg)
+                    fetchRequest.sortDescriptors = [NSSortDescriptor(
+                        keyPath: \Message.id,
+                        ascending: true)]
+                    
+                    var messages = try! context.fetch(fetchRequest) as! [Message]
+                    
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+                    let date = dateFormatter.date(from: "\(data["timestamp"]!)")
+                    
+                    let isSystemNotification: Bool = data["isSystemNotification"]! as! Bool
+                    
+                    MessageModel.username = data["username"] as? String
+                    MessageModel.message = data["message"] as? String
+                    MessageModel.date = date
+                    MessageModel.id = data["_id"] as! String
+                    MessageModel.group = groupId
+                    MessageModel.room = data["room"] as! String
+                    MessageModel.isSystemNotification = isSystemNotification
+                    
+                    if(isSystemNotification) {
+                        MessageModel.sender = nil
+                    } else {
+                        MessageModel.sender = data["sender"] as! String
+                    }
+                    
+                    try! context.save()
                 }
-                
-                try! context.save()
             }
         }
     }
     
-    public func createGroup(groupName: String, groupDescription: String, completion: @escaping (Result<Bool, Error>) -> Void) {
-        socket.emit("create_group", ["name": groupName, "description": groupDescription])
+    public func createGroup(groupName: String, groupDescription: String, groupType: SocialifyClient.GroupType, completion: @escaping (Result<Bool, Error>) -> Void) {
+        socket.emit("create_group", ["name": groupName, "description": groupDescription, "type": SocialifyClient.parseFromGroupType(type: groupType)])
         socket.on("create_group") { [self] dataArray, socketAck in
             let resp: [String: Any] = dataArray[0] as! [String: Any]
            
@@ -103,8 +104,14 @@ extension SocketIOManager {
                 
                 let data = resp["data"] as! [String: String]
                 let groupId = data["groupId"]!
+                
+                let icon = Data(base64Encoded: data["icon"] as! String)
 
-                self.addGroupToDB(groupId: groupId, groupName: groupName, groupDescription: groupDescription, myRole: 1)
+                self.addGroupToDB(groupId: groupId,
+                                  groupName: groupName,
+                                  groupDescription: groupDescription,
+                                  myRole: 1,
+                                  icon: icon!)
                 
 //                self.connectRoom(roomId: roomId)
 //                self.socket.emit("activate_room", ["roomId": roomId])
@@ -129,8 +136,13 @@ extension SocketIOManager {
                 let groupId = data["groupId"]!
                 let groupName = data["groupName"]!
                 let groupDescription = data["groupDescription"]!
+                let icon = Data(base64Encoded: data["icon"] as! String)
 
-                self.addGroupToDB(groupId: groupId, groupName: groupName, groupDescription: groupDescription, myRole: 2)
+                self.addGroupToDB(groupId: groupId,
+                                  groupName: groupName,
+                                  groupDescription: groupDescription,
+                                  myRole: 2,
+                                  icon: icon!)
                 
                 completion(.success(true))
             } else {
@@ -167,9 +179,6 @@ extension SocketIOManager {
         socket.on("create_invite_link") { [self] dataArray, socketAck in
             let resp: [String: Any] = dataArray[0] as! [String: Any]
             
-            print("==============LINK CREATION RESPONSE================")
-            print(resp)
-            print("==============LINK CREATION RESPONSE================")
             socket.off("create_invite_link")
             let success: Bool = (resp["success"] != nil)
             
@@ -239,7 +248,7 @@ extension SocketIOManager {
             return
         }
         
-        let regex = try! NSRegularExpression(pattern: "\(api_url)/[A-Za-z0-9]{16}")
+        let regex = try! NSRegularExpression(pattern: "\(api_url)/[A-Za-z0-9+/=]{16}")
         let range = NSRange(location: 0, length: message.utf16.count)
        
         let matches = regex.matches(in: message, range: range)
@@ -337,7 +346,71 @@ extension SocketIOManager {
                                      "message": message])
     }
     
-    private func addGroupToDB(groupId: String, groupName: String, groupDescription: String, myRole: Int) {
+    public func updateGroupIcon(groupId: String, icon: UIImage, completion: @escaping (Result<Bool, Error>) -> Void) {
+        let iconData = icon.pngData()
+        let parsedIcon = iconData?.base64EncodedString()
+        socket.emit("update_icon", ["icon": parsedIcon, "groupId": groupId])
+        socket.on("update_icon") { [self] dataArray, socketAck in
+            let resp: [String: Any] = dataArray[0] as! [String: Any]
+            socket.off("update_icon")
+            let success: Bool = resp["success"] as! Bool
+            
+            if(!success) {
+                completion(.failure(SocialifyClient.SdkError.UnexpectedError))
+                return
+            }
+           
+            completion(.success(true))
+        }
+    }
+    
+    private func newGroupSystemNotification(data: [String: Any]) {
+        let notificationType: SocialifyClient.SystemNotificationType = SocialifyClient.parseSystemNotificationtype(type: data["type"] as! Int)
+        
+        switch(notificationType) {
+        case SocialifyClient.SystemNotificationType.iconUpdate:
+            newGroupIconNotification(data: data)
+        }
+    }
+    
+    private func newGroupIconNotification(data: [String: Any]) {
+        let groupId: String = data["group"] as! String
+        
+        socket.emit("get_group_icon", ["groupId": groupId])
+        socket.on("get_group_icon") { [self] dataArray, socketAck in
+            let resp: [String: Any] = dataArray[0] as! [String: Any]
+            socket.off("get_group_icon")
+            let success: Bool = resp["success"] as! Bool
+            
+            if(!success) {
+                return
+            }
+            
+            let context = self.client.persistentContainer.viewContext
+            let fetchRequestGroup = NSFetchRequest<NSFetchRequestResult>(entityName: "ChatGroup")
+            fetchRequestGroup.predicate = NSPredicate(format: "id == %@", NSString(string: groupId))
+            let fetchResultsGroup = try! context.fetch(fetchRequestGroup) as! [ChatGroup]
+            
+            if(fetchResultsGroup.isEmpty) {
+                return
+            }
+            
+            let fetchRequestChat = NSFetchRequest<NSFetchRequestResult>(entityName: "Chat")
+            fetchRequestChat.predicate = NSPredicate(format: "chatId == %@", NSString(string: groupId))
+            let fetchResultsChat = try! context.fetch(fetchRequestChat) as! [Chat]
+            
+            if(fetchResultsChat.isEmpty) {
+                return
+            }
+            
+            fetchResultsGroup[0].icon = Data(base64Encoded: resp["icon"] as! String)
+            fetchResultsChat[0].avatar = Data(base64Encoded: resp["icon"] as! String)
+            
+            try! context.save()
+        }
+    }
+    
+    private func addGroupToDB(groupId: String, groupName: String, groupDescription: String, myRole: Int, icon: Data) {
         let context = self.client.persistentContainer.viewContext
 
         let groupEntityDescription = NSEntityDescription.entity(
@@ -365,12 +438,14 @@ extension SocketIOManager {
         groupModel.name = groupName
         groupModel.groupDescription = groupDescription
         groupModel.myRole = Int16(myRole)
+        groupModel.icon = icon
         
         let datenow = Date()
 
         chatModel.type = "Group"
         chatModel.chatId = "\(groupId)" as! String
         chatModel.name = groupName
+        chatModel.avatar = icon
 
         try! context.save()
     }

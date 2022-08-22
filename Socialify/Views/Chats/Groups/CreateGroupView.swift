@@ -19,6 +19,7 @@ struct CreateGroupView: View {
    
     @State private var showAlert = false
     @State private var activeAlert: ActiveAlert = .success
+    @State private var showUnavailableGroupTypeAlert = false
     
     @State private var clicked: Bool = false
 
@@ -27,6 +28,7 @@ struct CreateGroupView: View {
     
     @State private var groupName = ""
     @State private var groupDescription = ""
+    @State private var groupType: SocialifyClient.GroupType = SocialifyClient.GroupType.publicGroup
     //@State private var password = ""
     
     @State private var buttonText = "Create"
@@ -83,6 +85,26 @@ struct CreateGroupView: View {
                         RoundedRectangle(cornerRadius: cornerRadius)
                             .stroke(setColor(input: groupDescription, clicked: clicked), lineWidth: 2)
                     )
+                
+                HStack {
+                    Text("Group type")
+                        .padding(.leading)
+                    Spacer()
+                    Picker("Type", selection: $groupType) {
+                        Text("Public").tag(SocialifyClient.GroupType.publicGroup)
+                        Text("Private").tag(SocialifyClient.GroupType.privateGroup)
+                    }
+                }.autocapitalization(.none)
+                .font(Font.body.weight(Font.Weight.medium))
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+                .frame(height: cellHeight)
+                .background(cellBackground)
+                .cornerRadius(cornerRadius)
+                .overlay(
+                    RoundedRectangle(cornerRadius: cornerRadius)
+                        .stroke(setColor(input: groupDescription, clicked: clicked), lineWidth: 2)
+                )
             }.padding(.bottom, 60)
             
             Spacer()
@@ -90,21 +112,29 @@ struct CreateGroupView: View {
             
             CustomButtonView(action: {
                 clicked = true
-                if(groupName != ""){
-                    SocketIOManager.sharedInstance.createGroup(groupName: groupName, groupDescription: groupDescription) { value in
-                        switch(value){
-                        case .success(let value):
-                            self.activeAlert = .success
-                            self.showAlert = true
-                            
-                        case .failure(let error):
-                            errorAlertShow = ErrorAlert(name: "errors.default".localized, description: "errors.default_description".localized)
+                if(groupType != SocialifyClient.GroupType.privateGroup) {
+                    if(groupName != ""){
+                        SocketIOManager.sharedInstance.createGroup(groupName: groupName, groupDescription: groupDescription, groupType: groupType) { value in
+                            switch(value){
+                            case .success(_):
+                                self.activeAlert = .success
+                                self.showAlert = true
+                                self.presentationMode.wrappedValue.dismiss()
+                                
+                            case .failure(_):
+                                errorAlertShow = ErrorAlert(name: "errors.default".localized, description: "errors.default_description".localized)
+                            }
                         }
                     }
+                } else {
+                    self.showUnavailableGroupTypeAlert = true
                 }
             }, title: buttonText)
             .padding(.bottom)
         }.padding()
+        .alert(isPresented: $showUnavailableGroupTypeAlert) {
+            Alert(title: Text("Unavailable"), message: Text("This group type is currently unavailable"))
+        }
         .sheet(isPresented: $showErrorReportModal, onDismiss: {
             }) {
             NavigationView {
@@ -116,18 +146,19 @@ struct CreateGroupView: View {
         }
         .background(Color("BackgroundColor"))
         .padding(.bottom, -55)
-        .alert(isPresented: $showAlert) {
-            switch activeAlert {
-            case .success:
-                return Alert(title: Text("success"), message: Text("Group has successfully created!"), dismissButton: .default(Text("got_it")){
-                        DispatchQueue.main.async{
-                            self.presentationMode.wrappedValue.dismiss()
-                        }
-                    })
-            case .failure:
-                return Alert(title: Text(errorAlertShow?.name ?? "errors.default"), message: Text(errorAlertShow?.description ?? "errors.default_description"), primaryButton: .cancel(), secondaryButton: .destructive(Text("errors.button")) { self.showErrorReportModal = true } )
-            }
-        }
+        
+//        .alert(isPresented: $showAlert) {
+//            switch activeAlert {
+//            case .success:
+//                return Alert(title: Text("success"), message: Text("Group has successfully created!"), dismissButton: .default(Text("got_it")){
+//                        DispatchQueue.main.async {
+//                            self.presentationMode.wrappedValue.dismiss()
+//                        }
+//                    })
+//            case .failure:
+//                return Alert(title: Text(errorAlertShow?.name ?? "errors.default"), message: Text(errorAlertShow?.description ?? "errors.default_description"), primaryButton: .cancel(), secondaryButton: .destructive(Text("errors.button")) { self.showErrorReportModal = true } )
+//            }
+//        }
     }
 }
 //

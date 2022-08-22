@@ -260,7 +260,6 @@ func documentDirectoryPath() -> URL? {
 }
 
 func saveJpg(_ image: UIImage, name: String) {
-    print(image)
     if let jpgData = image.jpegData(compressionQuality: 0.5),
         let path = documentDirectoryPath()?.appendingPathComponent("\(name).jpg") {
         try? jpgData.write(to: path)

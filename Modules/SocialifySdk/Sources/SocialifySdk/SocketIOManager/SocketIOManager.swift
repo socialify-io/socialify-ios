@@ -87,8 +87,14 @@ public class SocketIOManager: NSObject {
         socket.connect()
         
         socket.on("connect") { [self]_,_ in
-            fetchLastUnreadDMs()
-            //getFetchLastUnreadDMsResponse()
+//            fetchLastUnreadDMs()
+            updateData()
+            listenForDMs() { _ in}
+            listenForMessages() { _ in }
+            DispatchQueue.global(qos: .background).async { [unowned self] in
+                fetchAllUnreadDMs()
+//                fetchAllUnreadMessages()
+            }
         }
     }
     
@@ -96,6 +102,6 @@ public class SocketIOManager: NSObject {
         return socket.status
     }
     
-    lazy var manager = SocketManager(socketURL: URL(string: "http://192.168.8.199:81")!, config: [.log(true), .compress, .extraHeaders(getWebsocketHeaders())])
+    lazy var manager = SocketManager(socketURL: URL(string: "http://192.168.8.199:81")!, config: [.log(false), .compress, .extraHeaders(getWebsocketHeaders())])
     lazy var socket = manager.defaultSocket
 }

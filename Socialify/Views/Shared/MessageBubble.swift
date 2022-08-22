@@ -32,12 +32,13 @@ struct LeftMessageBubble: View {
     @State var trailingPadding: CGFloat = 25
     @State var paddingIfGroupData: CGFloat = 0
     
+    
     var body: some View {
         HStack {
             VStack {
                 HStack {
                     ForEach(media) { mediaElement in
-                        if mediaElement.messageId as! String == message.id as! String {
+                        if mediaElement.messageId! == message.id! {
                             let mediaurl: String = mediaElement.url!
                             HStack {
                                 
@@ -84,11 +85,13 @@ struct LeftMessageBubble: View {
 //                                            Spacer()
 //                                        }
                                         HStack {
-                                            Image("Facebook")
-                                                .resizable()
-                                                .cornerRadius(20)
-                                                .frame(width: 50, height: 50)
-                                                .padding(.trailing, 4)
+                                            if groupData["icon"] != nil {
+                                                Image(uiImage: UIImage(data: Data(base64Encoded: groupData["icon"]!)!)!)
+                                                    .resizable()
+                                                    .cornerRadius(20)
+                                                    .frame(width: 50, height: 50)
+                                                    .padding(.trailing, 4)
+                                            }
 
                                             VStack(alignment: .leading) {
                                                 Text(groupData["name"] ?? "<name>")
@@ -99,7 +102,6 @@ struct LeftMessageBubble: View {
                                        
                                         Button(LocalizedStringKey("Join")) {
                                             SocketIOManager.sharedInstance.joinGroup(linkId: groupData["linkId"]!) { response in
-                                               print(response)
                                             }
                                         }
                                         .font(.headline)
@@ -124,21 +126,18 @@ struct LeftMessageBubble: View {
                 }
             }
         }.padding(.leading, 4)
-            .padding(.vertical, -5)
-            .padding(.trailing, trailingPadding)
-            .onAppear() {
-                SocketIOManager.sharedInstance.isInviteLinkInMessage(message: message.message ?? "<message can't be loaded>") { result in
-                    print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-                    print(result)
-                    print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-                    let success: Bool = result["success"] as! Bool
-                    if (success) {
-                        trailingPadding = 0
-                        groupData = result["data"] as! [String: String]
-                        paddingIfGroupData = -12
-                    }
+        .padding(.vertical, -5)
+        .padding(.trailing, trailingPadding)
+        .onAppear() {
+            SocketIOManager.sharedInstance.isInviteLinkInMessage(message: message.message ?? "<message can't be loaded>") { result in
+                let success: Bool = result["success"] as! Bool
+                if (success) {
+                    trailingPadding = 0
+                    groupData = result["data"] as! [String: String]
+                    paddingIfGroupData = -12
                 }
             }
+        }
     }
 }
 
@@ -159,7 +158,7 @@ struct RightMessageBubble: View {
                                     
             VStack {
                 ForEach(media) { mediaElement in
-                    if mediaElement.messageId as! String == message.id as! String {
+                    if mediaElement.messageId! == message.id! {
                         let mediaurl: String = mediaElement.url!
                         HStack {
                             Spacer()
@@ -209,11 +208,13 @@ struct RightMessageBubble: View {
 //                                            Spacer()
 //                                        }
                                 HStack {
-                                    Image("Facebook")
-                                        .resizable()
-                                        .cornerRadius(20)
-                                        .frame(width: 50, height: 50)
-                                        .padding(.trailing, 4)
+                                    if groupData["icon"] != nil {
+                                        Image(uiImage: UIImage(data: Data(base64Encoded: groupData["icon"]!)!)!)
+                                            .resizable()
+                                            .cornerRadius(20)
+                                            .frame(width: 50, height: 50)
+                                            .padding(.trailing, 4)
+                                    }
 
                                     VStack(alignment: .leading) {
                                         Text(groupData["name"] ?? "<name>")
@@ -249,9 +250,6 @@ struct RightMessageBubble: View {
         .padding(.leading, 25)
         .onAppear {
             SocketIOManager.sharedInstance.isInviteLinkInMessage(message: message.message ?? "<message can't be loaded>") { result in
-                print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-                print(result)
-                print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
                 let success: Bool = result["success"] as! Bool
                 if (success) {
                     trailingPadding = 0
@@ -279,7 +277,7 @@ struct LeftDMBubble: View {
             VStack {
                 HStack {
                     ForEach(media) { mediaElement in
-                        if mediaElement.messageId as! String == message.id as! String {
+                        if mediaElement.messageId! == message.id! {
                             let mediaurl: String = mediaElement.url!
                             HStack {
                                 
@@ -328,11 +326,13 @@ struct LeftDMBubble: View {
 //                                            Spacer()
 //                                        }
                                         HStack {
-                                            Image("Facebook")
-                                                .resizable()
-                                                .cornerRadius(20)
-                                                .frame(width: 50, height: 50)
-                                                .padding(.trailing, 4)
+                                            if groupData["icon"] != nil {
+                                                Image(uiImage: UIImage(data: Data(base64Encoded: groupData["icon"]!)!)!)
+                                                    .resizable()
+                                                    .cornerRadius(20)
+                                                    .frame(width: 50, height: 50)
+                                                    .padding(.trailing, 4)
+                                            }
 
                                             VStack(alignment: .leading) {
                                                 Text(groupData["name"] ?? "<name>")
@@ -372,9 +372,6 @@ struct LeftDMBubble: View {
             .padding(.trailing, trailingPadding)
             .onAppear() {
                 SocketIOManager.sharedInstance.isInviteLinkInMessage(message: message.message ?? "<message can't be loaded>") { result in
-                    print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-                    print(result)
-                    print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
                     let success: Bool = result["success"] as! Bool
                     if (success) {
                         trailingPadding = 0
@@ -404,7 +401,7 @@ struct RightDMBubble: View {
                                     
             VStack {
                 ForEach(media) { mediaElement in
-                    if mediaElement.messageId as! String == message.id as! String {
+                    if mediaElement.messageId! == message.id! {
                         let mediaurl: String = mediaElement.url!
                         HStack {
                             Spacer()
@@ -455,11 +452,13 @@ struct RightDMBubble: View {
 //                                            Spacer()
 //                                        }
                                 HStack {
-                                    Image("Facebook")
-                                        .resizable()
-                                        .cornerRadius(20)
-                                        .frame(width: 50, height: 50)
-                                        .padding(.trailing, 4)
+                                    if groupData["icon"] != nil {
+                                        Image(uiImage: UIImage(data: Data(base64Encoded: groupData["icon"]!)!)!)
+                                            .resizable()
+                                            .cornerRadius(20)
+                                            .frame(width: 50, height: 50)
+                                            .padding(.trailing, 4)
+                                    }
 
                                     VStack(alignment: .leading) {
                                         Text(groupData["name"] ?? "<name>")
@@ -495,9 +494,7 @@ struct RightDMBubble: View {
         .padding(.leading, 25)
         .onAppear {
             SocketIOManager.sharedInstance.isInviteLinkInMessage(message: message.message ?? "<message can't be loaded>") { result in
-                print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-                print(result)
-                print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+
                 let success: Bool = result["success"] as! Bool
                 if (success) {
                     trailingPadding = 0
